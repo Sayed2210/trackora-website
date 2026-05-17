@@ -1,0 +1,153 @@
+{
+  "nav": {
+    "home": "Home",
+    "features": "Features",
+    "solutions": "Solutions",
+    "pricing": "Pricing",
+    "blog": "Blog",
+    "contact": "Contact",
+    "trackShipment": "Track Shipment",
+    "requestDemo": "Request Demo",
+    "login": "Log In",
+    "loginMerchant": "Merchant Login",
+    "loginCourier": "Courier Login",
+    "loginAdmin": "Admin Login"
+  },
+  "hero": {
+    "title": "Track your shipments",
+    "accent": "smartly & precisely",
+    "subtitle": "Trackora is an intelligent platform for shipment management, delivery tracking, and COD collection — designed for shipping companies, e-commerce stores, and delivery sellers in the Arab region.",
+    "ctaPrimary": "Start Free",
+    "ctaSecondary": "Learn More"
+  },
+  "problems": {
+    "heading": "Challenges you face"
+  },
+  "features": {
+    "heading": "Core Features"
+  },
+  "howItWorks": {
+    "heading": "How Trackora works"
+  },
+  "pricingPreview": {
+    "heading": "Plans for every business size",
+    "text": "From startups to enterprises — we have a plan that fits.",
+    "cta": "See all plans"
+  },
+  "demoCta": {
+    "heading": "Ready to start?",
+    "text": "Join thousands of companies managing shipments smartly with Trackora.",
+    "cta": "Request a demo"
+  },
+  "faq": {
+    "heading": "Frequently Asked Questions"
+  },
+  "footer": {
+    "brand": "Trackora",
+    "copyright": "All rights reserved",
+    "features": "Features",
+    "solutions": "Solutions",
+    "pricing": "Pricing",
+    "blog": "Blog",
+    "contact": "Contact",
+    "trackShipment": "Track Shipment"
+  },
+  "track": {
+    "heading": "Track Your Shipment",
+    "subtitle": "Enter your tracking number to check delivery status.",
+    "inputPlaceholder": "Tracking number",
+    "submitButton": "Track",
+    "mockNotice": "This is sample data for demonstration purposes only.",
+    "exampleFormat": "Example: TRK-240502-A1B2",
+    "privacyNote": "Your data is protected — we never share your tracking number with third parties.",
+    "emptyInputError": "Please enter a tracking number",
+    "resultTitle": "Tracking Result",
+    "trackingNumber": "Tracking number",
+    "status": "Status",
+    "merchant": "Merchant",
+    "estimatedDelivery": "Estimated delivery",
+    "customer": "Customer",
+    "phone": "Phone",
+    "timeline": "Shipment timeline",
+    "notFound": "Shipment not found",
+    "notFoundDescription": "Please double-check the tracking number and try again. If the problem persists, contact the merchant.",
+    "errorTitle": "Something went wrong",
+    "errorDescription": "We could not fetch tracking data right now. Please try again later.",
+    "retry": "Retry",
+    "backToTrack": "Track another shipment",
+    "loading": "Searching for shipment..."
+  },
+  "trackingStatus": {
+    "PENDING": "Pending",
+    "PICKED_UP": "Picked up",
+    "IN_WAREHOUSE": "In warehouse",
+    "OUT_FOR_DELIVERY": "Out for delivery",
+    "DELIVERED": "Delivered",
+    "FAILED": "Failed delivery",
+    "POSTPONED": "Postponed",
+    "RETURNED": "Returned",
+    "CANCELLED": "Cancelled"
+  },
+  "requestDemo": {
+    "heading": "Request a Demo",
+    "subtitle": "Tell us about your business and we will contact you within 24 hours.",
+    "fields": {
+      "name": "Name",
+      "company": "Company name",
+      "email": "Email",
+      "phone": "Phone number",
+      "businessType": "Business type",
+      "message": "Additional message"
+    },
+    "submit": "Submit Request",
+    "success": "Your request has been submitted successfully! We will contact you soon.",
+    "error": "An error occurred during submission. Please try again later."
+  },
+  "contact": {
+    "heading": "Contact Us",
+    "subtitle": "We are not far away. Send us a message and we will reply as soon as possible.",
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "subject": "Subject",
+      "message": "Message"
+    },
+    "submit": "Send",
+    "success": "Your message has been sent successfully!",
+    "error": "An error occurred during submission. Please try again later."
+  },
+  "pricing": {
+    "heading": "Trackora Plans & Pricing",
+    "subtitle": "Choose the plan that fits your business. Upgrade or downgrade at any time.",
+    "cta": "Request a demo",
+    "faqHeading": "Pricing FAQ"
+  },
+  "blog": {
+    "heading": "Blog",
+    "subtitle": "Ideas and tips on shipment management, delivery, and COD collection.",
+    "readMore": "Read more"
+  },
+  "common": {
+    "loading": "Loading...",
+    "noResults": "No results found",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "backHome": "Back to home",
+    "learnMore": "Learn more",
+    "viewAll": "View all"
+  },
+  "solutions": {
+    "shippingCompanies": {
+      "heading": "Solutions for Shipping Companies",
+      "subtitle": "Complete management of shipping operations from dispatch to delivery and COD collection."
+    },
+    "ecommerceStores": {
+      "heading": "Solutions for E-commerce Stores",
+      "subtitle": "Track your store shipments and deliver an excellent delivery experience to your customers."
+    },
+    "socialSellers": {
+      "heading": "Solutions for Social Sellers",
+      "subtitle": "Upload orders easily and track delivery and COD collection without complexity."
+    }
+  }
+}

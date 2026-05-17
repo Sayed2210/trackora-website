@@ -1,0 +1,228 @@
+{
+  "nav": {
+    "home": "Home",
+    "features": "Features",
+    "solutions": "Solutions",
+    "pricing": "Pricing",
+    "blog": "Blog",
+    "contact": "Contact",
+    "trackShipment": "Track Shipment",
+    "requestDemo": "Request Demo",
+    "login": "Log In",
+    "loginMerchant": "Merchant Login",
+    "loginCourier": "Courier Login",
+    "loginAdmin": "Admin Login"
+  },
+  "hero": {
+    "title": "Track your shipments",
+    "accent": "smartly & precisely",
+    "subtitle": "Trackora is an intelligent platform for shipment management, delivery tracking, and COD collection — designed for shipping companies, e-commerce stores, and delivery sellers in the Arab region.",
+    "ctaPrimary": "Start Free",
+    "ctaSecondary": "Learn More"
+  },
+  "problems": {
+    "heading": "Challenges you face",
+    "items": [
+      {
+        "icon": "📦",
+        "title": "Lost shipments",
+        "text": "Shipments lost without clear tracking and transparent operations."
+      },
+      {
+        "icon": "💰",
+        "title": "COD complexity",
+        "text": "Cash-on-delivery collection is error-prone and risky."
+      },
+      {
+        "icon": "🚚",
+        "title": "Poor courier management",
+        "text": "Inefficient task distribution and difficulty monitoring courier performance."
+      },
+      {
+        "icon": "📊",
+        "title": "No visibility",
+        "text": "No clear reports on performance or shipment flow."
+      }
+    ]
+  },
+  "features": {
+    "heading": "Core Features",
+    "items": [
+      {
+        "icon": "🚀",
+        "title": "Smart Dispatch",
+        "text": "Automatic shipment distribution to the best courier based on location and load.",
+        "link": "/features/smart-dispatch"
+      },
+      {
+        "icon": "📱",
+        "title": "Courier App",
+        "text": "Mobile app for couriers to confirm pickup, delivery, and share location.",
+        "link": "/features/courier-app"
+      },
+      {
+        "icon": "🖥️",
+        "title": "Merchant Portal",
+        "text": "Comprehensive portal for shipment management, order tracking, and reports.",
+        "link": "/features/merchant-portal"
+      },
+      {
+        "icon": "👛",
+        "title": "COD Wallet",
+        "text": "Full management of cash-on-delivery balances, settlements, and reports.",
+        "link": "/features/cod-wallet"
+      },
+      {
+        "icon": "📤",
+        "title": "Bulk Upload",
+        "text": "Upload thousands of orders at once with smart validation and feedback.",
+        "link": "/features/bulk-upload"
+      },
+      {
+        "icon": "🛡️",
+        "title": "Fraud Detection",
+        "text": "Smart analysis of suspicious orders to protect your operations from losses.",
+        "link": "/features/fraud-detection"
+      }
+    ]
+  },
+  "howItWorks": {
+    "heading": "How Trackora works",
+    "steps": [
+      {
+        "step": "1",
+        "title": "Upload shipments",
+        "text": "Upload orders individually or in bulk via Excel file."
+      },
+      {
+        "step": "2",
+        "title": "Auto-dispatch",
+        "text": "Trackora assigns shipments to the best courier for you."
+      },
+      {
+        "step": "3",
+        "title": "Track in detail",
+        "text": "Follow every shipment from warehouse to customer door."
+      },
+      {
+        "step": "4",
+        "title": "Collect & manage",
+        "text": "Collect COD, manage balances, and generate reports effortlessly."
+      }
+    ]
+  },
+  "pricingPreview": {
+    "heading": "Plans for every business size",
+    "text": "From startups to enterprises — we have a plan that fits.",
+    "cta": "See all plans"
+  },
+  "demoCta": {
+    "heading": "Ready to start?",
+    "text": "Join thousands of companies managing shipments smartly with Trackora.",
+    "cta": "Request a demo"
+  },
+  "faq": {
+    "heading": "Frequently Asked Questions",
+    "items": [
+      {
+        "question": "Is Trackora free?",
+        "answer": "Yes, you can start free with a basic plan. Advanced plans are available for larger needs."
+      },
+      {
+        "question": "Does Trackora support Arabic?",
+        "answer": "Absolutely. Trackora is Arabic-first — full interface, calendar, and number formatting."
+      },
+      {
+        "question": "How do I upload shipments?",
+        "answer": "Upload individually or in bulk via Excel with smart validation and instant feedback."
+      },
+      {
+        "question": "How does COD collection work?",
+        "answer": "Trackora manages the entire cash-on-delivery cycle — from customer collection to merchant settlement."
+      },
+      {
+        "question": "Is my data safe?",
+        "answer": "Absolutely. We use advanced encryption and never share your data. Your privacy is our priority."
+      }
+    ]
+  },
+  "footer": {
+    "brand": "Trackora",
+    "copyright": "All rights reserved",
+    "features": "Features",
+    "solutions": "Solutions",
+    "pricing": "Pricing",
+    "blog": "Blog",
+    "contact": "Contact",
+    "trackShipment": "Track Shipment"
+  },
+  "track": {
+    "heading": "Track Your Shipment",
+    "subtitle": "Enter your tracking number to check delivery status.",
+    "inputPlaceholder": "Tracking number",
+    "submitButton": "Track",
+    "mockNotice": "This is sample data for demonstration purposes only."
+  },
+  "requestDemo": {
+    "heading": "Request a Demo",
+    "subtitle": "Tell us about your business and we will contact you within 24 hours.",
+    "fields": {
+      "name": "Name",
+      "company": "Company name",
+      "email": "Email",
+      "phone": "Phone number",
+      "businessType": "Business type",
+      "message": "Additional message"
+    },
+    "submit": "Submit Request",
+    "success": "Your request has been submitted successfully! We will contact you soon.",
+    "error": "An error occurred during submission. Please try again later."
+  },
+  "contact": {
+    "heading": "Contact Us",
+    "subtitle": "We are not far away. Send us a message and we will reply as soon as possible.",
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "subject": "Subject",
+      "message": "Message"
+    },
+    "submit": "Send",
+    "success": "Your message has been sent successfully!",
+    "error": "An error occurred during submission. Please try again later."
+  },
+  "pricing": {
+    "heading": "Trackora Plans & Pricing",
+    "subtitle": "Choose the plan that fits your business. Upgrade or downgrade at any time.",
+    "cta": "Request a demo",
+    "faqHeading": "Pricing FAQ"
+  },
+  "blog": {
+    "heading": "Blog",
+    "subtitle": "Ideas and tips on shipment management, delivery, and COD collection.",
+    "readMore": "Read more"
+  },
+  "common": {
+    "loading": "Loading...",
+    "noResults": "No results found",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "backHome": "Back to home",
+    "learnMore": "Learn more",
+    "viewAll": "View all"
+  },
+  "solutions": {
+    "shippingCompanies": {
+      "heading": "Solutions for Shipping Companies",
+      "subtitle": "Complete management of shipping operations from dispatch to delivery and COD collection."
+    },
+    "ecommerceStores": {
+      "heading": "Solutions for E-commerce Stores",
+      "subtitle": "Track your store shipments and deliver an excellent delivery experience to your customers."
+    },
+    "socialSellers": {
+      "heading": "Solutions for Social Sellers",
+      "subtitle": "Upload orders easily and track delivery and COD collection without complexity."
+    }
+  }
+}
