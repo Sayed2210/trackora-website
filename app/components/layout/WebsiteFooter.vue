@@ -2,7 +2,11 @@
   <footer class="footer" role="contentinfo">
     <div class="app-container footer__inner">
       <div class="footer__brand">
-        <NuxtLink :to="localePath('/')" class="footer__logo">{{ t('footer.brand') }}</NuxtLink>
+        <NuxtLink :to="localePath('/')" class="footer__logo">
+          <span class="footer__logo-img">
+            <img src="/logos/trackora_logo_full.png" class="object-cover" alt="تراكورا" />
+          </span>
+        </NuxtLink>
         <p class="footer__copy">&copy; {{ year }} {{ t('footer.brand') }}. {{ t('footer.copyright') }}.</p>
       </div>
       <nav class="footer__nav" aria-label="روابط التذييل">
@@ -24,6 +28,22 @@ const year = new Date().getFullYear()
 </script>
 
 <style scoped>
+
+
+.app-container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--spacing-6);
+}
+
+
+
+@media (max-width: 36rem) {
+  .app-container {
+    padding-inline: var(--spacing-4);
+  }
+}
 .footer {
   border-block-start: 1px solid var(--color-border);
   background-color: var(--color-bg-dark);
@@ -51,6 +71,12 @@ const year = new Date().getFullYear()
 
 .footer__logo:hover {
   color: var(--color-accent);
+}
+
+.footer__logo-img {
+  display: inline-block;
+  width: 120px;
+  height: auto;
 }
 
 .footer__copy {

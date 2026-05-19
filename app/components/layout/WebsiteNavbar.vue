@@ -2,7 +2,9 @@
   <header :class="['navbar', { 'navbar--scrolled': isScrolled }]" role="banner">
     <nav class="app-container navbar__inner" aria-label="التنقل الرئيسي">
       <NuxtLink :to="localePath('/')" class="navbar__logo" aria-label="تراكورا - الصفحة الرئيسية">
-        <span class="navbar__logo-text">تراكورا</span>
+        <span class="navbar__logo-img">
+          <img src="/logos/trackora_logo_full_white.png" alt="تراكورا" />
+        </span>
       </NuxtLink>
 
       <ul class="navbar__links" :class="{ 'navbar__links--open': mobileOpen }">
@@ -72,6 +74,21 @@ onMounted(() => {
 </script>
 
 <style scoped>
+
+.app-container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--spacing-6);
+}
+
+
+
+@media (max-width: 36rem) {
+  .app-container {
+    padding-inline: var(--spacing-4);
+  }
+}
 .navbar {
   position: sticky;
   top: 0;
@@ -100,12 +117,10 @@ onMounted(() => {
   flex-shrink: 0;
 }
 
-.navbar__logo-text {
-  font-family: var(--font-heading);
-  font-size: var(--text-2xl);
-  font-weight: 800;
-  color: var(--color-text-light);
-  letter-spacing: -0.02em;
+.navbar__logo-img {
+  display: inline-block;
+  width: 80px;
+  height: auto;
 }
 
 .navbar__links {
