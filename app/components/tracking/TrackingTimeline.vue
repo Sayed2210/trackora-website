@@ -1,11 +1,25 @@
 <template>
   <div class="tracking-timeline">
-    <h3 class="tracking-timeline__title">{{ t('track.timeline') }}</h3>
+    <div class="tracking-timeline__header">
+      <AppIcon3D name="courier-app" alt="" size="md" />
+      <div>
+        <p class="tracking-timeline__kicker">{{ locale === 'ar' ? 'خطوات التوصيل' : 'Delivery steps' }}</p>
+        <h3 class="tracking-timeline__title">{{ t('track.timeline') }}</h3>
+      </div>
+    </div>
     <ol class="tracking-timeline__list">
       <li
         v-for="(entry, i) in shipment.timeline"
         :key="i"
-        :class="['tracking-timeline__step', { 'tracking-timeline__step--active': entry.completed && !nextPendingIndex, 'tracking-timeline__step--completed': entry.completed, 'tracking-timeline__step--pending': !entry.completed }]"
+        :class="[
+          'tracking-timeline__step',
+          'reveal-stagger',
+          {
+            'tracking-timeline__step--active': i === latestCompletedIndex,
+            'tracking-timeline__step--completed': entry.completed,
+            'tracking-timeline__step--pending': !entry.completed,
+          },
+        ]"
       >
         <div class="tracking-timeline__marker">
           <span v-if="entry.completed" class="tracking-timeline__dot tracking-timeline__dot--completed" aria-hidden="true">✓</span>
@@ -29,12 +43,16 @@ const props = defineProps<{
   shipment: TrackingData
 }>()
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
-const nextPendingIndex = computed(() => {
-  const idx = props.shipment.timeline.findIndex((e) => !e.completed)
-  return idx === -1 ? null : idx
+const latestCompletedIndex = computed(() => {
+  for (let i = props.shipment.timeline.length - 1; i >= 0; i -= 1) {
+    if (props.shipment.timeline[i]?.completed) return i
+  }
+  return -1
 })
+
+useScrollReveal()
 
 function localizeStatus(status: string) {
   const key = `trackingStatus.${status}` as string
@@ -54,16 +72,49 @@ function formatDate(iso: string) {
 
 <style scoped>
 .tracking-timeline {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(26, 59, 102, 0.08);
+  border-radius: var(--radius-4xl);
   padding: var(--spacing-8);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+.tracking-timeline::before {
+  content: '';
+  position: absolute;
+  width: 14rem;
+  height: 14rem;
+  inset-block-start: -8rem;
+  inset-inline-start: -6rem;
+  border-radius: 50%;
+  background: rgba(59, 89, 152, 0.07);
+  pointer-events: none;
+}
+
+.tracking-timeline__header,
+.tracking-timeline__list {
+  position: relative;
+  z-index: 1;
+}
+
+.tracking-timeline__header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  margin-block-end: var(--spacing-8);
+}
+
+.tracking-timeline__kicker {
+  color: var(--color-primary);
+  font-size: var(--text-sm);
+  font-weight: 800;
 }
 
 .tracking-timeline__title {
+  margin-block-start: var(--spacing-1);
   font-size: var(--text-xl);
-  font-weight: 700;
-  margin-block-end: var(--spacing-8);
 }
 
 .tracking-timeline__list {
@@ -79,8 +130,8 @@ function formatDate(iso: string) {
   position: relative;
   display: flex;
   align-items: flex-start;
-  gap: var(--spacing-4);
-  padding-block-end: var(--spacing-6);
+  gap: var(--spacing-5);
+  padding-block-end: var(--spacing-5);
 }
 
 .tracking-timeline__step:last-child {
@@ -93,47 +144,68 @@ function formatDate(iso: string) {
   flex-direction: column;
   align-items: center;
   flex-shrink: 0;
-  width: 2rem;
+  width: 2.75rem;
 }
 
 .tracking-timeline__dot {
-  width: 2rem;
-  height: 2rem;
+  width: 2.75rem;
+  height: 2.75rem;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: var(--text-sm);
-  font-weight: 700;
+  font-weight: 900;
   flex-shrink: 0;
   z-index: 1;
+  box-shadow: var(--shadow-sm);
 }
 
 .tracking-timeline__dot--completed {
-  background-color: var(--color-primary);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
   color: var(--color-text-light);
 }
 
 .tracking-timeline__dot--pending {
-  background-color: var(--color-bg-alt);
-  border: 2px solid var(--color-border);
+  background: var(--color-bg-alt);
+  border: 2px solid rgba(26, 59, 102, 0.12);
 }
 
 .tracking-timeline__line {
   position: absolute;
-  top: 2rem;
+  top: 2.75rem;
   bottom: 0;
-  inset-inline-start: calc(50% - 1px);
+  inset-inline-start: calc(1.375rem - 1px);
   width: 2px;
-  background-color: var(--color-border);
+  background-color: rgba(26, 59, 102, 0.1);
 }
 
 .tracking-timeline__line--completed {
-  background-color: var(--color-primary);
+  background: linear-gradient(180deg, var(--color-primary), rgba(59, 89, 152, 0.16));
 }
 
 .tracking-timeline__content {
-  padding-block-start: var(--spacing-1);
+  min-width: 0;
+  width: 100%;
+  border: 1px solid rgba(26, 59, 102, 0.08);
+  border-radius: var(--radius-2xl);
+  padding: var(--spacing-5);
+  background: rgba(255, 255, 255, 0.74);
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.tracking-timeline__step--active .tracking-timeline__content {
+  border-color: rgba(26, 59, 102, 0.16);
+  box-shadow: var(--shadow-md);
+  background: linear-gradient(145deg, rgba(59, 89, 152, 0.07), rgba(255, 255, 255, 0.86));
+}
+
+.tracking-timeline__step--pending .tracking-timeline__content {
+  background: rgba(245, 245, 245, 0.68);
+}
+
+.tracking-timeline__content {
   min-width: 0;
 }
 
@@ -151,10 +223,49 @@ function formatDate(iso: string) {
   font-size: var(--text-sm);
   color: var(--color-text-secondary);
   margin-block-end: var(--spacing-1);
+  line-height: 1.75;
 }
 
 .tracking-timeline__time {
   font-size: var(--text-xs);
   color: var(--color-text-secondary);
+}
+
+@media (max-width: 36rem) {
+  .tracking-timeline {
+    padding: var(--spacing-6);
+  }
+
+  .tracking-timeline__header {
+    align-items: flex-start;
+  }
+
+  .tracking-timeline__step {
+    gap: var(--spacing-3);
+  }
+
+  .tracking-timeline__marker {
+    width: 2.25rem;
+  }
+
+  .tracking-timeline__dot {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .tracking-timeline__line {
+    top: 2.25rem;
+    inset-inline-start: calc(1.125rem - 1px);
+  }
+
+  .tracking-timeline__content {
+    padding: var(--spacing-4);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tracking-timeline__content {
+    transition: none;
+  }
 }
 </style>
