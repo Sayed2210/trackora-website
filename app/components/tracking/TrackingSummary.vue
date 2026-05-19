@@ -1,15 +1,22 @@
 <template>
   <div class="tracking-summary">
-    <div class="tracking-summary__header">
-      <AppBadge :variant="statusVariant">
+    <div class="tracking-summary__hero">
+      <div class="tracking-summary__icon-wrap" aria-hidden="true">
+        <AppIcon3D name="shipment" alt="" size="lg" />
+      </div>
+      <div class="tracking-summary__headline">
+        <p class="tracking-summary__kicker">{{ t('track.trackingNumber') }}</p>
+        <p class="tracking-summary__number" dir="ltr">{{ shipment.trackingNumber }}</p>
+      </div>
+      <AppBadge :variant="statusVariant" class="tracking-summary__badge">
         {{ localizedStatus }}
       </AppBadge>
     </div>
 
     <dl class="tracking-summary__details">
-      <div class="tracking-summary__row">
-        <dt class="tracking-summary__label">{{ t('track.trackingNumber') }}</dt>
-        <dd class="tracking-summary__value" dir="ltr">{{ shipment.trackingNumber }}</dd>
+      <div class="tracking-summary__row tracking-summary__row--status">
+        <dt class="tracking-summary__label">{{ t('track.status') }}</dt>
+        <dd class="tracking-summary__value">{{ localizedStatus }}</dd>
       </div>
       <div class="tracking-summary__row">
         <dt class="tracking-summary__label">{{ t('track.merchant') }}</dt>
@@ -19,15 +26,16 @@
         <dt class="tracking-summary__label">{{ t('track.estimatedDelivery') }}</dt>
         <dd class="tracking-summary__value">{{ shipment.estimatedDelivery }}</dd>
       </div>
-      <div class="tracking-summary__row">
-        <dt class="tracking-summary__label">{{ t('track.customer') }}</dt>
-        <dd class="tracking-summary__value">{{ shipment.customerName }}</dd>
-      </div>
       <div v-if="shipment.customerPhoneMasked" class="tracking-summary__row">
         <dt class="tracking-summary__label">{{ t('track.phone') }}</dt>
         <dd class="tracking-summary__value" dir="ltr">{{ shipment.customerPhoneMasked }}</dd>
       </div>
     </dl>
+
+    <div class="tracking-summary__privacy">
+      <AppIcon3D name="fraud-detection" alt="" size="sm" />
+      <p>{{ locale === 'ar' ? 'نعرض فقط البيانات اللازمة للتتبّع. أي رقم هاتف يظهر هنا يكون مخفياً لحماية الخصوصية.' : 'We only show the details needed for tracking. Any phone number shown here is masked for privacy.' }}</p>
+    </div>
   </div>
 </template>
 
@@ -38,7 +46,7 @@ const props = defineProps<{
   shipment: TrackingData
 }>()
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 const STATUS_VARIANTS: Record<string, 'primary' | 'accent' | 'success' | 'error' | 'default'> = {
   PENDING: 'default',
@@ -63,31 +71,91 @@ const statusVariant = computed(() => STATUS_VARIANTS[props.shipment.status] ?? '
 
 <style scoped>
 .tracking-summary {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(26, 59, 102, 0.08);
+  border-radius: var(--radius-4xl);
   padding: var(--spacing-8);
+  background:
+    radial-gradient(circle at 16% 0%, rgba(59, 89, 152, 0.1), transparent 34%),
+    var(--glass-bg);
+  box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(18px);
 }
 
-.tracking-summary__header {
-  margin-block-end: var(--spacing-6);
+.tracking-summary::before {
+  content: '';
+  position: absolute;
+  width: 16rem;
+  height: 16rem;
+  inset-block-start: -8rem;
+  inset-inline-end: -7rem;
+  border-radius: 50%;
+  background: rgba(59, 89, 152, 0.08);
+  pointer-events: none;
+}
+
+.tracking-summary__hero,
+.tracking-summary__details,
+.tracking-summary__privacy {
+  position: relative;
+  z-index: 1;
+}
+
+.tracking-summary__hero {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: var(--spacing-5);
+  align-items: center;
+  margin-block-end: var(--spacing-8);
+}
+
+.tracking-summary__headline {
+  min-width: 0;
+}
+
+.tracking-summary__kicker {
+  color: var(--color-primary);
+  font-size: var(--text-sm);
+  font-weight: 800;
+}
+
+.tracking-summary__number {
+  margin-block-start: var(--spacing-1);
+  color: var(--color-text);
+  font-size: clamp(1.25rem, 4vw, 2rem);
+  font-weight: 900;
+  overflow-wrap: anywhere;
+}
+
+.tracking-summary__badge {
+  align-self: start;
 }
 
 .tracking-summary__details {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-4) var(--spacing-8);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-4);
 }
 
 .tracking-summary__row {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-1);
+  gap: var(--spacing-2);
+  border: 1px solid rgba(26, 59, 102, 0.08);
+  border-radius: var(--radius-2xl);
+  padding: var(--spacing-5);
+  background: rgba(255, 255, 255, 0.76);
+  box-shadow: var(--shadow-sm);
+}
+
+.tracking-summary__row--status {
+  background: linear-gradient(145deg, rgba(59, 89, 152, 0.08), rgba(255, 255, 255, 0.82));
 }
 
 .tracking-summary__label {
   font-size: var(--text-sm);
-  font-weight: 600;
+  font-weight: 800;
   color: var(--color-text-secondary);
 }
 
@@ -97,9 +165,40 @@ const statusVariant = computed(() => STATUS_VARIANTS[props.shipment.status] ?? '
   color: var(--color-text);
 }
 
-@media (max-width: 36rem) {
+.tracking-summary__privacy {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  margin-block-start: var(--spacing-6);
+  border: 1px solid rgba(26, 59, 102, 0.08);
+  border-radius: var(--radius-2xl);
+  padding: var(--spacing-4);
+  background: rgba(255, 255, 255, 0.66);
+}
+
+.tracking-summary__privacy p {
+  color: var(--color-text-secondary);
+  font-size: var(--text-sm);
+  line-height: 1.7;
+}
+
+@media (max-width: 48rem) {
+  .tracking-summary__hero {
+    grid-template-columns: 1fr;
+  }
+
   .tracking-summary__details {
     grid-template-columns: 1fr;
+  }
+
+  .tracking-summary__privacy {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 36rem) {
+  .tracking-summary {
+    padding: var(--spacing-6);
   }
 }
 </style>
