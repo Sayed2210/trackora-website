@@ -10,19 +10,26 @@
 
         <div class="pricing__grid">
           <div v-for="plan in pricingPlans" :key="plan.key" :class="['pricing__card', { 'pricing__card--highlighted': plan.highlighted }]">
-            <AppBadge v-if="plan.highlighted" variant="accent" class="pricing__badge">{{ locale === 'ar' ? 'الأكثر شعبية' : 'Most popular' }}</AppBadge>
-            <h3 class="pricing__plan-name">{{ locale === 'ar' ? plan.nameAr : plan.nameEn }}</h3>
+            <div v-if="plan.highlighted" class="pricing__badge">
+              {{ locale === 'ar' ? 'الأكثر شعبية' : 'Most popular' }}
+            </div>
+            <div class="pricing__plan-head">
+              <AppIcon3D :name="planIconMap[plan.key] || 'shipment'" :alt="locale === 'ar' ? `${plan.nameAr} ثلاثي الأبعاد` : `${plan.nameEn} plan 3D icon`" size="md" />
+              <h3 class="pricing__plan-name">{{ locale === 'ar' ? plan.nameAr : plan.nameEn }}</h3>
+            </div>
             <p class="pricing__plan-price">{{ locale === 'ar' ? plan.priceAr : plan.priceEn }}</p>
             <p class="pricing__plan-desc">{{ locale === 'ar' ? plan.descriptionAr : plan.descriptionEn }}</p>
             <ul class="pricing__features">
               <li v-for="(feat, i) in plan.featuresAr" :key="i" class="pricing__feature">
-                <span class="pricing__check" aria-hidden="true">✓</span>
-                {{ locale === 'ar' ? feat : plan.featuresEn[i] }}
+                <span class="pricing__check" aria-hidden="true">&#10003;</span>
+                <span>{{ locale === 'ar' ? feat : plan.featuresEn[i] }}</span>
               </li>
             </ul>
-            <AppButton :to="plan.key === 'enterprise' ? localePath('/contact') : localePath('/request-demo')" :variant="plan.highlighted ? 'primary' : 'outline'" block>
-              {{ locale === 'ar' ? plan.ctaAr : plan.ctaEn }}
-            </AppButton>
+            <div class="pricing__cta">
+              <AppButton :to="plan.key === 'enterprise' ? localePath('/contact') : localePath('/request-demo')" :variant="plan.highlighted ? 'primary' : 'outline'" block>
+                {{ locale === 'ar' ? plan.ctaAr : plan.ctaEn }}
+              </AppButton>
+            </div>
           </div>
         </div>
       </AppContainer>
@@ -60,6 +67,12 @@ const { t, locale } = useI18n()
 const localePath = useLocalePath()
 const { setSeo } = useLocaleSeo()
 
+const planIconMap: Record<string, string> = {
+  starter: 'shipment',
+  professional: 'smart-dispatch',
+  enterprise: 'analytics',
+}
+
 setSeo(
   locale.value === 'ar' ? 'خطط وأسعار تراكورا' : 'Trackora Plans & Pricing',
   locale.value === 'ar'
@@ -73,46 +86,93 @@ setSeo(
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--spacing-8);
-  align-items: start;
+  align-items: stretch;
 }
 
 .pricing__card {
   position: relative;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  padding: var(--spacing-10);
+  min-height: 100%;
+  background:
+    radial-gradient(circle at 18% 0%, rgba(59, 89, 152, 0.08), transparent 34%),
+    var(--glass-bg);
+  border: 1px solid rgba(26, 59, 102, 0.08);
+  border-radius: var(--radius-3xl);
+  padding: var(--spacing-10) var(--spacing-8) var(--spacing-8);
   display: flex;
   flex-direction: column;
   gap: var(--spacing-4);
+  box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(18px);
+  transition: transform 0.3s var(--reveal-easing), box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.pricing__card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(26, 59, 102, 0.12);
 }
 
 .pricing__card--highlighted {
-  border: 2px solid var(--color-accent);
-  box-shadow: 0 0 0 1px var(--color-accent), var(--shadow-lg);
+  border-color: var(--color-primary);
+  box-shadow: 0 18px 58px rgba(26, 59, 102, 0.2), 0 0 0 1px rgba(26, 59, 102, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  background:
+    radial-gradient(circle at 20% 0%, rgba(255, 107, 107, 0.12), transparent 34%),
+    linear-gradient(180deg, rgba(26, 59, 102, 0.05), rgba(255, 255, 255, 0.9));
+  transform: translateY(-0.5rem);
+}
+
+.pricing__card--highlighted:hover {
+  box-shadow: 0 16px 60px rgba(26, 59, 102, 0.25), 0 0 0 1px var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.pricing__plan-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-4);
+  text-align: center;
 }
 
 .pricing__badge {
   position: absolute;
   top: calc(-1 * var(--spacing-3));
-  inset-inline-start: var(--spacing-6);
+  inset-inline-start: var(--spacing-8);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+  color: var(--color-text-light);
+  font-family: var(--font-heading);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  padding: var(--spacing-1) var(--spacing-4);
+  border-radius: var(--radius-full);
+  letter-spacing: 0.04em;
+  box-shadow: 0 4px 16px rgba(26, 59, 102, 0.3);
 }
 
 .pricing__plan-name {
+  font-family: var(--font-heading);
   font-size: var(--text-xl);
-  font-weight: 700;
+  font-weight: 800;
+  color: var(--color-text);
+  margin: 0;
 }
 
 .pricing__plan-price {
-  font-size: var(--text-3xl);
-  font-weight: 800;
-  color: var(--color-primary);
+  font-size: var(--text-4xl);
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-align: center;
 }
 
 .pricing__plan-desc {
   color: var(--color-text-secondary);
   font-size: var(--text-base);
   line-height: 1.7;
+  text-align: center;
+  min-height: 3.4em;
 }
 
 .pricing__features {
@@ -127,14 +187,21 @@ setSeo(
   display: flex;
   align-items: flex-start;
   gap: var(--spacing-2);
-  font-size: var(--text-base);
+  font-size: var(--text-sm);
   line-height: 1.6;
+  color: var(--color-text-secondary);
 }
 
 .pricing__check {
   color: var(--color-success);
   font-weight: 700;
   flex-shrink: 0;
+  margin-block-start: 0.1em;
+}
+
+.pricing__cta {
+  margin-block-start: auto;
+  padding-block-start: var(--spacing-2);
 }
 
 .pricing-faq__list {
@@ -145,9 +212,10 @@ setSeo(
 
 .pricing-faq__item {
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-6);
-  background: var(--color-bg);
+  border-radius: var(--radius-2xl);
+  padding: var(--spacing-8) var(--spacing-6);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
 }
 
 .pricing-faq__question {
@@ -184,6 +252,16 @@ setSeo(
     grid-template-columns: 1fr;
     max-width: 28rem;
     margin-inline: auto;
+  }
+
+  .pricing__card--highlighted {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pricing__card:hover {
+    transform: none;
   }
 }
 </style>

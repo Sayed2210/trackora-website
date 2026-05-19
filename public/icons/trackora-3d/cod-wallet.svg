@@ -1,0 +1,30 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="wallet" x1="220" y1="290" x2="800" y2="729" gradientUnits="userSpaceOnUse"><stop stop-color="#3B5998"/><stop offset="1" stop-color="#1A3B66"/></linearGradient>
+    <linearGradient id="walletLip" x1="261" y1="218" x2="640" y2="509" gradientUnits="userSpaceOnUse"><stop stop-color="#FFFFFF"/><stop offset="1" stop-color="#DDE5F0"/></linearGradient>
+    <linearGradient id="coral" x1="608" y1="328" x2="811" y2="531" gradientUnits="userSpaceOnUse"><stop stop-color="#FF9A9A"/><stop offset="1" stop-color="#FF6B6B"/></linearGradient>
+    <linearGradient id="coin" x1="603" y1="128" x2="766" y2="298" gradientUnits="userSpaceOnUse"><stop stop-color="#FFE5A6"/><stop offset="1" stop-color="#FFB84D"/></linearGradient>
+    <filter id="shadow" x="132" y="130" width="772" height="770" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feDropShadow dx="0" dy="42" stdDeviation="42" flood-color="#1A3B66" flood-opacity="0.24"/></filter>
+    <filter id="smallShadow" x="0" y="0" width="1024" height="1024" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#1A3B66" flood-opacity="0.18"/></filter>
+  </defs>
+  <ellipse cx="512" cy="806" rx="258" ry="62" fill="#1A3B66" opacity="0.12"/>
+  <g filter="url(#shadow)">
+    <path d="M270 287c0-43 35-78 78-78h280c43 0 78 35 78 78v82H270v-82Z" fill="url(#walletLip)"/>
+    <rect x="211" y="325" width="604" height="394" rx="74" fill="url(#wallet)"/>
+    <path d="M211 399c0-41 33-74 74-74h456c41 0 74 33 74 74v19H211v-19Z" fill="#FFFFFF" opacity="0.18"/>
+    <path d="M611 435h155c31 0 56 25 56 56v83c0 31-25 56-56 56H611c-54 0-98-44-98-98s44-97 98-97Z" fill="url(#coral)"/>
+    <circle cx="617" cy="532" r="41" fill="#FFFFFF" opacity="0.92"/>
+    <circle cx="617" cy="532" r="19" fill="#1A3B66" opacity="0.2"/>
+    <rect x="292" y="447" width="158" height="30" rx="15" fill="#FFFFFF" opacity="0.35"/>
+    <rect x="292" y="510" width="111" height="30" rx="15" fill="#FFFFFF" opacity="0.25"/>
+  </g>
+  <g filter="url(#smallShadow)">
+    <circle cx="669" cy="227" r="78" fill="url(#coin)"/>
+    <circle cx="669" cy="227" r="47" fill="#FFFFFF" opacity="0.28"/>
+    <path d="M641 226h56" stroke="#1A3B66" stroke-width="22" stroke-linecap="round" opacity="0.32"/>
+    <circle cx="762" cy="303" r="58" fill="url(#coin)"/>
+    <path d="M741 303h42" stroke="#1A3B66" stroke-width="18" stroke-linecap="round" opacity="0.32"/>
+    <path d="M326 248h221c23 0 42 19 42 42v52H284v-52c0-23 19-42 42-42Z" fill="#FFFFFF" opacity="0.9"/>
+    <rect x="331" y="284" width="175" height="28" rx="14" fill="#3B5998" opacity="0.35"/>
+  </g>
+</svg>

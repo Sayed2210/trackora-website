@@ -82,6 +82,12 @@ Full token definitions in `app/assets/css/main.css`.
 | `NUXT_PUBLIC_API_BASE_URL` | Trackora API base URL |
 | `NUXT_PUBLIC_ENABLE_MOCK_TRACKING` | Set to `true` for mock tracking data |
 
+## Contributing
+
+1. Create a feature branch from `main`
+2. Make your changes
+3. Open a pull request
+
 ## License
 
 Private — All rights reserved.

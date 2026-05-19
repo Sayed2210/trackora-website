@@ -1,15 +1,25 @@
 export const problems = [
-  { icon: '📦', titleAr: 'فقدان الشحنات', textAr: 'شحنات تضيع بدون تتبّع واضح وعمليات شفافة.', titleEn: 'Lost shipments', textEn: 'Shipments lost without clear tracking and transparent operations.' },
-  { icon: '💰', titleAr: 'تعقيد التحصيل', textAr: 'إدارة النقدي عند التوصيل صعبة ومعرّضة للأخطاء والخسائر.', titleEn: 'COD complexity', textEn: 'Cash-on-delivery collection is error-prone and risky.' },
-  { icon: '🚚', titleAr: 'ضعف إدارة السعاة', textAr: 'توزيع مهام غير فعّال وصعوبة في متابعة أداء السعاة.', titleEn: 'Poor courier management', textEn: 'Inefficient task distribution and difficulty monitoring courier performance.' },
-  { icon: '📊', titleAr: 'غياب الرؤية', textAr: 'لا تقارير واضحة عن الأداء أو حركة الشحنات.', titleEn: 'No visibility', textEn: 'No clear reports on performance or shipment flow.' },
+  { icon: '📊', titleAr: 'فوضى الجداول والملفات', textAr: 'إدارة الشحنات في Excel وورق متفرّق. بيانات ضائعة، متابعة معدومة، وأخطاء بشرية تكلفك المزيد.', titleEn: 'Spreadsheet chaos', textEn: 'Managing shipments in Excel and scattered paperwork. Lost data, zero tracking, and human errors that cost you more.' },
+  { icon: '🚚', titleAr: 'التوزيع اليدوي للشحنات', textAr: 'توزيع الطلبات على السعاة يدوياً يستنزف وقت فرق العمليات ويبطئ التوصيل.', titleEn: 'Manual dispatch', textEn: 'Assigning orders to couriers manually drains operations team time and slows delivery.' },
+  { icon: '💰', titleAr: 'تعقيد التحصيل النقدي', textAr: 'النقدي عند التوصيل يعني تحصيل، تسوية، تقارير، ومخاطر خسارة — كلّه يدوياً.', titleEn: 'COD complexity', textEn: 'Cash on delivery means collection, settlement, reports, and loss risk — all manual.' },
+  { icon: '🚨', titleAr: 'الطلبات المزيّفة والاحتيال', textAr: 'طلبات وهمية تستهلك وقت السعاة وتضيع موارد الشركة بدون كشف مبكر.', titleEn: 'Fake orders and fraud', textEn: 'Fraudulent orders waste courier time and company resources without early detection.' },
+  { icon: '📞', titleAr: 'ضغط مكالمات العملاء', textAr: 'كل شحنة بدون تتبّع تعني مكالمة من العميل. وفريقك يقضي الوقت في الرد بدل العمل.', titleEn: 'Customer call pressure', textEn: 'Every untracked shipment means a customer call. Your team spends time answering instead of operating.' },
 ]
 
 export const howItWorksSteps = [
-  { stepAr: '١', stepEn: '1', titleAr: 'ارفع شحناتك', textAr: 'ارفع الطلبات مفردة أو مجمّعاً عبر ملف Excel.', titleEn: 'Upload shipments', textEn: 'Upload orders individually or in bulk via Excel file.' },
-  { stepAr: '٢', stepEn: '2', titleAr: 'وزّع تلقائياً', textAr: 'تراكورا يوزّع الشحنات على أفضل ساعٍ لك.', titleEn: 'Auto-dispatch', textEn: 'Trackora assigns shipments to the best courier for you.' },
-  { stepAr: '٣', stepEn: '3', titleAr: 'تتبّع بالتفصيل', textAr: 'تابع كل شحنة من المستودع حتى باب العميل.', titleEn: 'Track in detail', textEn: 'Follow every shipment from warehouse to customer door.' },
-  { stepAr: '٤', stepEn: '4', titleAr: 'حصّل وأدر', textAr: 'حصّل النقدي وأدر أرصدتك وتقاريرك بسهولة.', titleEn: 'Collect & manage', textEn: 'Collect COD, manage balances, and generate reports effortlessly.' },
+  { stepAr: '١', stepEn: '1', titleAr: 'ارفع شحناتك', textAr: 'ارفع الطلبات مفردة أو مجمّعاً عبر ملف Excel مع تحقّق ذكي.', titleEn: 'Upload shipments', textEn: 'Upload orders individually or in bulk via Excel with smart validation.' },
+  { stepAr: '٢', stepEn: '2', titleAr: 'تحقّق من المخاطر', textAr: 'تراكورا يفحص كل طلب ويكشف الطلبات المشبوهة قبل الإرسال.', titleEn: 'Risk validation', textEn: 'Trackora screens every order and detects suspicious ones before dispatch.' },
+  { stepAr: '٣', stepEn: '3', titleAr: 'وزّع تلقائياً', textAr: 'توزيع ذكي على أفضل ساعٍ بناءً على الموقع والحمل والأولوية.', titleEn: 'Smart dispatch', textEn: 'Smart assignment to the best courier based on location, load, and priority.' },
+  { stepAr: '٤', stepEn: '4', titleAr: 'سلّم وتتبّع', textAr: 'الساعي يوصل الشحنة مع إثبات رقمي وتتبّع لحظي من المستودع للباب.', titleEn: 'Deliver & track', textEn: 'Courier delivers with digital proof and real-time tracking from warehouse to door.' },
+  { stepAr: '٥', stepEn: '5', titleAr: 'حصّل وأدر النقدي', textAr: 'حصّل النقدي عند التوصيل وأدر الأرصدة والتسويات والتقارير بسهولة.', titleEn: 'Collect & manage COD', textEn: 'Collect cash on delivery and manage balances, settlements, and reports effortlessly.' },
+  { stepAr: '٦', stepEn: '6', titleAr: 'تتبّع علنياً', textAr: 'عميلك يتتبّع شحنته لحظياً بدون ضغط على فريقك.', titleEn: 'Public tracking', textEn: 'Your customer tracks their shipment in real time without burdening your team.' },
+]
+
+export const metrics = [
+  { valueAr: 'أقل', valueEn: 'Less', labelAr: 'عمل يدوي', labelEn: 'manual work', icon: '⚡' },
+  { valueAr: 'أسرع', valueEn: 'Faster', labelAr: 'توزيع الشحنات', labelEn: 'shipment dispatch', icon: '🚀' },
+  { valueAr: 'أفضل', valueEn: 'Better', labelAr: 'سيطرة على النقدي', labelEn: 'COD control', icon: '💰' },
+  { valueAr: 'أوضح', valueEn: 'Clearer', labelAr: 'رؤية تشغيلية', labelEn: 'operational visibility', icon: '👁️' },
 ]
 
 export const faqItems = [

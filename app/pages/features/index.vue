@@ -9,7 +9,12 @@
         />
         <div class="features-index__grid">
           <NuxtLink v-for="feature in featureList" :key="feature.key" :to="localePath(feature.path)" class="features-index__card">
-            <span class="features-index__icon" aria-hidden="true">{{ feature.icon }}</span>
+            <AppIcon3D
+              :name="featureIconMap[feature.key] || 'analytics'"
+              :alt="locale === 'ar' ? `${feature.titleAr} ثلاثي الأبعاد` : `${feature.titleEn} 3D icon`"
+              size="lg"
+              class="features-index__icon"
+            />
             <h2 class="features-index__title">{{ locale === 'ar' ? feature.titleAr : feature.titleEn }}</h2>
             <p class="features-index__text">{{ locale === 'ar' ? feature.summaryAr : feature.summaryEn }}</p>
             <span class="features-index__link">{{ locale === 'ar' ? 'تعرّف أكثر ←' : 'Learn more →' }}</span>
@@ -36,6 +41,14 @@ import { features } from '~/data/features'
 const { locale } = useI18n()
 const localePath = useLocalePath()
 const featureList = features
+const featureIconMap: Record<string, string> = {
+  'smart-dispatch': 'smart-dispatch',
+  'courier-app': 'courier-app',
+  'merchant-portal': 'analytics',
+  'cod-wallet': 'cod-wallet',
+  'bulk-upload': 'bulk-upload',
+  'fraud-detection': 'fraud-detection',
+}
 
 useHead({
   title: locale.value === 'ar' ? 'المزايا | تراكورا' : 'Features | Trackora',
@@ -74,7 +87,7 @@ useHead({
 }
 
 .features-index__icon {
-  font-size: var(--text-4xl);
+  margin-inline: auto;
   margin-block-end: var(--spacing-4);
 }
 

@@ -42,7 +42,7 @@ defineEmits<{ 'update:modelValue': [value: string] }>()
 .app-textarea {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-1);
+  gap: var(--spacing-2);
 }
 
 .app-textarea__label {
@@ -52,30 +52,41 @@ defineEmits<{ 'update:modelValue': [value: string] }>()
 }
 
 .app-textarea__field {
-  padding: var(--spacing-3) var(--spacing-4);
+  padding: 0.85rem var(--spacing-4);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-xl);
   font-family: var(--font-sans);
   font-size: var(--text-base);
   color: var(--color-text);
   background-color: var(--color-surface);
   resize: vertical;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  line-height: 1.7;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.app-textarea__field::placeholder {
+  color: var(--color-text-secondary);
+  opacity: 0.6;
 }
 
 .app-textarea__field:focus-visible {
   outline: none;
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(27, 77, 92, 0.15);
+  box-shadow: 0 0 0 4px rgba(26, 59, 102, 0.12);
 }
 
 .app-textarea__field:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
+  background-color: var(--color-bg-alt);
 }
 
 .app-textarea--error .app-textarea__field {
-  border-color: var(--color-error);
+  border-color: var(--color-danger);
+}
+
+.app-textarea--error .app-textarea__field:focus-visible {
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.12);
 }
 
 .app-textarea__hint {
@@ -85,6 +96,7 @@ defineEmits<{ 'update:modelValue': [value: string] }>()
 
 .app-textarea__error {
   font-size: var(--text-sm);
-  color: var(--color-error);
+  color: var(--color-danger);
+  font-weight: 500;
 }
 </style>
