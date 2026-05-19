@@ -107,7 +107,7 @@ function handleSubmit() {
 .app-contact-form__form {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-6);
+  gap: var(--spacing-6) var(--spacing-5);
 }
 
 .app-contact-form__field--full {
@@ -116,7 +116,10 @@ function handleSubmit() {
 
 .app-contact-form__success {
   text-align: center;
+  border: 1px solid rgba(34, 197, 94, 0.16);
+  border-radius: var(--radius-3xl);
   padding: var(--spacing-12) var(--spacing-6);
+  background: rgba(34, 197, 94, 0.06);
 }
 
 .app-contact-form__success-icon {
@@ -141,13 +144,13 @@ function handleSubmit() {
 }
 
 .app-contact-form__error-banner {
-  background-color: var(--color-error);
-  color: white;
-  padding: var(--spacing-3) var(--spacing-4);
-  border-radius: var(--radius-md);
+  border: 1px solid rgba(239, 68, 68, 0.18);
+  background-color: rgba(239, 68, 68, 0.1);
+  color: var(--color-danger);
+  padding: var(--spacing-4) var(--spacing-5);
+  border-radius: var(--radius-2xl);
   margin-block-end: var(--spacing-6);
   font-weight: 600;
-  text-align: center;
 }
 
 .app-contact-form__field select.app-input__field {
@@ -157,6 +160,23 @@ function handleSubmit() {
   background-position: left var(--spacing-4) center;
   padding-inline-start: var(--spacing-4);
   padding-inline-end: var(--spacing-10);
+}
+
+.app-contact-form :deep(.app-input__label),
+.app-contact-form :deep(.app-textarea__label) {
+  font-weight: 800;
+}
+
+.app-contact-form :deep(.app-input__field),
+.app-contact-form :deep(.app-textarea__field) {
+  min-height: 3.35rem;
+  border-color: rgba(26, 59, 102, 0.1);
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+}
+
+.app-contact-form :deep(.app-textarea__field) {
+  min-height: 8.5rem;
 }
 
 [dir="ltr"] .app-contact-form__field select.app-input__field {
