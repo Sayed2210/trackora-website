@@ -1,0 +1,26 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="file" x1="279" y1="151" x2="728" y2="808" gradientUnits="userSpaceOnUse"><stop stop-color="#FFFFFF"/><stop offset="1" stop-color="#E7EDF5"/></linearGradient>
+    <linearGradient id="fold" x1="612" y1="153" x2="752" y2="305" gradientUnits="userSpaceOnUse"><stop stop-color="#F5F5F5"/><stop offset="1" stop-color="#C8D3E2"/></linearGradient>
+    <linearGradient id="blue" x1="315" y1="296" x2="723" y2="681" gradientUnits="userSpaceOnUse"><stop stop-color="#3B5998"/><stop offset="1" stop-color="#1A3B66"/></linearGradient>
+    <linearGradient id="coral" x1="421" y1="183" x2="605" y2="379" gradientUnits="userSpaceOnUse"><stop stop-color="#FF9A9A"/><stop offset="1" stop-color="#FF6B6B"/></linearGradient>
+    <filter id="shadow" x="159" y="94" width="724" height="836" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feDropShadow dx="0" dy="42" stdDeviation="42" flood-color="#1A3B66" flood-opacity="0.22"/></filter>
+    <filter id="smallShadow" x="0" y="0" width="1024" height="1024" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#1A3B66" flood-opacity="0.17"/></filter>
+  </defs>
+  <ellipse cx="512" cy="812" rx="236" ry="58" fill="#1A3B66" opacity="0.12"/>
+  <g filter="url(#shadow)">
+    <path d="M271 218c0-45 36-82 81-82h272l131 131v446c0 45-37 82-82 82H352c-45 0-81-37-81-82V218Z" fill="url(#file)"/>
+    <path d="M624 136v86c0 45 36 82 81 82h50L624 136Z" fill="url(#fold)"/>
+    <rect x="341" y="409" width="342" height="235" rx="34" fill="url(#blue)"/>
+    <path d="M341 477h342M341 550h342M455 409v235M569 409v235" stroke="#FFFFFF" stroke-width="14" opacity="0.32"/>
+    <rect x="371" y="438" width="53" height="25" rx="12" fill="#FFFFFF" opacity="0.78"/>
+    <rect x="485" y="511" width="53" height="25" rx="12" fill="#FFFFFF" opacity="0.78"/>
+    <rect x="599" y="584" width="53" height="25" rx="12" fill="#FFFFFF" opacity="0.78"/>
+    <path d="M333 222c12-29 35-44 68-44h165" stroke="#FFFFFF" stroke-width="34" stroke-linecap="round" opacity="0.7"/>
+  </g>
+  <g filter="url(#smallShadow)">
+    <circle cx="512" cy="286" r="104" fill="url(#coral)"/>
+    <path d="M512 342V236" stroke="#FFFFFF" stroke-width="34" stroke-linecap="round"/>
+    <path d="M459 282l53-53 53 53" stroke="#FFFFFF" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

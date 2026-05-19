@@ -14,20 +14,33 @@
     "loginAdmin": "Admin Login"
   },
   "hero": {
-    "title": "Track your shipments",
-    "accent": "smartly & precisely",
-    "subtitle": "Trackora is an intelligent platform for shipment management, delivery tracking, and COD collection — designed for shipping companies, e-commerce stores, and delivery sellers in the Arab region.",
-    "ctaPrimary": "Start Free",
-    "ctaSecondary": "Learn More"
+    "eyebrow": "Shipping Operating System",
+    "title": "From chaos",
+    "accent": "to full control",
+    "subtitle": "Trackora brings operations, dispatch, COD collection, and tracking into one experience — replacing spreadsheets, calls, and manual follow-ups.",
+    "ctaPrimary": "Request a Demo",
+    "ctaSecondary": "Track a Shipment"
   },
   "problems": {
-    "heading": "Challenges you face"
+    "eyebrow": "Before Trackora",
+    "heading": "Your shipments don't have to stay this broken"
+  },
+  "reveal": {
+    "eyebrow": "All-in-One System",
+    "heading": "Trackora: The Shipping OS",
+    "subtitle": "From upload to delivery and collection — everything in one place."
   },
   "features": {
-    "heading": "Core Features"
+    "eyebrow": "Everything you need",
+    "heading": "Ship without the chaos"
   },
   "howItWorks": {
-    "heading": "How Trackora works"
+    "eyebrow": "How it works",
+    "heading": "From upload to delivery in 6 steps"
+  },
+  "metrics": {
+    "eyebrow": "Impact",
+    "heading": "Your shipments run smarter"
   },
   "pricingPreview": {
     "heading": "Plans for every business size",
@@ -40,7 +53,7 @@
     "cta": "Request a demo"
   },
   "faq": {
-    "heading": "Frequently Asked Questions"
+    "heading": "Frequently asked questions"
   },
   "footer": {
     "brand": "Trackora",

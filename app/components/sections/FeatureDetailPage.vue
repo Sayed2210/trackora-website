@@ -3,7 +3,13 @@
     <section class="feature-hero section section--dark" aria-labelledby="feature-heading">
       <AppContainer narrow>
         <div class="feature-hero__inner">
-          <span class="feature-hero__icon" aria-hidden="true">{{ feature.icon }}</span>
+          <AppIcon3D
+            :name="featureIconMap[feature.key] || 'analytics'"
+            :alt="locale === 'ar' ? `${feature.titleAr} ثلاثي الأبعاد` : `${feature.titleEn} 3D icon`"
+            size="xl"
+            variant="hero"
+            class="feature-hero__icon"
+          />
           <h1 id="feature-heading" class="feature-hero__title">{{ locale === 'ar' ? feature.titleAr : feature.titleEn }}</h1>
           <p class="feature-hero__subtitle">{{ locale === 'ar' ? feature.summaryAr : feature.summaryEn }}</p>
           <div class="feature-hero__actions">
@@ -74,7 +80,12 @@
         />
         <div class="feature-related__grid">
           <AppCard v-for="related in relatedFeatures" :key="related.key" variant="bordered">
-            <div class="feature-related__icon" aria-hidden="true">{{ related.icon }}</div>
+            <AppIcon3D
+              :name="featureIconMap[related.key] || 'analytics'"
+              :alt="locale === 'ar' ? `${related.titleAr} ثلاثي الأبعاد` : `${related.titleEn} 3D icon`"
+              size="md"
+              class="feature-related__icon"
+            />
             <h3 class="feature-related__title">{{ locale === 'ar' ? related.titleAr : related.titleEn }}</h3>
             <p class="feature-related__text">{{ locale === 'ar' ? related.summaryAr : related.summaryEn }}</p>
             <NuxtLink :to="localePath(related.path)" class="feature-related__link">
@@ -116,6 +127,15 @@ const relatedFeatures = computed(() =>
     .filter(Boolean) as FeatureDetail[]
 )
 
+const featureIconMap: Record<string, string> = {
+  'smart-dispatch': 'smart-dispatch',
+  'courier-app': 'courier-app',
+  'merchant-portal': 'analytics',
+  'cod-wallet': 'cod-wallet',
+  'bulk-upload': 'bulk-upload',
+  'fraud-detection': 'fraud-detection',
+}
+
 useHead({
   title: locale.value === 'ar' ? feature.value.seoTitleAr : feature.value.seoTitleEn,
   meta: [
@@ -132,8 +152,7 @@ useHead({
 }
 
 .feature-hero__icon {
-  font-size: var(--text-5xl);
-  display: block;
+  display: inline-flex;
   margin-block-end: var(--spacing-6);
 }
 
@@ -244,9 +263,8 @@ useHead({
 }
 
 .feature-related__icon {
-  font-size: var(--text-4xl);
+  margin-inline: auto;
   margin-block-end: var(--spacing-4);
-  text-align: center;
 }
 
 .feature-related__title {

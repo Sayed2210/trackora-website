@@ -1,0 +1,20 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="top" x1="310" y1="207" x2="719" y2="434" gradientUnits="userSpaceOnUse"><stop stop-color="#FFFFFF"/><stop offset="1" stop-color="#DCE5F0"/></linearGradient>
+    <linearGradient id="left" x1="226" y1="369" x2="502" y2="781" gradientUnits="userSpaceOnUse"><stop stop-color="#3B5998"/><stop offset="1" stop-color="#1A3B66"/></linearGradient>
+    <linearGradient id="right" x1="520" y1="357" x2="800" y2="775" gradientUnits="userSpaceOnUse"><stop stop-color="#274A78"/><stop offset="1" stop-color="#102F52"/></linearGradient>
+    <linearGradient id="coral" x1="463" y1="257" x2="594" y2="528" gradientUnits="userSpaceOnUse"><stop stop-color="#FF9A9A"/><stop offset="1" stop-color="#FF6B6B"/></linearGradient>
+    <filter id="shadow" x="130" y="153" width="766" height="740" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feDropShadow dx="0" dy="42" stdDeviation="42" flood-color="#1A3B66" flood-opacity="0.24"/></filter>
+  </defs>
+  <ellipse cx="512" cy="808" rx="260" ry="62" fill="#1A3B66" opacity="0.12"/>
+  <g filter="url(#shadow)">
+    <path d="M512 181l294 157-294 157-294-157 294-157Z" fill="url(#top)"/>
+    <path d="M218 338l294 157v337L218 674V338Z" fill="url(#left)"/>
+    <path d="M806 338L512 495v337l294-158V338Z" fill="url(#right)"/>
+    <path d="M409 236l292 157-85 45-295-157 88-45Z" fill="#FFFFFF" opacity="0.58"/>
+    <path d="M455 464l116-62 100 53v153l-99 53-117-63V464Z" fill="url(#coral)"/>
+    <path d="M572 402v259" stroke="#FFFFFF" stroke-width="20" opacity="0.22"/>
+    <path d="M279 408l174 93" stroke="#FFFFFF" stroke-width="24" stroke-linecap="round" opacity="0.24"/>
+    <path d="M592 772l143-77" stroke="#FFFFFF" stroke-width="24" stroke-linecap="round" opacity="0.2"/>
+  </g>
+</svg>
