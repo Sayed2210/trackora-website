@@ -1,7 +1,7 @@
 <template>
   <header :class="['navbar', { 'navbar--scrolled': isScrolled }]" role="banner">
-    <nav class="app-container navbar__inner" aria-label="التنقل الرئيسي">
-      <NuxtLink :to="localePath('/')" class="navbar__logo" aria-label="تراكورا - الصفحة الرئيسية">
+    <nav class="app-container navbar__inner" :aria-label="locale === 'ar' ? 'التنقل الرئيسي' : 'Main navigation'">
+      <NuxtLink :to="localePath('/')" class="navbar__logo" :aria-label="locale === 'ar' ? 'تراكورا - الصفحة الرئيسية' : 'Trackora - Home'">
         <span class="navbar__logo-img">
           <img src="/logos/trackora_logo_full_white.png" alt="تراكورا" />
         </span>
@@ -13,7 +13,7 @@
             {{ t(`nav.${item.key}`) }}
           </NuxtLink>
           <div v-else class="navbar__dropdown">
-            <button class="navbar__link navbar__dropdown-toggle" @click="toggleDropdown(item.key)">
+            <button class="navbar__link navbar__dropdown-toggle" type="button" aria-haspopup="true" :aria-expanded="openDropdown === item.key" @click="toggleDropdown(item.key)">
               {{ t(`nav.${item.key}`) }}
               <span class="navbar__chevron" aria-hidden="true">▾</span>
             </button>
@@ -46,7 +46,7 @@
 <script setup lang="ts">
 import { navigationItems } from '~/data/navigation'
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const localePath = useLocalePath()
 const mobileOpen = ref(false)
 const openDropdown = ref<string | null>(null)

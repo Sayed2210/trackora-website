@@ -7,18 +7,22 @@
       :value="modelValue"
       :placeholder="placeholder"
       :disabled="disabled"
+      :aria-invalid="!!error"
+      :aria-describedby="describedBy"
       class="app-input__field"
       @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
     />
-    <p v-if="hint && !error" class="app-input__hint">{{ hint }}</p>
-    <p v-if="error" class="app-input__error">{{ error }}</p>
+    <p v-if="hint && !error" :id="hintId" class="app-input__hint">{{ hint }}</p>
+    <p v-if="error" :id="errorId" class="app-input__error">{{ error }}</p>
   </div>
 </template>
 
 <script setup lang="ts">
 const inputId = useId()
+const hintId = `${inputId}-hint`
+const errorId = `${inputId}-error`
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   label?: string
   type?: string
   modelValue?: string
@@ -36,6 +40,12 @@ withDefaults(defineProps<{
 })
 
 defineEmits<{ 'update:modelValue': [value: string] }>()
+
+const describedBy = computed(() => {
+  if (props.error) return errorId
+  if (props.hint) return hintId
+  return undefined
+})
 </script>
 
 <style scoped>

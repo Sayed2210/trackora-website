@@ -12,8 +12,8 @@
               {{ locale === 'ar' ? 'تراكورا يجمع الإرسال، السعاة، التجار، التحصيل، الرفع المجمّع، وكشف الاحتيال في تجربة واحدة هادئة وواضحة.' : 'Trackora brings dispatch, couriers, merchants, COD, bulk upload, and fraud detection into one calm, clear operating experience.' }}
             </p>
             <div class="features-hero__actions">
-              <AppButton to="/request-demo" size="lg">{{ locale === 'ar' ? 'اطلب عرضاً توضيحياً' : 'Request a demo' }}</AppButton>
-              <AppButton to="/features/smart-dispatch" variant="secondary" size="lg">{{ locale === 'ar' ? 'ابدأ بالإرسال الذكي' : 'Start with Smart Dispatch' }}</AppButton>
+              <AppButton :to="localePath('/request-demo')" size="lg">{{ locale === 'ar' ? 'اطلب عرضاً توضيحياً' : 'Request a demo' }}</AppButton>
+              <AppButton :to="localePath('/features/smart-dispatch')" variant="secondary" size="lg">{{ locale === 'ar' ? 'ابدأ بالإرسال الذكي' : 'Start with Smart Dispatch' }}</AppButton>
             </div>
           </div>
 
@@ -78,7 +78,7 @@
           <p class="features-cta__eyebrow">{{ locale === 'ar' ? 'الخطوة التالية' : 'Next step' }}</p>
           <h2 id="features-cta-heading" class="features-cta__title">{{ locale === 'ar' ? 'شاهد كيف تتصل هذه القدرات داخل عملياتك.' : 'See how these capabilities connect inside your operation.' }}</h2>
           <p class="features-cta__text">{{ locale === 'ar' ? 'احصل على جولة مخصّصة توضح أين يقل العمل اليدوي، وأين تتحسن الرؤية، وكيف تتسارع دورة الشحن.' : 'Get a tailored walkthrough showing where manual work drops, visibility improves, and the delivery cycle moves faster.' }}</p>
-          <AppButton to="/request-demo" variant="primary" size="lg">{{ locale === 'ar' ? 'اطلب عرضاً توضيحياً' : 'Request a demo' }}</AppButton>
+          <AppButton :to="localePath('/request-demo')" variant="primary" size="lg">{{ locale === 'ar' ? 'اطلب عرضاً توضيحياً' : 'Request a demo' }}</AppButton>
         </div>
       </AppContainer>
     </section>

@@ -5,7 +5,7 @@
         <h2 id="demo-cta-heading" class="demo-cta__title reveal-up">{{ t('demoCta.heading') }}</h2>
         <p class="demo-cta__text reveal-up">{{ t('demoCta.text') }}</p>
         <div class="demo-cta__action reveal-up">
-          <AppButton to="/request-demo" variant="primary" size="lg" block>{{ t('demoCta.cta') }}</AppButton>
+          <AppButton :to="localePath('/request-demo')" variant="primary" size="lg" block>{{ t('demoCta.cta') }}</AppButton>
         </div>
       </div>
     </AppContainer>
@@ -14,6 +14,7 @@
 
 <script setup lang="ts">
 const { t } = useI18n()
+const localePath = useLocalePath()
 useScrollReveal()
 </script>
 

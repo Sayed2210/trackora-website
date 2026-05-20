@@ -10,8 +10,8 @@
           </h1>
           <p class="hero__subtitle reveal-up">{{ t('hero.subtitle') }}</p>
           <div class="hero__actions reveal-up">
-            <AppButton to="/request-demo" variant="primary" size="lg">{{ t('hero.ctaPrimary') }}</AppButton>
-            <AppButton to="/track" variant="secondary" size="lg">{{ t('hero.ctaSecondary') }}</AppButton>
+            <AppButton :to="localePath('/request-demo')" variant="primary" size="lg">{{ t('hero.ctaPrimary') }}</AppButton>
+            <AppButton :to="localePath('/track')" variant="secondary" size="lg">{{ t('hero.ctaSecondary') }}</AppButton>
           </div>
         </div>
         <div class="hero__visual reveal-scale" aria-hidden="true">
@@ -82,6 +82,7 @@
 
 <script setup lang="ts">
 const { t, locale } = useI18n()
+const localePath = useLocalePath()
 useScrollReveal()
 </script>
 

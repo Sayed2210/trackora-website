@@ -79,7 +79,13 @@ const { data: article } = await useAsyncData(
 
 if (article.value) {
   const seoTitle = (article.value.seoTitle as string) || (article.value.title as string) || 'Blog'
-  const seoDescription = (article.value.seoDescription as string) || (article.value.excerpt as string) || ''
+  const seoDescription =
+    (article.value.seoDescription as string)
+    || (article.value.description as string)
+    || (article.value.excerpt as string)
+    || (locale.value === 'ar'
+      ? 'مقال من مدوّنة تراكورا حول إدارة الشحن والتوصيل والتحصيل.'
+      : 'A Trackora blog article about shipment management, delivery, and COD collection.')
   setSeo(seoTitle, seoDescription)
 } else {
   setSeo(

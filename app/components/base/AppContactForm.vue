@@ -29,12 +29,14 @@
               :id="field.key"
               v-model="formValues[field.key]"
               :disabled="loadingState"
+              :aria-invalid="!!errors[field.key]"
+              :aria-describedby="errors[field.key] ? fieldErrorId(field.key) : undefined"
               :class="['app-input__field', { 'app-input__field--error': errors[field.key] }]"
             >
               <option value="" disabled>{{ locale === 'ar' ? field.placeholderAr : field.placeholderEn }}</option>
               <option v-for="opt in field.options" :key="opt.value" :value="opt.value">{{ locale === 'ar' ? opt.labelAr : opt.labelEn }}</option>
             </select>
-            <p v-if="errors[field.key]" class="app-input__error">{{ errors[field.key] }}</p>
+            <p v-if="errors[field.key]" :id="fieldErrorId(field.key)" class="app-input__error">{{ errors[field.key] }}</p>
           </div>
           <AppTextarea
             v-else-if="field.type === 'textarea'"
@@ -100,6 +102,10 @@ function validate() {
 function handleSubmit() {
   if (!validate()) return
   emit('submit', { ...formValues })
+}
+
+function fieldErrorId(key: string) {
+  return `${key}-error`
 }
 </script>
 

@@ -1,6 +1,12 @@
 <template>
   <div class="mobile-menu">
-    <button class="mobile-menu__toggle" :aria-label="open ? 'إغلاق القائمة' : 'فتح القائمة'" @click="$emit('toggle')">
+    <button
+      class="mobile-menu__toggle"
+      :aria-label="open ? (locale === 'ar' ? 'إغلاق القائمة' : 'Close menu') : (locale === 'ar' ? 'فتح القائمة' : 'Open menu')"
+      :aria-expanded="open"
+      aria-controls="mobile-menu-panel"
+      @click="$emit('toggle')"
+    >
       <span v-if="!open" class="mobile-menu__icon" aria-hidden="true">☰</span>
       <span v-else class="mobile-menu__icon" aria-hidden="true">✕</span>
     </button>
@@ -8,7 +14,7 @@
     <Teleport to="body">
       <Transition name="mobile-menu">
         <div v-if="open" class="mobile-menu__overlay" @click="$emit('close')">
-          <nav class="mobile-menu__panel" role="navigation" aria-label="القائمة الجانبية" @click.stop>
+          <nav id="mobile-menu-panel" class="mobile-menu__panel" role="navigation" :aria-label="locale === 'ar' ? 'القائمة الجانبية' : 'Mobile navigation'" @click.stop>
             <ul class="mobile-menu__list">
               <li v-for="item in navItems" :key="item.key">
                 <NuxtLink v-if="!item.children" :to="localePath(item.pathAr)" class="mobile-menu__link" @click="$emit('close')">
@@ -43,7 +49,7 @@ import { navigationItems } from '~/data/navigation'
 defineProps<{ open: boolean }>()
 defineEmits<{ toggle: [], close: [] }>()
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const localePath = useLocalePath()
 const navItems = navigationItems
 </script>
@@ -75,6 +81,10 @@ const navItems = navigationItems
   z-index: 100;
   display: flex;
   justify-content: flex-end;
+}
+
+[dir="ltr"] .mobile-menu__overlay {
+  justify-content: flex-start;
 }
 
 .mobile-menu__panel {

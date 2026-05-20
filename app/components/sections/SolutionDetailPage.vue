@@ -8,8 +8,8 @@
             <h1 id="solution-heading" class="solution-hero__title">{{ activeCopy.title }}</h1>
             <p class="solution-hero__subtitle">{{ activeCopy.summary }}</p>
             <div class="solution-hero__actions">
-              <AppButton to="/request-demo" variant="primary" size="lg">{{ t('nav.requestDemo') }}</AppButton>
-              <AppButton to="/features" variant="secondary" size="lg">{{ t('common.learnMore') }}</AppButton>
+              <AppButton :to="localePath('/request-demo')" variant="primary" size="lg">{{ t('nav.requestDemo') }}</AppButton>
+              <AppButton :to="localePath('/features')" variant="secondary" size="lg">{{ t('common.learnMore') }}</AppButton>
             </div>
           </div>
 
@@ -185,7 +185,7 @@
           <p class="solution-cta__eyebrow">{{ locale === 'ar' ? 'الخطوة التالية' : 'Next step' }}</p>
           <h2 id="solution-cta-heading" class="solution-cta__title">{{ audienceStory.ctaTitle }}</h2>
           <p class="solution-cta__text">{{ audienceStory.ctaLead }}</p>
-          <AppButton to="/request-demo" variant="primary" size="lg">{{ t('nav.requestDemo') }}</AppButton>
+          <AppButton :to="localePath('/request-demo')" variant="primary" size="lg">{{ t('nav.requestDemo') }}</AppButton>
         </div>
       </AppContainer>
     </section>
