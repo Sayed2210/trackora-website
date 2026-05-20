@@ -8,8 +8,8 @@
             <h1 id="feature-heading" class="feature-hero__title">{{ locale === 'ar' ? feature.titleAr : feature.titleEn }}</h1>
             <p class="feature-hero__subtitle">{{ locale === 'ar' ? feature.summaryAr : feature.summaryEn }}</p>
             <div class="feature-hero__actions">
-              <AppButton to="/request-demo" variant="primary" size="lg">{{ t('nav.requestDemo') }}</AppButton>
-              <AppButton to="/features" variant="secondary" size="lg">{{ t('common.viewAll') }}</AppButton>
+              <AppButton :to="localePath('/request-demo')" variant="primary" size="lg">{{ t('nav.requestDemo') }}</AppButton>
+              <AppButton :to="localePath('/features')" variant="secondary" size="lg">{{ t('common.viewAll') }}</AppButton>
             </div>
           </div>
 
@@ -149,7 +149,7 @@
           <p class="feature-cta__eyebrow">{{ locale === 'ar' ? 'جاهز للتجربة؟' : 'Ready to see it?' }}</p>
           <h2 id="feature-cta-heading" class="feature-cta__title">{{ locale === 'ar' ? `شاهد ${feature.titleAr} داخل عملياتك.` : `See ${feature.titleEn} inside your operation.` }}</h2>
           <p class="feature-cta__text">{{ locale === 'ar' ? 'سنريك كيف تتصل هذه الميزة ببقية منظومة تراكورا لتقليل العمل اليدوي وتحسين الرؤية.' : 'We will show how this capability connects with the rest of Trackora to reduce manual work and improve visibility.' }}</p>
-          <AppButton to="/request-demo" variant="primary" size="lg">{{ t('nav.requestDemo') }}</AppButton>
+          <AppButton :to="localePath('/request-demo')" variant="primary" size="lg">{{ t('nav.requestDemo') }}</AppButton>
         </div>
       </AppContainer>
     </section>
