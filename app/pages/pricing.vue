@@ -33,30 +33,17 @@
 
     <section class="pricing-plans section" aria-label="Pricing plans">
       <AppContainer>
-        <div class="pricing__grid">
-          <div v-for="plan in pricingPlans" :key="plan.key" :class="['pricing__card', 'reveal-stagger', { 'pricing__card--highlighted': plan.highlighted }]">
-            <div v-if="plan.highlighted" class="pricing__badge">
-              {{ locale === 'ar' ? 'الأكثر شعبية' : 'Most popular' }}
-            </div>
-            <div class="pricing__plan-head">
-              <AppIcon3D :name="planIconMap[plan.key] || 'shipment'" :alt="locale === 'ar' ? `${plan.nameAr} ثلاثي الأبعاد` : `${plan.nameEn} plan 3D icon`" size="md" />
-              <h3 class="pricing__plan-name">{{ locale === 'ar' ? plan.nameAr : plan.nameEn }}</h3>
-            </div>
-            <p class="pricing__plan-price">{{ locale === 'ar' ? plan.priceAr : plan.priceEn }}</p>
-            <p class="pricing__plan-desc">{{ locale === 'ar' ? plan.descriptionAr : plan.descriptionEn }}</p>
-            <ul class="pricing__features">
-              <li v-for="(feat, i) in plan.featuresAr" :key="i" class="pricing__feature">
-                <span class="pricing__check" aria-hidden="true">&#10003;</span>
-                <span>{{ locale === 'ar' ? feat : plan.featuresEn[i] }}</span>
-              </li>
-            </ul>
-            <div class="pricing__cta">
-              <AppButton :to="plan.key === 'enterprise' ? localePath('/contact') : localePath('/request-demo')" :variant="plan.highlighted ? 'primary' : 'outline'" block>
-                {{ locale === 'ar' ? plan.ctaAr : plan.ctaEn }}
-              </AppButton>
-            </div>
+        <PricingLoadingState v-if="plansService.loading.value" />
+        <PricingErrorState v-else-if="plansService.error.value" @retry="plansService.fetchPlans" />
+        <PricingEmptyState v-else-if="plansService.isEmpty.value" />
+        <template v-else-if="plansService.data.value && plansService.data.value.length > 0">
+          <div v-if="plansService.usedFallback.value" class="pricing__dev-notice">
+            {{ locale === 'ar' ? '⚠ البيانات المعروضة بيانات تجريبية للتطوير فقط' : '⚠ Displayed plans are development fallback data only' }}
           </div>
-        </div>
+          <div class="pricing__grid">
+            <PricingCard v-for="plan in plansService.data.value" :key="plan.id" :plan="plan" />
+          </div>
+        </template>
       </AppContainer>
     </section>
 
@@ -85,18 +72,16 @@
 </template>
 
 <script setup lang="ts">
-import { pricingPlans } from '~/data/pricing'
 import { pricingFaqItems } from '~/data/forms'
+import PricingCard from '~/components/pricing/PricingCard.vue'
+import PricingLoadingState from '~/components/pricing/PricingLoadingState.vue'
+import PricingEmptyState from '~/components/pricing/PricingEmptyState.vue'
+import PricingErrorState from '~/components/pricing/PricingErrorState.vue'
 
 const { t, locale } = useI18n()
 const localePath = useLocalePath()
 const { setSeo } = useLocaleSeo()
-
-const planIconMap: Record<string, string> = {
-  starter: 'shipment',
-  professional: 'smart-dispatch',
-  enterprise: 'analytics',
-}
+const plansService = usePublicPlansService()
 
 useScrollReveal()
 
@@ -106,6 +91,8 @@ setSeo(
     ? 'اختر الخطة المناسبة لعملك — من المبتدئة المجانية إلى المؤسسية المخصصة. ترقية وتخفيض في أي وقت.'
     : 'Choose the plan that fits your business — from free Starter to custom Enterprise. Upgrade or downgrade anytime.'
 )
+
+await plansService.fetchPlans()
 </script>
 
 <style scoped>
@@ -209,125 +196,23 @@ setSeo(
   padding-block-start: 0;
 }
 
+.pricing__dev-notice {
+  text-align: center;
+  padding: var(--spacing-3) var(--spacing-6);
+  margin-block-end: var(--spacing-6);
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: var(--radius-xl);
+  color: var(--color-warning);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
 .pricing__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--spacing-8);
   align-items: stretch;
-}
-
-.pricing__card {
-  position: relative;
-  height: 100%;
-  background:
-    radial-gradient(circle at 18% 0%, rgba(59, 89, 152, 0.09), transparent 34%),
-    var(--glass-bg);
-  border: 1px solid rgba(26, 59, 102, 0.08);
-  border-radius: var(--radius-4xl);
-  padding: var(--spacing-12) var(--spacing-8) var(--spacing-8);
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-4);
-  box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(18px);
-  transition: transform 0.3s var(--reveal-easing), box-shadow 0.3s ease, border-color 0.3s ease;
-}
-
-.pricing__card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-  border-color: rgba(26, 59, 102, 0.12);
-}
-
-.pricing__card--highlighted {
-  border-color: var(--color-primary);
-  box-shadow: 0 24px 70px rgba(26, 59, 102, 0.18), 0 0 0 1px rgba(26, 59, 102, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  background:
-    radial-gradient(circle at 20% 0%, rgba(255, 107, 107, 0.12), transparent 34%),
-    linear-gradient(180deg, rgba(26, 59, 102, 0.05), rgba(255, 255, 255, 0.9));
-  transform: translateY(-0.5rem);
-}
-
-.pricing__card--highlighted:hover {
-  box-shadow: 0 16px 60px rgba(26, 59, 102, 0.25), 0 0 0 1px var(--color-primary);
-  border-color: var(--color-primary);
-}
-
-.pricing__plan-head {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-4);
-}
-
-.pricing__badge {
-  position: absolute;
-  top: calc(-1 * var(--spacing-3));
-  inset-inline-start: var(--spacing-8);
-  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
-  color: var(--color-text-light);
-  font-family: var(--font-heading);
-  font-size: var(--text-xs);
-  font-weight: 700;
-  padding: var(--spacing-1) var(--spacing-4);
-  border-radius: var(--radius-full);
-  letter-spacing: 0.04em;
-  box-shadow: 0 4px 16px rgba(26, 59, 102, 0.3);
-}
-
-.pricing__plan-name {
-  font-family: var(--font-heading);
-  font-size: var(--text-xl);
-  font-weight: 800;
-  color: var(--color-text);
-  margin: 0;
-}
-
-.pricing__plan-price {
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 900;
-  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-block-start: var(--spacing-4);
-}
-
-.pricing__plan-desc {
-  color: var(--color-text-secondary);
-  font-size: var(--text-base);
-  line-height: 1.7;
-  min-height: 3.4em;
-}
-
-.pricing__features {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-3);
-  flex-grow: 1;
-  margin-block: var(--spacing-2);
-}
-
-.pricing__feature {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--spacing-2);
-  font-size: var(--text-sm);
-  line-height: 1.6;
-  color: var(--color-text-secondary);
-  padding: var(--spacing-2) 0;
-  border-block-end: 1px solid rgba(26, 59, 102, 0.06);
-}
-
-.pricing__check {
-  color: var(--color-success);
-  font-weight: 700;
-  flex-shrink: 0;
-  margin-block-start: 0.1em;
-}
-
-.pricing__cta {
-  margin-block-start: auto;
-  padding-block-start: var(--spacing-2);
 }
 
 .pricing-faq__list {
@@ -393,10 +278,6 @@ setSeo(
     max-width: 28rem;
     margin-inline: auto;
   }
-
-  .pricing__card--highlighted {
-    transform: none;
-  }
 }
 
 @media (max-width: 36rem) {
@@ -418,16 +299,9 @@ setSeo(
     gap: var(--spacing-4);
   }
 
-  .pricing__card,
   .pricing-faq__item,
   .pricing-cta__inner {
     padding: var(--spacing-6);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .pricing__card:hover {
-    transform: none;
   }
 }
 </style>

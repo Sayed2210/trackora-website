@@ -133,7 +133,14 @@
     "heading": "Trackora Plans & Pricing",
     "subtitle": "Choose the plan that fits your business. Upgrade or downgrade at any time.",
     "cta": "Request a demo",
-    "faqHeading": "Pricing FAQ"
+    "faqHeading": "Pricing FAQ",
+    "loading": "Loading plans...",
+    "emptyTitle": "No plans available",
+    "emptyText": "We could not load pricing plans right now. Please try again later.",
+    "errorTitle": "Could not load plans",
+    "errorText": "An error occurred while fetching pricing data. Please try again later.",
+    "perMonth": "/ mo",
+    "perYear": "/ yr"
   },
   "blog": {
     "heading": "Blog",
