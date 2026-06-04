@@ -100,8 +100,8 @@ await plansService.fetchPlans()
   position: relative;
   overflow: hidden;
   background:
-    radial-gradient(circle at 14% 12%, rgba(59, 89, 152, 0.18), transparent 32%),
-    radial-gradient(circle at 86% 16%, rgba(255, 107, 107, 0.1), transparent 28%),
+    radial-gradient(circle at 14% 12%, rgba(45, 110, 125, 0.18), transparent 32%),
+    radial-gradient(circle at 86% 16%, rgba(232, 168, 56, 0.1), transparent 28%),
     linear-gradient(180deg, rgba(245, 245, 245, 0.88), rgba(255, 255, 255, 0));
 }
 
@@ -119,7 +119,7 @@ await plansService.fetchPlans()
 .pricing-hero__eyebrow {
   display: inline-flex;
   margin-block-end: var(--spacing-4);
-  border: 1px solid rgba(26, 59, 102, 0.1);
+  border: 1px solid rgba(27, 77, 92, 0.1);
   border-radius: var(--radius-full);
   padding: var(--spacing-2) var(--spacing-4);
   background: rgba(255, 255, 255, 0.72);
@@ -180,7 +180,7 @@ await plansService.fetchPlans()
   height: 12rem;
   inset-block-end: -4rem;
   inset-inline-start: -3rem;
-  background: rgba(255, 107, 107, 0.16);
+  background: rgba(232, 168, 56, 0.16);
 }
 
 .pricing-hero__icon-stack {
@@ -222,7 +222,7 @@ await plansService.fetchPlans()
 }
 
 .pricing-faq__item {
-  border: 1px solid rgba(26, 59, 102, 0.08);
+  border: 1px solid rgba(27, 77, 92, 0.08);
   border-radius: var(--radius-3xl);
   padding: var(--spacing-8);
   background: var(--color-surface);

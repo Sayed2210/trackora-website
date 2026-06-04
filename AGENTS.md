@@ -55,3 +55,8 @@ at specs/001-trackora-marketing-website/plan.md
 - /track (not yet implemented)
 - /track/[trackingNumber] (not yet implemented)
 <!-- SPECKIT END -->
+
+## Design Context
+- Read `PRODUCT.md` for Trackora strategy before design work: default register is `brand`, primary audience is logistics operators, voice is confident, clear, and operational.
+- Read `DESIGN.md` for the current visual system: the extracted live tokens use teal and gold from `app/assets/css/main.css`, with the creative north star "Shipment Ledger".
+- Preserve Arabic-first RTL behavior, WCAG AA contrast/focus/reduced-motion requirements, and avoid generic SaaS patterns called out in `PRODUCT.md` and `DESIGN.md`.

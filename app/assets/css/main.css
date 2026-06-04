@@ -1,31 +1,32 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap');
 
 :root {
-  --color-primary: #1A3B66;
-  --color-primary-light: #3B5998;
-  --color-primary-dark: #102844;
-  --color-accent: #FF6B6B;
-  --color-accent-hover: #E95F5F;
-  --color-accent-light: #FFF0F0;
+  --color-primary: #1B4D5C;
+  --color-primary-light: #2D6E7D;
+  --color-primary-dark: #0F3340;
+  --color-accent: #E8A838;
+  --color-accent-hover: #D99A24;
+  --color-accent-light: #FFF7E3;
+  --color-accent-contrast: #4C3508;
   --color-bg: #FFFFFF;
-  --color-bg-alt: #F5F5F5;
-  --color-bg-dark: #102844;
+  --color-bg-alt: #F7F9FA;
+  --color-bg-dark: #0F3340;
   --color-surface: #FFFFFF;
   --color-text: #333333;
   --color-text-secondary: #666666;
   --color-text-light: #FFFFFF;
   --color-text-on-primary: #FFFFFF;
-  --color-text-on-accent: #FFFFFF;
+  --color-text-on-accent: #0F3340;
   --color-border: #E0E0E0;
-  --color-border-light: #F5F5F5;
+  --color-border-light: #F7F9FA;
   --color-success: #22C55E;
   --color-warning: #F59E0B;
   --color-danger: #EF4444;
   --color-info: #3B82F6;
   --color-error: var(--color-danger);
 
-  --gradient-hero: radial-gradient(ellipse 80% 60% at 20% 30%, rgba(59, 89, 152, 0.35), transparent 60%), radial-gradient(ellipse 50% 40% at 80% 15%, rgba(255, 107, 107, 0.15), transparent 50%), linear-gradient(160deg, #0D2240 0%, var(--color-primary) 50%, #1A4A80 100%);
-  --gradient-soft: linear-gradient(180deg, rgba(59, 89, 152, 0.06) 0%, rgba(255, 255, 255, 0) 100%);
+  --gradient-hero: radial-gradient(ellipse 80% 60% at 20% 30%, rgba(45, 110, 125, 0.35), transparent 60%), radial-gradient(ellipse 50% 40% at 80% 15%, rgba(232, 168, 56, 0.15), transparent 50%), linear-gradient(160deg, #0B2933 0%, var(--color-primary) 50%, #246475 100%);
+  --gradient-soft: linear-gradient(180deg, rgba(45, 110, 125, 0.06) 0%, rgba(255, 255, 255, 0) 100%);
   --glass-bg: rgba(255, 255, 255, 0.82);
   --glass-bg-dark: rgba(255, 255, 255, 0.1);
   --glass-border: rgba(255, 255, 255, 0.18);
@@ -75,11 +76,11 @@
   --radius-4xl: 2.5rem;
   --radius-full: 9999px;
 
-  --shadow-sm: 0 1px 2px rgba(26, 59, 102, 0.06);
-  --shadow-md: 0 8px 24px rgba(26, 59, 102, 0.08);
-  --shadow-lg: 0 20px 60px rgba(26, 59, 102, 0.14);
-  --shadow-glow: 0 32px 90px rgba(59, 89, 152, 0.2);
-  --shadow-card: 0 4px 16px rgba(26, 59, 102, 0.06), 0 1px 3px rgba(26, 59, 102, 0.04);
+  --shadow-sm: 0 1px 2px rgba(27, 77, 92, 0.06);
+  --shadow-md: 0 8px 24px rgba(27, 77, 92, 0.08);
+  --shadow-lg: 0 20px 60px rgba(27, 77, 92, 0.14);
+  --shadow-glow: 0 32px 90px rgba(45, 110, 125, 0.2);
+  --shadow-card: 0 4px 16px rgba(27, 77, 92, 0.06), 0 1px 3px rgba(27, 77, 92, 0.04);
 
   --container-max: 76rem;
   --container-wide: 88rem;
@@ -204,11 +205,11 @@ h4 { font-size: var(--text-xl); }
 .btn--primary {
   background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
   color: var(--color-text-on-primary);
-  box-shadow: 0 8px 24px rgba(26, 59, 102, 0.3);
+  box-shadow: 0 8px 24px rgba(27, 77, 92, 0.3);
 }
 
 .btn--primary:hover {
-  box-shadow: 0 12px 36px rgba(26, 59, 102, 0.4);
+  box-shadow: 0 12px 36px rgba(27, 77, 92, 0.4);
   transform: translateY(-1px);
 }
 

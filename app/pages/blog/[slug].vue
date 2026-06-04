@@ -124,8 +124,8 @@ useScrollReveal()
 .blog-detail-hero {
   overflow: hidden;
   background:
-    radial-gradient(circle at 14% 12%, rgba(59, 89, 152, 0.16), transparent 32%),
-    radial-gradient(circle at 86% 12%, rgba(255, 107, 107, 0.09), transparent 30%),
+    radial-gradient(circle at 14% 12%, rgba(45, 110, 125, 0.16), transparent 32%),
+    radial-gradient(circle at 86% 12%, rgba(232, 168, 56, 0.09), transparent 30%),
     linear-gradient(180deg, rgba(245, 245, 245, 0.9), rgba(255, 255, 255, 0));
 }
 
@@ -159,7 +159,7 @@ useScrollReveal()
   align-items: center;
   gap: var(--spacing-2);
   margin-block-end: var(--spacing-8);
-  border: 1px solid rgba(26, 59, 102, 0.1);
+  border: 1px solid rgba(27, 77, 92, 0.1);
   border-radius: var(--radius-full);
   padding: var(--spacing-2) var(--spacing-4);
   background: rgba(255, 255, 255, 0.76);
@@ -287,7 +287,7 @@ html[lang='ar'] .blog-detail__title {
   border-inline-start: 4px solid var(--color-primary);
   border-radius: var(--radius-2xl);
   padding: var(--spacing-6);
-  background: rgba(59, 89, 152, 0.07);
+  background: rgba(45, 110, 125, 0.07);
   color: var(--color-text);
   font-weight: 700;
 }
@@ -296,7 +296,7 @@ html[lang='ar'] .blog-detail__title {
   border: 0;
   height: 1px;
   margin-block: var(--spacing-12);
-  background: rgba(26, 59, 102, 0.1);
+  background: rgba(27, 77, 92, 0.1);
 }
 
 .blog-detail__cta {
@@ -329,7 +329,7 @@ html[lang='ar'] .blog-detail__title {
   justify-items: center;
   max-width: 42rem;
   margin-inline: auto;
-  border: 1px solid rgba(26, 59, 102, 0.08);
+  border: 1px solid rgba(27, 77, 92, 0.08);
   border-radius: var(--radius-4xl);
   text-align: center;
   padding: var(--spacing-12) var(--spacing-6);

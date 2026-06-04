@@ -75,9 +75,9 @@ function formatPrice(amount: number, currency: string): string {
   position: relative;
   height: 100%;
   background:
-    radial-gradient(circle at 18% 0%, rgba(59, 89, 152, 0.09), transparent 34%),
+    radial-gradient(circle at 18% 0%, rgba(45, 110, 125, 0.09), transparent 34%),
     var(--glass-bg);
-  border: 1px solid rgba(26, 59, 102, 0.08);
+  border: 1px solid rgba(27, 77, 92, 0.08);
   border-radius: var(--radius-4xl);
   padding: var(--spacing-12) var(--spacing-8) var(--spacing-8);
   display: flex;
@@ -91,20 +91,20 @@ function formatPrice(amount: number, currency: string): string {
 .pricing__card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-lg);
-  border-color: rgba(26, 59, 102, 0.12);
+  border-color: rgba(27, 77, 92, 0.12);
 }
 
 .pricing__card--highlighted {
   border-color: var(--color-primary);
-  box-shadow: 0 24px 70px rgba(26, 59, 102, 0.18), 0 0 0 1px rgba(26, 59, 102, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  box-shadow: 0 24px 70px rgba(27, 77, 92, 0.18), 0 0 0 1px rgba(27, 77, 92, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.8);
   background:
-    radial-gradient(circle at 20% 0%, rgba(255, 107, 107, 0.12), transparent 34%),
-    linear-gradient(180deg, rgba(26, 59, 102, 0.05), rgba(255, 255, 255, 0.9));
+    radial-gradient(circle at 20% 0%, rgba(232, 168, 56, 0.12), transparent 34%),
+    linear-gradient(180deg, rgba(27, 77, 92, 0.05), rgba(255, 255, 255, 0.9));
   transform: translateY(-0.5rem);
 }
 
 .pricing__card--highlighted:hover {
-  box-shadow: 0 16px 60px rgba(26, 59, 102, 0.25), 0 0 0 1px var(--color-primary);
+  box-shadow: 0 16px 60px rgba(27, 77, 92, 0.25), 0 0 0 1px var(--color-primary);
   border-color: var(--color-primary);
 }
 
@@ -120,7 +120,7 @@ function formatPrice(amount: number, currency: string): string {
   padding: var(--spacing-1) var(--spacing-4);
   border-radius: var(--radius-full);
   letter-spacing: 0.04em;
-  box-shadow: 0 4px 16px rgba(26, 59, 102, 0.3);
+  box-shadow: 0 4px 16px rgba(27, 77, 92, 0.3);
 }
 
 .pricing__plan-head {
@@ -181,7 +181,7 @@ function formatPrice(amount: number, currency: string): string {
   line-height: 1.6;
   color: var(--color-text-secondary);
   padding: var(--spacing-2) 0;
-  border-block-end: 1px solid rgba(26, 59, 102, 0.06);
+  border-block-end: 1px solid rgba(27, 77, 92, 0.06);
 }
 
 .pricing__check {

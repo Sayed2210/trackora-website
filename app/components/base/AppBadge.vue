@@ -32,13 +32,13 @@ withDefaults(defineProps<{
 }
 
 .app-badge--primary {
-  background-color: rgba(26, 59, 102, 0.12);
+  background-color: rgba(27, 77, 92, 0.12);
   color: var(--color-primary);
 }
 
 .app-badge--accent {
   background-color: var(--color-accent-light);
-  color: var(--color-accent);
+  color: var(--color-accent-contrast);
 }
 
 .app-badge--success {

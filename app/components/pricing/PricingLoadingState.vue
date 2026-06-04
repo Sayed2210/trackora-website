@@ -34,7 +34,7 @@ const { t } = useI18n()
 }
 
 .pricing-loading__card {
-  border: 1px solid rgba(26, 59, 102, 0.06);
+  border: 1px solid rgba(27, 77, 92, 0.06);
   border-radius: var(--radius-4xl);
   padding: var(--spacing-12) var(--spacing-8) var(--spacing-8);
   display: flex;
@@ -45,7 +45,7 @@ const { t } = useI18n()
 
 .pricing-loading__shimmer {
   border-radius: var(--radius-md);
-  background: linear-gradient(90deg, rgba(26, 59, 102, 0.06) 25%, rgba(26, 59, 102, 0.12) 50%, rgba(26, 59, 102, 0.06) 75%);
+  background: linear-gradient(90deg, rgba(27, 77, 92, 0.06) 25%, rgba(27, 77, 92, 0.12) 50%, rgba(27, 77, 92, 0.06) 75%);
   background-size: 200% 100%;
   animation: pricing-shimmer 1.5s infinite;
 }

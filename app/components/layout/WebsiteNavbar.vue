@@ -167,7 +167,7 @@ onMounted(() => {
   top: 100%;
   inset-inline-start: 0;
   background: var(--glass-bg);
-  border: 1px solid rgba(26, 59, 102, 0.08);
+  border: 1px solid rgba(27, 77, 92, 0.08);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-lg);
   list-style: none;

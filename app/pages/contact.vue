@@ -129,8 +129,8 @@ function handleSubmit(payload: Record<string, string>) {
 .contact-hero {
   overflow: hidden;
   background:
-    radial-gradient(circle at 16% 12%, rgba(59, 89, 152, 0.16), transparent 32%),
-    radial-gradient(circle at 84% 8%, rgba(255, 107, 107, 0.1), transparent 30%),
+    radial-gradient(circle at 16% 12%, rgba(45, 110, 125, 0.16), transparent 32%),
+    radial-gradient(circle at 84% 8%, rgba(232, 168, 56, 0.1), transparent 30%),
     linear-gradient(180deg, rgba(245, 245, 245, 0.9), rgba(255, 255, 255, 0));
 }
 
@@ -143,7 +143,7 @@ function handleSubmit(payload: Record<string, string>) {
 .contact-hero__eyebrow {
   display: inline-flex;
   margin-block-end: var(--spacing-4);
-  border: 1px solid rgba(26, 59, 102, 0.1);
+  border: 1px solid rgba(27, 77, 92, 0.1);
   border-radius: var(--radius-full);
   padding: var(--spacing-2) var(--spacing-4);
   background: rgba(255, 255, 255, 0.76);
@@ -186,7 +186,7 @@ function handleSubmit(payload: Record<string, string>) {
   display: flex;
   align-items: center;
   gap: var(--spacing-5);
-  border: 1px solid rgba(26, 59, 102, 0.08);
+  border: 1px solid rgba(27, 77, 92, 0.08);
   border-radius: var(--radius-4xl);
   padding: var(--spacing-6);
   background: var(--glass-bg);
@@ -214,7 +214,7 @@ function handleSubmit(payload: Record<string, string>) {
   display: flex;
   gap: var(--spacing-4);
   align-items: flex-start;
-  border: 1px solid rgba(26, 59, 102, 0.08);
+  border: 1px solid rgba(27, 77, 92, 0.08);
   border-radius: var(--radius-3xl);
   padding: var(--spacing-5);
   background: rgba(255, 255, 255, 0.78);
@@ -236,7 +236,7 @@ function handleSubmit(payload: Record<string, string>) {
   display: flex;
   align-items: flex-start;
   gap: var(--spacing-4);
-  border: 1px solid rgba(26, 59, 102, 0.08);
+  border: 1px solid rgba(27, 77, 92, 0.08);
   border-radius: var(--radius-2xl);
   padding: var(--spacing-5);
   background: var(--color-surface);
@@ -249,9 +249,9 @@ function handleSubmit(payload: Record<string, string>) {
   justify-content: center;
   width: 3rem;
   height: 3rem;
-  border: 1px solid rgba(26, 59, 102, 0.08);
+  border: 1px solid rgba(27, 77, 92, 0.08);
   border-radius: var(--radius-xl);
-  background: linear-gradient(145deg, rgba(59, 89, 152, 0.08), rgba(255, 255, 255, 0.8));
+  background: linear-gradient(145deg, rgba(45, 110, 125, 0.08), rgba(255, 255, 255, 0.8));
   color: var(--color-primary);
   font-size: var(--text-sm);
   font-weight: 900;
@@ -275,11 +275,11 @@ a.contact__channel-value:hover {
 }
 
 .contact__form-wrapper {
-  border: 1px solid rgba(26, 59, 102, 0.08);
+  border: 1px solid rgba(27, 77, 92, 0.08);
   border-radius: var(--radius-4xl);
   padding: var(--spacing-10);
   background:
-    radial-gradient(circle at 14% 0%, rgba(59, 89, 152, 0.08), transparent 36%),
+    radial-gradient(circle at 14% 0%, rgba(45, 110, 125, 0.08), transparent 36%),
     var(--glass-bg);
   box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.82);
   backdrop-filter: blur(18px);

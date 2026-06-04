@@ -142,7 +142,7 @@ useHead({
   height: 22rem;
   inset-block-end: -10rem;
   inset-inline-end: 10%;
-  background: rgba(255, 107, 107, 0.12);
+  background: rgba(232, 168, 56, 0.12);
   filter: blur(14px);
 }
 
@@ -289,7 +289,7 @@ html[lang='ar'] .features-hero__title {
   align-items: end;
   color: inherit;
   text-decoration: none;
-  border: 1px solid rgba(26, 59, 102, 0.08);
+  border: 1px solid rgba(27, 77, 92, 0.08);
   border-radius: var(--radius-4xl);
   background:
     radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 36%),
@@ -307,7 +307,7 @@ html[lang='ar'] .features-hero__title {
   inset-block-start: -8rem;
   inset-inline-end: -7rem;
   border-radius: var(--radius-full);
-  background: rgba(59, 89, 152, 0.08);
+  background: rgba(45, 110, 125, 0.08);
   pointer-events: none;
 }
 
@@ -319,7 +319,7 @@ html[lang='ar'] .features-hero__title {
 
 .features-index__card:hover {
   transform: translateY(-6px);
-  border-color: rgba(26, 59, 102, 0.16);
+  border-color: rgba(27, 77, 92, 0.16);
   box-shadow: var(--shadow-lg);
 }
 

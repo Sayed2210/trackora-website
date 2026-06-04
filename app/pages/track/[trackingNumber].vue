@@ -90,8 +90,8 @@ function retry() {
 .track-result {
   overflow: hidden;
   background:
-    radial-gradient(circle at 14% 8%, rgba(59, 89, 152, 0.14), transparent 30%),
-    radial-gradient(circle at 86% 10%, rgba(255, 107, 107, 0.08), transparent 28%),
+    radial-gradient(circle at 14% 8%, rgba(45, 110, 125, 0.14), transparent 30%),
+    radial-gradient(circle at 86% 10%, rgba(232, 168, 56, 0.08), transparent 28%),
     linear-gradient(180deg, rgba(245, 245, 245, 0.9), rgba(255, 255, 255, 0));
 }
 
@@ -105,7 +105,7 @@ function retry() {
 .track-result__eyebrow {
   display: inline-flex;
   margin-block-end: var(--spacing-4);
-  border: 1px solid rgba(26, 59, 102, 0.1);
+  border: 1px solid rgba(27, 77, 92, 0.1);
   border-radius: var(--radius-full);
   padding: var(--spacing-2) var(--spacing-4);
   background: rgba(255, 255, 255, 0.76);
@@ -129,7 +129,7 @@ html[lang='ar'] .track-result__title {
   display: inline-flex;
   max-width: 100%;
   overflow-wrap: anywhere;
-  border: 1px solid rgba(26, 59, 102, 0.08);
+  border: 1px solid rgba(27, 77, 92, 0.08);
   border-radius: var(--radius-full);
   padding: var(--spacing-2) var(--spacing-5);
   background: rgba(255, 255, 255, 0.78);
@@ -151,7 +151,7 @@ html[lang='ar'] .track-result__title {
   text-align: center;
   max-width: 34rem;
   margin-inline: auto;
-  border: 1px solid rgba(26, 59, 102, 0.08);
+  border: 1px solid rgba(27, 77, 92, 0.08);
   border-radius: var(--radius-4xl);
   padding: var(--spacing-12) var(--spacing-6);
   background: var(--glass-bg);
