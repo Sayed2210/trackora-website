@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-04T00:00:00.000Z",
+  "title": "Design System: Trackora Website",
+  "extensions": {
+    "colorMeta": {
+      "operational-teal": {
+        "role": "primary",
+        "displayName": "Operational Teal",
+        "canonical": "#1B4D5C",
+        "tonalRamp": ["#061A1F", "#0F3340", "#164452", "#1B4D5C", "#2D6E7D", "#6EA1AB", "#C7DEE2", "#EEF7F8"]
+      },
+      "gold-action": {
+        "role": "secondary",
+        "displayName": "Gold Action",
+        "canonical": "#E8A838",
+        "tonalRamp": ["#3A2604", "#704807", "#9E6810", "#D99A24", "#E8A838", "#F1C46B", "#F8E0A8", "#FFF7E3"]
+      },
+      "canvas": {
+        "role": "neutral",
+        "displayName": "Canvas",
+        "canonical": "#FFFFFF",
+        "tonalRamp": ["#333333", "#666666", "#A3A3A3", "#E0E0E0", "#F7F9FA", "#FFFFFF"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero headlines and rare dominant route claims."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Arabic-first operational explanation, form help, FAQ copy, and feature descriptions."
+      }
+    },
+    "shadows": [
+      { "name": "shadow-sm", "value": "0 1px 2px rgba(27, 77, 92, 0.06)", "purpose": "Minimal separation for quiet elements." },
+      { "name": "shadow-md", "value": "0 8px 24px rgba(27, 77, 92, 0.08)", "purpose": "Hover, dropdown, and moderate card lift." },
+      { "name": "shadow-lg", "value": "0 20px 60px rgba(27, 77, 92, 0.14)", "purpose": "Elevated feature cards and stronger content separation." },
+      { "name": "shadow-glow", "value": "0 32px 90px rgba(45, 110, 125, 0.2)", "purpose": "Hero dashboard and command-surface emphasis." },
+      { "name": "shadow-card", "value": "0 4px 16px rgba(27, 77, 92, 0.06), 0 1px 3px rgba(27, 77, 92, 0.04)", "purpose": "Default card depth." }
+    ],
+    "motion": [
+      { "name": "reveal-duration", "value": "650ms", "purpose": "Default reveal duration for scroll-introduced elements." },
+      { "name": "reveal-easing", "value": "cubic-bezier(0.22, 1, 0.36, 1)", "purpose": "Exponential-feeling ease for reveals and tactile hover lift." },
+      { "name": "reveal-distance", "value": "32px", "purpose": "Default vertical offset for reveal transitions." }
+    ],
+    "breakpoints": [
+      { "name": "desktop-nav", "value": "64rem" },
+      { "name": "tablet", "value": "48rem" },
+      { "name": "mobile", "value": "36rem" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "High-confidence conversion action for demos and primary route actions.",
+      "html": "<button class=\"ds-btn-primary\">Request demo</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; min-height: 3rem; padding: 0.85rem 2rem; border: 1px solid transparent; border-radius: 9999px; background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); color: #fff; font-family: var(--font-heading); font-size: 1rem; font-weight: 700; line-height: 1.4; letter-spacing: 0.01em; box-shadow: 0 12px 32px rgba(27, 77, 92, 0.3); transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s ease; } .ds-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(27, 77, 92, 0.4); } .ds-btn-primary:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 2px; }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary light-surface action that becomes teal on hover.",
+      "html": "<button class=\"ds-btn-outline\">Track shipment</button>",
+      "css": ".ds-btn-outline { display: inline-flex; align-items: center; justify-content: center; min-height: 3rem; padding: 0.85rem 2rem; border: 1px solid rgba(27, 77, 92, 0.28); border-radius: 9999px; background: transparent; color: var(--color-primary); font-family: var(--font-heading); font-size: 1rem; font-weight: 700; line-height: 1.4; letter-spacing: 0.01em; transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease; } .ds-btn-outline:hover { transform: translateY(-2px); background: var(--color-primary); color: #fff; box-shadow: 0 8px 24px rgba(27, 77, 92, 0.2); } .ds-btn-outline:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 2px; }"
+    },
+    {
+      "name": "Gold Badge",
+      "kind": "chip",
+      "refersTo": "badge-accent",
+      "description": "Compact gold emphasis badge for COD, value, and highlighted status labels.",
+      "html": "<span class=\"ds-badge-gold\">COD collected</span>",
+      "css": ".ds-badge-gold { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.25rem 1rem; border-radius: 9999px; background: var(--color-accent-light); color: var(--color-accent-contrast); font-family: var(--font-heading); font-size: 0.875rem; font-weight: 700; line-height: 1.5; white-space: nowrap; }"
+    },
+    {
+      "name": "Default Card",
+      "kind": "card",
+      "refersTo": "card-default",
+      "description": "Rounded marketing content surface with soft operational lift.",
+      "html": "<article class=\"ds-card\"><h3>Smart dispatch</h3><p>Assign shipments to couriers by location, load, and priority.</p></article>",
+      "css": ".ds-card { background: #fff; color: var(--color-text); border: 1px solid var(--color-border); border-radius: 1.5rem; padding: 2rem 1.75rem; box-shadow: 0 4px 16px rgba(27, 77, 92, 0.06), 0 1px 3px rgba(27, 77, 92, 0.04); transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease; } .ds-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(27, 77, 92, 0.08); } .ds-card h3 { margin: 0 0 0.75rem; font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; line-height: 1.2; } .ds-card p { margin: 0; font-family: var(--font-body); font-size: 1rem; line-height: 1.7; color: var(--color-text-secondary); }"
+    },
+    {
+      "name": "Input Field",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Accessible white field for tracking, contact, and demo forms.",
+      "html": "<label class=\"ds-field\"><span>Tracking number</span><input placeholder=\"TRK-240502-A1\" /></label>",
+      "css": ".ds-field { display: flex; flex-direction: column; gap: 0.5rem; font-family: var(--font-body); color: var(--color-text); } .ds-field span { font-size: 0.875rem; font-weight: 600; } .ds-field input { padding: 0.85rem 1rem; border: 1px solid var(--color-border); border-radius: 1rem; background: #fff; color: var(--color-text); font-family: var(--font-body); font-size: 1rem; transition: border-color 0.2s ease, box-shadow 0.2s ease; } .ds-field input::placeholder { color: var(--color-text-secondary); opacity: 0.8; } .ds-field input:focus-visible { outline: none; border-color: var(--color-primary); box-shadow: 0 0 0 4px rgba(27, 77, 92, 0.12); }"
+    },
+    {
+      "name": "Dark Navigation",
+      "kind": "nav",
+      "description": "Sticky command-surface navigation for the public marketing site.",
+      "html": "<nav class=\"ds-nav\"><strong>Trackora</strong><a href=\"#\">Features</a><a href=\"#\">Pricing</a><button>Request demo</button></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; gap: 1.5rem; padding: 1rem 1.5rem; border-radius: 1.5rem; background: rgba(15, 51, 64, 0.92); color: #fff; font-family: var(--font-heading); backdrop-filter: blur(16px); box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15); } .ds-nav strong { margin-inline-end: auto; font-weight: 800; } .ds-nav a { color: rgba(255, 255, 255, 0.75); font-size: 0.875rem; font-weight: 500; text-decoration: none; } .ds-nav a:hover, .ds-nav a:focus-visible { color: #fff; } .ds-nav button { padding: 0.5rem 1rem; border: 0; border-radius: 9999px; background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); color: #fff; font-family: var(--font-heading); font-weight: 700; } .ds-nav button:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 2px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Shipment Ledger",
+    "overview": "Trackora's visual system should feel like a reliable logistics record brought to life: every shipment, courier, risk signal, and COD movement has a visible place. The design uses deep teal as the trust anchor, warm gold as the action signal, rounded tactile controls, and dashboard-like surfaces that make delivery operations feel organized rather than abstract.",
+    "keyCharacteristics": [
+      "Arabic-first operational clarity with bilingual parity.",
+      "Teal-dominant surfaces with gold action emphasis.",
+      "Tactile pill controls, rounded product surfaces, and clear focus states.",
+      "Lifted cards and glow used to separate operational layers.",
+      "Motion that supports status, reveal, and affordance without hiding content."
+    ],
+    "rules": [
+      { "name": "The Gold Is an Action Rule", "body": "Gold is reserved for action, status, COD/value emphasis, and focus. Do not scatter it as decoration.", "section": "colors" },
+      { "name": "The Teal Carries Trust Rule", "body": "High-value claims, navigation, and product-control surfaces should lean on Operational Teal or Deep Command Teal before introducing new hues.", "section": "colors" },
+      { "name": "The Arabic First Rule", "body": "New components should inherit Arabic typography and RTL behavior by default, then adapt cleanly to English through the existing locale switches.", "section": "typography" },
+      { "name": "The No Editorial Costume Rule", "body": "Do not introduce serif display, mono metadata, drop caps, or magazine-like separators unless the product context explicitly changes.", "section": "typography" },
+      { "name": "The Lift Has a Job Rule", "body": "Elevation must separate an interactive or operational layer. If the shadow does not clarify state, hierarchy, or focus, remove it.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use teal as the trust anchor for major surfaces, CTAs, navigation, and product-control moments.",
+      "Do keep Arabic-first typography and RTL layout native, not patched after English layouts are complete.",
+      "Do use gold for focus, action, COD/value emphasis, and status emphasis, especially where the user can do something next.",
+      "Do preserve visible keyboard focus and reduced-motion fallbacks on every interactive or animated element.",
+      "Do show operational proof: shipments, couriers, COD, dispatch, tracking, validation, and risk states."
+    ],
+    "donts": [
+      "Don't let Trackora look like a generic SaaS template: repetitive icon-card grids, decorative gradient text, interchangeable dashboard mockups, vague buzzwords, tiny repeated section eyebrows, or muted text that reads poorly on tinted backgrounds.",
+      "Don't use gradient text as emphasis. Use a solid token color, weight, or hierarchy instead.",
+      "Don't use glass, blur, or glow as decoration. Use them only when they clarify layered command surfaces.",
+      "Don't add side-stripe borders greater than 1px on cards, callouts, or list items.",
+      "Don't introduce new fonts, serif editorial styling, or monospace technical costume without a confirmed design-system change."
+    ]
+  }
+}

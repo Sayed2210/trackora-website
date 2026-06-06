@@ -176,7 +176,7 @@ function fieldErrorId(key: string) {
 .app-contact-form :deep(.app-input__field),
 .app-contact-form :deep(.app-textarea__field) {
   min-height: 3.35rem;
-  border-color: rgba(26, 59, 102, 0.1);
+  border-color: rgba(27, 77, 92, 0.1);
   background: rgba(255, 255, 255, 0.88);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
 }

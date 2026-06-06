@@ -10,8 +10,9 @@
     "requestDemo": "Request Demo",
     "login": "Log In",
     "loginMerchant": "Merchant Login",
+    "loginShippingCompany": "Shipping Company Login",
     "loginCourier": "Courier Login",
-    "loginAdmin": "Admin Login"
+    "loginAdmin": "System Admin Login"
   },
   "hero": {
     "eyebrow": "Shipping Operating System",
@@ -58,12 +59,21 @@
   "footer": {
     "brand": "Trackora",
     "copyright": "All rights reserved",
+    "description": "Trackora is an Arabic-first platform for shipments, dispatch, customer tracking, and COD wallets for logistics operators and merchants.",
+    "product": "Product",
+    "company": "Company",
+    "ctaTitle": "Run shipments and COD from one operating record",
+    "ctaText": "Book a demo shaped around your shipment volume and delivery zones.",
     "features": "Features",
     "solutions": "Solutions",
     "pricing": "Pricing",
     "blog": "Blog",
     "contact": "Contact",
-    "trackShipment": "Track Shipment"
+    "trackShipment": "Track Shipment",
+    "requestDemo": "Request Demo",
+    "shippingCompanies": "Shipping Companies",
+    "ecommerceStores": "E-commerce Stores",
+    "socialSellers": "Social Sellers"
   },
   "track": {
     "heading": "Track Your Shipment",

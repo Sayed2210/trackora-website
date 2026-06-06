@@ -1,17 +1,18 @@
 {
   "nav": {
     "home": "الرئيسية",
-    "features": "المزايا",
+    "features": "المميزات",
     "solutions": "الحلول",
     "pricing": "الأسعار",
     "blog": "المدوّنة",
     "contact": "تواصل معنا",
-    "trackShipment": "تتبّع شحنتك",
-    "requestDemo": "اطلب عرضاً توضيحياً",
+    "trackShipment": "تتبع شحنة",
+    "requestDemo": "اطلب عرض توضيحي",
     "login": "تسجيل الدخول",
-    "loginMerchant": "دخول التجّار",
-    "loginCourier": "دخول السعاة",
-    "loginAdmin": "دخول الإدارة"
+    "loginMerchant": "دخول التاجر",
+    "loginShippingCompany": "دخول شركة الشحن",
+    "loginCourier": "دخول المندوب",
+    "loginAdmin": "دخول مدير النظام"
   },
   "hero": {
     "eyebrow": "نظام تشغيل الشحن",
@@ -58,12 +59,21 @@
   "footer": {
     "brand": "تراكورا",
     "copyright": "جميع الحقوق محفوظة",
-    "features": "المزايا",
+    "description": "Trackora منصة عربية لإدارة الشحنات، التوزيع، تتبع العملاء، ومحافظ COD لشركات الشحن والمتاجر.",
+    "product": "المنتج",
+    "company": "الشركة",
+    "ctaTitle": "رتب تشغيل الشحنات وCOD في نظام واحد",
+    "ctaText": "احجز عرضا توضيحيا يناسب حجم شحناتك ومناطق التوصيل لديك.",
+    "features": "المميزات",
     "solutions": "الحلول",
     "pricing": "الأسعار",
     "blog": "المدوّنة",
     "contact": "تواصل معنا",
-    "trackShipment": "تتبّع شحنتك"
+    "trackShipment": "تتبع شحنة",
+    "requestDemo": "اطلب عرض توضيحي",
+    "shippingCompanies": "شركات الشحن",
+    "ecommerceStores": "المتاجر الإلكترونية",
+    "socialSellers": "البائعون عبر التواصل"
   },
   "track": {
     "heading": "تتبّع شحنتك",

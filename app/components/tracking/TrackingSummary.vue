@@ -73,11 +73,11 @@ const statusVariant = computed(() => STATUS_VARIANTS[props.shipment.status] ?? '
 .tracking-summary {
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(26, 59, 102, 0.08);
+  border: 1px solid rgba(27, 77, 92, 0.08);
   border-radius: var(--radius-4xl);
   padding: var(--spacing-8);
   background:
-    radial-gradient(circle at 16% 0%, rgba(59, 89, 152, 0.1), transparent 34%),
+    radial-gradient(circle at 16% 0%, rgba(45, 110, 125, 0.1), transparent 34%),
     var(--glass-bg);
   box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.82);
   backdrop-filter: blur(18px);
@@ -91,7 +91,7 @@ const statusVariant = computed(() => STATUS_VARIANTS[props.shipment.status] ?? '
   inset-block-start: -8rem;
   inset-inline-end: -7rem;
   border-radius: 50%;
-  background: rgba(59, 89, 152, 0.08);
+  background: rgba(45, 110, 125, 0.08);
   pointer-events: none;
 }
 
@@ -142,7 +142,7 @@ const statusVariant = computed(() => STATUS_VARIANTS[props.shipment.status] ?? '
   display: flex;
   flex-direction: column;
   gap: var(--spacing-2);
-  border: 1px solid rgba(26, 59, 102, 0.08);
+  border: 1px solid rgba(27, 77, 92, 0.08);
   border-radius: var(--radius-2xl);
   padding: var(--spacing-5);
   background: rgba(255, 255, 255, 0.76);
@@ -150,7 +150,7 @@ const statusVariant = computed(() => STATUS_VARIANTS[props.shipment.status] ?? '
 }
 
 .tracking-summary__row--status {
-  background: linear-gradient(145deg, rgba(59, 89, 152, 0.08), rgba(255, 255, 255, 0.82));
+  background: linear-gradient(145deg, rgba(45, 110, 125, 0.08), rgba(255, 255, 255, 0.82));
 }
 
 .tracking-summary__label {
@@ -170,7 +170,7 @@ const statusVariant = computed(() => STATUS_VARIANTS[props.shipment.status] ?? '
   align-items: center;
   gap: var(--spacing-4);
   margin-block-start: var(--spacing-6);
-  border: 1px solid rgba(26, 59, 102, 0.08);
+  border: 1px solid rgba(27, 77, 92, 0.08);
   border-radius: var(--radius-2xl);
   padding: var(--spacing-4);
   background: rgba(255, 255, 255, 0.66);

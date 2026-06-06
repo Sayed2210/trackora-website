@@ -97,8 +97,8 @@ function handleTrack() {
   overflow: hidden;
   min-height: 70vh;
   background:
-    radial-gradient(circle at 12% 12%, rgba(59, 89, 152, 0.16), transparent 32%),
-    radial-gradient(circle at 86% 10%, rgba(255, 107, 107, 0.1), transparent 30%),
+    radial-gradient(circle at 12% 12%, rgba(45, 110, 125, 0.16), transparent 32%),
+    radial-gradient(circle at 86% 10%, rgba(232, 168, 56, 0.1), transparent 30%),
     linear-gradient(180deg, rgba(245, 245, 245, 0.9), rgba(255, 255, 255, 0));
 }
 
@@ -125,7 +125,7 @@ function handleTrack() {
 .track-input__eyebrow {
   display: inline-flex;
   width: fit-content;
-  border: 1px solid rgba(26, 59, 102, 0.1);
+  border: 1px solid rgba(27, 77, 92, 0.1);
   border-radius: var(--radius-full);
   padding: var(--spacing-2) var(--spacing-4);
   background: rgba(255, 255, 255, 0.76);
@@ -192,11 +192,11 @@ html[lang='ar'] .track-input__title {
 }
 
 .track-input__card {
-  border: 1px solid rgba(26, 59, 102, 0.08);
+  border: 1px solid rgba(27, 77, 92, 0.08);
   border-radius: var(--radius-4xl);
   padding: var(--spacing-10);
   background:
-    radial-gradient(circle at 14% 0%, rgba(59, 89, 152, 0.08), transparent 36%),
+    radial-gradient(circle at 14% 0%, rgba(45, 110, 125, 0.08), transparent 36%),
     var(--glass-bg);
   box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.82);
   backdrop-filter: blur(18px);
@@ -235,7 +235,7 @@ html[lang='ar'] .track-input__title {
   display: flex;
   align-items: center;
   gap: var(--spacing-4);
-  border: 1px solid rgba(26, 59, 102, 0.08);
+  border: 1px solid rgba(27, 77, 92, 0.08);
   border-radius: var(--radius-2xl);
   padding: var(--spacing-4);
   background: rgba(255, 255, 255, 0.72);

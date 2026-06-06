@@ -82,7 +82,7 @@ const describedBy = computed(() => {
 .app-textarea__field:focus-visible {
   outline: none;
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 4px rgba(26, 59, 102, 0.12);
+  box-shadow: 0 0 0 4px rgba(27, 77, 92, 0.12);
 }
 
 .app-textarea__field:disabled {

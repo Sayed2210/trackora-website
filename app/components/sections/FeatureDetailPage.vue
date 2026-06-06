@@ -228,7 +228,7 @@ useHead({
   height: 24rem;
   inset-block-end: -12rem;
   inset-inline-end: 12%;
-  background: rgba(255, 107, 107, 0.12);
+  background: rgba(232, 168, 56, 0.12);
   filter: blur(12px);
 }
 
@@ -394,7 +394,7 @@ html[lang='ar'] .feature-hero__title {
   font-size: clamp(4rem, 11vw, 8rem);
   font-weight: 800;
   line-height: 0.9;
-  color: rgba(26, 59, 102, 0.1);
+  color: rgba(27, 77, 92, 0.1);
 }
 
 .feature-narrative__label p {
@@ -435,10 +435,10 @@ html[lang='ar'] .feature-reveal__content h2 {
   min-height: 26rem;
   display: grid;
   place-items: center;
-  border: 1px solid rgba(26, 59, 102, 0.08);
+  border: 1px solid rgba(27, 77, 92, 0.08);
   border-radius: var(--radius-4xl);
   background:
-    radial-gradient(circle at 50% 42%, rgba(59, 89, 152, 0.14), transparent 28%),
+    radial-gradient(circle at 50% 42%, rgba(45, 110, 125, 0.14), transparent 28%),
     linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(245, 245, 245, 0.72));
   box-shadow: var(--shadow-card);
   overflow: hidden;
@@ -448,7 +448,7 @@ html[lang='ar'] .feature-reveal__content h2 {
 .feature-reveal__visual::after {
   content: '';
   position: absolute;
-  border: 1px solid rgba(26, 59, 102, 0.08);
+  border: 1px solid rgba(27, 77, 92, 0.08);
   border-radius: 48%;
 }
 
@@ -468,7 +468,7 @@ html[lang='ar'] .feature-reveal__content h2 {
   display: grid;
   gap: var(--spacing-1);
   padding: var(--spacing-5);
-  border: 1px solid rgba(26, 59, 102, 0.08);
+  border: 1px solid rgba(27, 77, 92, 0.08);
   border-radius: var(--radius-2xl);
   background: var(--glass-bg);
   box-shadow: var(--shadow-md);
@@ -500,9 +500,9 @@ html[lang='ar'] .feature-reveal__content h2 {
   justify-content: space-between;
   gap: var(--spacing-8);
   padding: var(--spacing-6);
-  border: 1px solid rgba(26, 59, 102, 0.08);
+  border: 1px solid rgba(27, 77, 92, 0.08);
   border-radius: var(--radius-3xl);
-  background: linear-gradient(180deg, rgba(59, 89, 152, 0.05), var(--color-surface));
+  background: linear-gradient(180deg, rgba(45, 110, 125, 0.05), var(--color-surface));
   box-shadow: var(--shadow-card);
   color: var(--color-text);
   line-height: 1.7;
@@ -517,7 +517,7 @@ html[lang='ar'] .feature-reveal__content h2 {
   inset-block-start: -5rem;
   inset-inline-end: -4rem;
   border-radius: var(--radius-full);
-  background: rgba(59, 89, 152, 0.08);
+  background: rgba(45, 110, 125, 0.08);
 }
 
 .feature-benefits__number {
@@ -557,7 +557,7 @@ html[lang='ar'] .feature-reveal__content h2 {
   align-items: flex-start;
   gap: var(--spacing-5);
   padding: var(--spacing-6);
-  border: 1px solid rgba(26, 59, 102, 0.08);
+  border: 1px solid rgba(27, 77, 92, 0.08);
   border-radius: var(--radius-3xl);
   background: rgba(255, 255, 255, 0.78);
   box-shadow: var(--shadow-card);
@@ -575,7 +575,7 @@ html[lang='ar'] .feature-reveal__content h2 {
   color: var(--color-text-light);
   font-size: var(--text-base);
   font-weight: 800;
-  box-shadow: 0 10px 24px rgba(26, 59, 102, 0.18);
+  box-shadow: 0 10px 24px rgba(27, 77, 92, 0.18);
 }
 
 .feature-workflow__text {
@@ -599,7 +599,7 @@ html[lang='ar'] .feature-reveal__content h2 {
   padding: var(--spacing-8);
   color: inherit;
   text-decoration: none;
-  border: 1px solid rgba(26, 59, 102, 0.08);
+  border: 1px solid rgba(27, 77, 92, 0.08);
   border-radius: var(--radius-4xl);
   background: var(--color-surface);
   box-shadow: var(--shadow-card);
@@ -615,12 +615,12 @@ html[lang='ar'] .feature-reveal__content h2 {
   inset-block-start: -7rem;
   inset-inline-end: -6rem;
   border-radius: var(--radius-full);
-  background: rgba(59, 89, 152, 0.08);
+  background: rgba(45, 110, 125, 0.08);
 }
 
 .feature-related__card:hover {
   transform: translateY(-6px);
-  border-color: rgba(26, 59, 102, 0.16);
+  border-color: rgba(27, 77, 92, 0.16);
   box-shadow: var(--shadow-lg);
 }
 

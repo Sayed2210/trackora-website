@@ -79,9 +79,9 @@ The Homepage should tell a single product launch story:
 
 ### Button Style
 
-- Primary buttons use `#1A3B66` with high-contrast text.
+- Primary buttons use `#1B4D5C` with high-contrast text.
 - Secondary buttons use glass, outline, or white/surface treatments.
-- Accent `#FF6B6B` is used sparingly for emphasis and conversion accents.
+- Accent `#E8A838` is used sparingly for focus, COD/value emphasis, and conversion accents.
 - Buttons should feel large, tactile, and calm.
 - Focus, loading, disabled, active, and hover states must remain accessible.
 

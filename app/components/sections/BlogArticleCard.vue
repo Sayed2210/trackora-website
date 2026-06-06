@@ -60,9 +60,9 @@ const formattedDate = computed(() => {
   flex-direction: column;
   min-height: 30rem;
   background:
-    radial-gradient(circle at 16% 0%, rgba(59, 89, 152, 0.08), transparent 34%),
+    radial-gradient(circle at 16% 0%, rgba(45, 110, 125, 0.08), transparent 34%),
     var(--color-surface);
-  border: 1px solid rgba(26, 59, 102, 0.08);
+  border: 1px solid rgba(27, 77, 92, 0.08);
   border-radius: var(--radius-4xl);
   padding: var(--spacing-8);
   text-decoration: none;
@@ -80,14 +80,14 @@ const formattedDate = computed(() => {
   inset-block-start: -7rem;
   inset-inline-end: -6rem;
   border-radius: 50%;
-  background: rgba(59, 89, 152, 0.08);
+  background: rgba(45, 110, 125, 0.08);
   pointer-events: none;
 }
 
 .blog-card:hover {
   transform: translateY(-6px);
   box-shadow: var(--shadow-lg);
-  border-color: rgba(26, 59, 102, 0.16);
+  border-color: rgba(27, 77, 92, 0.16);
 }
 
 .blog-card:focus-visible {

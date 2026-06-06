@@ -20,12 +20,12 @@ const localePath = useLocalePath()
 .tracking-empty {
   max-width: 42rem;
   margin-inline: auto;
-  border: 1px solid rgba(26, 59, 102, 0.08);
+  border: 1px solid rgba(27, 77, 92, 0.08);
   border-radius: var(--radius-4xl);
   text-align: center;
   padding: var(--spacing-12) var(--spacing-6);
   background:
-    radial-gradient(circle at 50% 0%, rgba(59, 89, 152, 0.08), transparent 34%),
+    radial-gradient(circle at 50% 0%, rgba(45, 110, 125, 0.08), transparent 34%),
     var(--glass-bg);
   box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.82);
   backdrop-filter: blur(18px);

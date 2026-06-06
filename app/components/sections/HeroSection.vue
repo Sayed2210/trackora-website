@@ -118,7 +118,7 @@ useScrollReveal()
 }
 
 .hero__accent {
-  background: linear-gradient(135deg, var(--color-accent), #FF8E53, #FFB347);
+  background: linear-gradient(135deg, var(--color-accent), #F0B84F, #F7D37B);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -155,7 +155,7 @@ useScrollReveal()
   border-radius: var(--radius-3xl);
   padding: var(--spacing-8);
   backdrop-filter: blur(24px);
-  box-shadow: var(--shadow-glow), 0 0 120px rgba(59, 89, 152, 0.15);
+  box-shadow: var(--shadow-glow), 0 0 120px rgba(45, 110, 125, 0.15);
   min-width: 0;
 }
 
@@ -218,7 +218,7 @@ useScrollReveal()
 }
 
 .hero__stat-card--accent .hero__stat-value {
-  background: linear-gradient(135deg, var(--color-accent), #FF8E53);
+  background: linear-gradient(135deg, var(--color-accent), #F0B84F);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -244,7 +244,7 @@ useScrollReveal()
   align-items: center;
   gap: var(--spacing-3);
   background: var(--glass-bg);
-  border: 1px solid rgba(26, 59, 102, 0.08);
+  border: 1px solid rgba(27, 77, 92, 0.08);
   border-radius: var(--radius-2xl);
   padding: var(--spacing-3) var(--spacing-4);
   backdrop-filter: blur(20px);

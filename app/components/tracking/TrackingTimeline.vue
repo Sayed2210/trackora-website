@@ -74,7 +74,7 @@ function formatDate(iso: string) {
 .tracking-timeline {
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(26, 59, 102, 0.08);
+  border: 1px solid rgba(27, 77, 92, 0.08);
   border-radius: var(--radius-4xl);
   padding: var(--spacing-8);
   background: var(--color-surface);
@@ -89,7 +89,7 @@ function formatDate(iso: string) {
   inset-block-start: -8rem;
   inset-inline-start: -6rem;
   border-radius: 50%;
-  background: rgba(59, 89, 152, 0.07);
+  background: rgba(45, 110, 125, 0.07);
   pointer-events: none;
 }
 
@@ -168,7 +168,7 @@ function formatDate(iso: string) {
 
 .tracking-timeline__dot--pending {
   background: var(--color-bg-alt);
-  border: 2px solid rgba(26, 59, 102, 0.12);
+  border: 2px solid rgba(27, 77, 92, 0.12);
 }
 
 .tracking-timeline__line {
@@ -177,17 +177,17 @@ function formatDate(iso: string) {
   bottom: 0;
   inset-inline-start: calc(1.375rem - 1px);
   width: 2px;
-  background-color: rgba(26, 59, 102, 0.1);
+  background-color: rgba(27, 77, 92, 0.1);
 }
 
 .tracking-timeline__line--completed {
-  background: linear-gradient(180deg, var(--color-primary), rgba(59, 89, 152, 0.16));
+  background: linear-gradient(180deg, var(--color-primary), rgba(45, 110, 125, 0.16));
 }
 
 .tracking-timeline__content {
   min-width: 0;
   width: 100%;
-  border: 1px solid rgba(26, 59, 102, 0.08);
+  border: 1px solid rgba(27, 77, 92, 0.08);
   border-radius: var(--radius-2xl);
   padding: var(--spacing-5);
   background: rgba(255, 255, 255, 0.74);
@@ -196,9 +196,9 @@ function formatDate(iso: string) {
 }
 
 .tracking-timeline__step--active .tracking-timeline__content {
-  border-color: rgba(26, 59, 102, 0.16);
+  border-color: rgba(27, 77, 92, 0.16);
   box-shadow: var(--shadow-md);
-  background: linear-gradient(145deg, rgba(59, 89, 152, 0.07), rgba(255, 255, 255, 0.86));
+  background: linear-gradient(145deg, rgba(45, 110, 125, 0.07), rgba(255, 255, 255, 0.86));
 }
 
 .tracking-timeline__step--pending .tracking-timeline__content {

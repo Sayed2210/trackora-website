@@ -67,7 +67,7 @@ useScrollReveal()
 .problems__card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-lg);
-  border-color: rgba(26, 59, 102, 0.15);
+  border-color: rgba(27, 77, 92, 0.15);
 }
 
 .problems__title {
