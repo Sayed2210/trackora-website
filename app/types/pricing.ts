@@ -11,4 +11,7 @@ export interface PublicPlan {
   isPopular: boolean
   ctaLabel: string
   ctaHref: string
+  audience?: string
+  overageNote?: string
+  displayPrice?: string
 }
