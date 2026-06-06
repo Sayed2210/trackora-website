@@ -46,7 +46,6 @@
           <article v-for="plan in copy.plans.items" :key="plan.id" :class="['plan-card', plan.recommended ? 'plan-card--recommended' : '']">
             <div class="plan-card__top">
               <div>
-                <span class="plan-card__name-en">{{ plan.nameEn }}</span>
                 <h3>{{ plan.name }}</h3>
               </div>
               <span v-if="plan.recommended" class="plan-card__badge">{{ copy.plans.recommended }}</span>
@@ -76,7 +75,7 @@
           <p>{{ copy.comparison.lead }}</p>
         </div>
 
-        <div class="comparison-table" role="region" :aria-label="copy.comparison.tableLabel" tabindex="0">
+        <div class="comparison-table" role="region" :aria-label="copy.comparison.tableLabel" :tabindex="comparisonTabIndex">
           <table>
             <thead>
               <tr>
@@ -101,7 +100,6 @@
       <AppContainer>
         <div class="reassurance-grid">
           <div class="reassurance-copy">
-            <p class="pricing-kicker pricing-kicker--light">{{ copy.reassurance.kicker }}</p>
             <h2 id="reassurance-heading">{{ copy.reassurance.title }}</h2>
             <p>{{ copy.reassurance.lead }}</p>
           </div>
@@ -122,7 +120,6 @@
       <AppContainer>
         <div class="enterprise-card">
           <div>
-            <p class="pricing-kicker">{{ copy.enterprise.kicker }}</p>
             <h2 id="enterprise-heading">{{ copy.enterprise.title }}</h2>
             <p>{{ copy.enterprise.lead }}</p>
           </div>
@@ -139,7 +136,6 @@
     <section class="pricing-section faq-section" aria-labelledby="faq-heading">
       <AppContainer narrow>
         <div class="pricing-section__header pricing-section__header--center">
-          <p class="pricing-kicker pricing-kicker--light">{{ copy.faq.kicker }}</p>
           <h2 id="faq-heading">{{ copy.faq.title }}</h2>
         </div>
         <div class="faq-list">
@@ -155,7 +151,6 @@
       <AppContainer>
         <div class="final-pricing-cta__inner">
           <div>
-            <p class="pricing-kicker">{{ copy.finalCta.kicker }}</p>
             <h2 id="final-pricing-heading">{{ copy.finalCta.title }}</h2>
             <p>{{ copy.finalCta.lead }}</p>
           </div>
@@ -174,14 +169,16 @@ const localePath = useLocalePath()
 const { setSeo } = useLocaleSeo()
 
 const isArabic = computed(() => locale.value === 'ar')
+const comparisonTabIndex = ref<number | null>(null)
+let removeComparisonFocusListener: (() => void) | null = null
 
 const pageCopy = {
   ar: {
-    seoTitle: 'أسعار Trackora | خطط إدارة الشحنات وCOD',
-    seoDescription: 'خطط واضحة لشركات الشحن والمتاجر والسوشيال سيلرز لإدارة الشحنات، الديسباتش، المناديب، التتبع، ومحفظة COD.',
+    seoTitle: 'أسعار Trackora | خطط إدارة الشحنات والتحصيل',
+    seoDescription: 'خطط واضحة لشركات الشحن والمتاجر والسوشيال سيلرز لإدارة الشحنات، الديسباتش، المناديب، التتبع، ومحفظة التحصيل عند التسليم.',
     hero: {
       kicker: 'أسعار مبنية على حجم التشغيل',
-      title: 'خطط واضحة لإدارة الشحنات وCOD بدون مفاجآت',
+      title: 'خطط واضحة لإدارة الشحنات والتحصيل بدون مفاجآت',
       lead: 'اختر نقطة بداية تناسب فريقك اليوم، ثم وسع Trackora مع زيادة الشحنات، المناديب، التجار، واحتياج التسوية المالية.',
       primaryCta: 'اطلب عرض توضيحي',
       secondaryCta: 'تواصل معنا لتسعير مخصص',
@@ -191,7 +188,7 @@ const pageCopy = {
       panelStatus: 'واضح قبل التعاقد',
       panelItems: [
         { label: 'حجم الشحنات', value: 'شهري', note: 'من أول فريق تشغيل حتى عمليات متعددة الفروع' },
-        { label: 'COD Wallet', value: 'حسب الاستخدام', note: 'تحصيل، معلق، مرتجع، وتسوية حسب التاجر والمندوب' },
+        { label: 'محفظة التحصيل', value: 'حسب الاستخدام', note: 'تحصيل، معلق، مرتجع، وتسوية حسب التاجر والمندوب' },
         { label: 'الدعم والإعداد', value: 'ضمن الاتفاق', note: 'مساعدة في التشغيل الأول وتهيئة الفريق' },
       ],
     },
@@ -204,39 +201,36 @@ const pageCopy = {
         {
           id: 'starter',
           name: 'البداية',
-          nameEn: 'Starter',
           description: 'للفرق التي تريد نقل الطلبات والتتبع من الجداول إلى نظام منظم.',
           price: 'حسب حجم الشحنات',
           priceNote: 'فاتورة شهرية واضحة',
           bestFor: 'الأفضل لأول فريق تشغيل أو متجر يبدأ تنظيم الشحن.',
-          features: ['حتى 1,000 شحنة شهريا', '3 مستخدمين إداريين', 'حتى 10 مناديب', 'بوابة تاجر واحدة', 'تتبع شحنات عام', 'تقارير أساسية', 'دعم عبر البريد أو واتساب'],
-          cta: 'اطلب خطة البداية',
-          ctaTo: '/request-demo',
+          features: ['حتى ١٬٠٠٠ شحنة شهريا', '٣ مستخدمين إداريين', 'حتى ١٠ مناديب', 'بوابة تاجر واحدة', 'تتبع شحنات عام', 'تقارير أساسية', 'دعم عبر البريد أو واتساب'],
+          cta: 'ابدأ بخطة البداية',
+          ctaTo: '/request-demo?plan=starter',
         },
         {
           id: 'growth',
           name: 'النمو',
-          nameEn: 'Growth',
-          description: 'لشركات الشحن والمتاجر التي تحتاج ديسباتش، مناديب، COD، وتقارير يومية في مكان واحد.',
+          description: 'لشركات الشحن والمتاجر التي تحتاج ديسباتش، مناديب، تحصيل عند التسليم، وتقارير يومية في مكان واحد.',
           price: 'حسب حجم الشحنات',
           priceNote: 'الخطة الموصى بها',
-          bestFor: 'الأفضل لعمليات COD نشطة وفريق ديسباتش يومي.',
-          features: ['حتى 10,000 شحنة شهريا', '10 مستخدمين إداريين', 'حتى 75 مندوبا', 'بوابات تجار متعددة', 'Smart Dispatch', 'Courier App', 'COD Wallet', 'Bulk Upload', 'تقارير تشغيلية متقدمة', 'دعم في مرحلة التشغيل الأولى'],
-          cta: 'اطلب عرض خطة النمو',
-          ctaTo: '/request-demo',
+          bestFor: 'الأفضل لعمليات تحصيل نشطة وفريق ديسباتش يومي.',
+          features: ['حتى ١٠٬٠٠٠ شحنة شهريا', '١٠ مستخدمين إداريين', 'حتى ٧٥ مندوبا', 'بوابات تجار متعددة', 'التوزيع الذكي', 'تطبيق المندوب', 'محفظة التحصيل عند التسليم', 'الرفع الجماعي', 'تقارير تشغيلية متقدمة', 'دعم في مرحلة التشغيل الأولى'],
+          cta: 'اطلب عرض لخطة النمو',
+          ctaTo: '/request-demo?plan=growth',
           recommended: true,
         },
         {
           id: 'scale',
           name: 'التوسع',
-          nameEn: 'Scale',
           description: 'لشركات الشحن عالية الحجم التي تحتاج صلاحيات، فروع، تقارير، وسير عمل مخصص.',
           price: 'تسعير مخصص',
           priceNote: 'حسب الفروع والتدفقات',
           bestFor: 'الأفضل لعمليات متعددة الفروع وتجار كثيرين.',
-          features: ['شحنات شهرية عالية الحجم', 'مستخدمون وصلاحيات متقدمة', 'عدد مناديب قابل للتوسع', 'فروع ومناطق متعددة', 'Fraud Detection', 'تقارير إدارة متقدمة', 'سير عمل مخصص', 'دعم مخصص للإطلاق والتشغيل'],
+          features: ['شحنات شهرية عالية الحجم', 'مستخدمون وصلاحيات متقدمة', 'عدد مناديب قابل للتوسع', 'فروع ومناطق متعددة', 'كشف الاحتيال', 'تقارير إدارة متقدمة', 'سير عمل مخصص', 'دعم مخصص للإطلاق والتشغيل'],
           cta: 'احصل على تسعير مخصص',
-          ctaTo: '/contact',
+          ctaTo: '/contact?topic=scale-pricing',
         },
       ],
     },
@@ -248,16 +242,20 @@ const pageCopy = {
       featureLabel: 'القدرة',
       plans: ['البداية', 'النمو', 'التوسع'],
       rows: [
-        { feature: 'عدد الشحنات شهريا', values: ['حتى 1,000', 'حتى 10,000', 'حسب الاتفاق'] },
+        { feature: 'عدد الشحنات شهريا', values: ['حتى ١٬٠٠٠', 'حتى ١٠٬٠٠٠', 'حسب الاتفاق'] },
+        { feature: 'عدد المستخدمين', values: ['٣ مستخدمين إداريين', '١٠ مستخدمين إداريين', 'حسب الفروع والصلاحيات'] },
+        { feature: 'عدد المناديب', values: ['حتى ١٠ مناديب', 'حتى ٧٥ مندوبا', 'قابل للتوسع حسب المناطق'] },
         { feature: 'بوابة التاجر', values: ['تاجر واحد', 'تجار متعددون', 'تجار وفروع متعددة'] },
-        { feature: 'Courier App', values: ['أساسي', 'كامل', 'كامل مع صلاحيات'] },
-        { feature: 'COD Wallet', values: ['مراجعة أساسية', 'تحصيل وتسوية', 'تسوية متقدمة'] },
-        { feature: 'Smart Dispatch', values: ['غير متاح', 'متاح', 'متقدم حسب المناطق'] },
-        { feature: 'Bulk Upload', values: ['متاح', 'متاح مع تحقق أخطاء', 'تدفقات مخصصة'] },
-        { feature: 'Public Tracking', values: ['متاح', 'متاح', 'متاح مع تخصيص'] },
-        { feature: 'Fraud Detection', values: ['غير متاح', 'إشارات أساسية', 'قواعد متقدمة'] },
-        { feature: 'Reports & Analytics', values: ['تقارير أساسية', 'تقارير تشغيلية', 'تقارير إدارة متقدمة'] },
+        { feature: 'تطبيق المندوب', values: ['أساسي', 'كامل', 'كامل مع صلاحيات'] },
+        { feature: 'محفظة التحصيل عند التسليم', values: ['مراجعة أساسية', 'تحصيل وتسوية', 'تسوية متقدمة'] },
+        { feature: 'التوزيع الذكي', values: ['غير متاح', 'متاح', 'متقدم حسب المناطق'] },
+        { feature: 'الرفع الجماعي', values: ['متاح', 'متاح مع تحقق أخطاء', 'تدفقات مخصصة'] },
+        { feature: 'التتبع العام', values: ['متاح', 'متاح', 'متاح مع تخصيص'] },
+        { feature: 'كشف الاحتيال', values: ['غير متاح', 'إشارات أساسية', 'قواعد متقدمة'] },
+        { feature: 'التقارير والتحليلات', values: ['تقارير أساسية', 'تقارير تشغيلية', 'تقارير إدارة متقدمة'] },
         { feature: 'مستوى الدعم', values: ['بريد وواتساب', 'دعم تشغيل أولي', 'دعم مخصص'] },
+        { feature: 'دعم الإعداد والتشغيل', values: ['دليل بدء', 'جلسة إعداد وتشغيل أولى', 'إعداد وتدريب مخصص'] },
+        { feature: 'ماذا يحدث عند تجاوز الاستخدام؟', values: ['نقترح الانتقال للنمو', 'نراجع الحدود والتكلفة', 'نضبط السعة حسب الاتفاق'] },
       ],
     },
     reassurance: {
@@ -268,7 +266,7 @@ const pageCopy = {
         { marker: '01', title: 'لا توجد رسوم إعداد مخفية', text: 'نوضح تكلفة الإعداد والتشغيل قبل التعاقد، بما في ذلك تهيئة البيانات والفريق.' },
         { marker: '02', title: 'مناسب للتجربة مع أول فريق تشغيل', text: 'ابدأ بفريق ديسباتش أو تاجر واحد، ثم وسع الاستخدام بعد ثبات الدورة.' },
         { marker: '03', title: 'قابل للتوسع حسب حجم الشحنات', text: 'أضف مناديب، تجار، مناطق، وتقارير عندما يزيد حجم العملية.' },
-        { marker: '04', title: 'دعم في مرحلة التشغيل الأولى', text: 'نساعد الفريق على فهم رفع الطلبات، إسناد المناديب، تتبع الحالات، وتسوية COD.' },
+        { marker: '04', title: 'دعم في مرحلة التشغيل الأولى', text: 'نساعد الفريق على فهم رفع الطلبات، إسناد المناديب، تتبع الحالات، وتسوية التحصيل.' },
       ],
     },
     enterprise: {
@@ -282,18 +280,18 @@ const pageCopy = {
       kicker: 'أسئلة التسعير',
       title: 'إجابات سريعة قبل طلب العرض',
       items: [
-        { question: 'هل الأسعار ثابتة أم حسب عدد الشحنات؟', answer: 'الأسعار ترتبط غالبا بحجم الشحنات، عدد المستخدمين، عدد المناديب، واحتياج COD والتقارير. نوضح التفاصيل في العرض.' },
+        { question: 'هل الأسعار ثابتة أم حسب عدد الشحنات؟', answer: 'الأسعار ترتبط غالبا بحجم الشحنات، عدد المستخدمين، عدد المناديب، واحتياج التحصيل والتقارير. نوضح التفاصيل في العرض.' },
         { question: 'هل يوجد فترة تجربة؟', answer: 'يمكن ترتيب تجربة أو تشغيل أولي محدود حسب حجم العملية والبيانات المتاحة.' },
         { question: 'هل يمكن تغيير الخطة لاحقا؟', answer: 'نعم. يمكن الانتقال لخطة أعلى أو تعديل الحدود عند زيادة الشحنات أو عدد التجار والمناديب.' },
         { question: 'هل تدعمون شركات الشحن متعددة الفروع؟', answer: 'نعم. خطة التوسع مناسبة للفروع والمناطق المتعددة والصلاحيات المتقدمة.' },
-        { question: 'هل محفظة COD ضمن كل الخطط؟', answer: 'توجد مراجعة COD أساسية في البداية، وتصبح المحفظة والتسوية التفصيلية أوضح في النمو والتوسع.' },
+        { question: 'هل محفظة التحصيل ضمن كل الخطط؟', answer: 'توجد مراجعة تحصيل أساسية في البداية، وتصبح المحفظة والتسوية التفصيلية أوضح في النمو والتوسع.' },
         { question: 'هل يوجد رسوم على التتبع أو المناديب؟', answer: 'يعتمد ذلك على الخطة وحجم الاستخدام. نوضح عدد المناديب وحدود التتبع ضمن عرض السعر.' },
       ],
     },
     finalCta: {
       kicker: 'الخطوة التالية',
       title: 'جاهز تنظم الشحنات والتحصيل؟',
-      lead: 'احجز عرضا توضيحيا مبنيا على حجم شحناتك، مناطق التوصيل، عدد المناديب، وطريقة تسوية COD.',
+      lead: 'احجز عرضا توضيحيا مبنيا على حجم شحناتك، مناطق التوصيل، عدد المناديب، وطريقة تسوية التحصيل.',
       cta: 'اطلب عرض توضيحي الآن',
     },
   },
@@ -325,39 +323,36 @@ const pageCopy = {
         {
           id: 'starter',
           name: 'Starter',
-          nameEn: 'Starter',
           description: 'For teams moving orders and tracking from spreadsheets into a structured system.',
           price: 'Based on shipment volume',
           priceNote: 'Clear monthly invoice',
           bestFor: 'Best for a first operations team or store organizing delivery.',
           features: ['Up to 1,000 shipments per month', '3 admin users', 'Up to 10 couriers', 'One merchant portal', 'Public shipment tracking', 'Basic reports', 'Email or WhatsApp support'],
           cta: 'Request Starter plan',
-          ctaTo: '/request-demo',
+          ctaTo: '/request-demo?plan=starter',
         },
         {
           id: 'growth',
           name: 'Growth',
-          nameEn: 'Growth',
           description: 'For shipping companies and stores that need dispatch, couriers, COD, and daily reports in one place.',
           price: 'Based on shipment volume',
           priceNote: 'Recommended plan',
           bestFor: 'Best for active COD operations and daily dispatch teams.',
           features: ['Up to 10,000 shipments per month', '10 admin users', 'Up to 75 couriers', 'Multiple merchant portals', 'Smart Dispatch', 'Courier App', 'COD Wallet', 'Bulk Upload', 'Advanced operations reports', 'First launch support'],
           cta: 'Request Growth demo',
-          ctaTo: '/request-demo',
+          ctaTo: '/request-demo?plan=growth',
           recommended: true,
         },
         {
           id: 'scale',
           name: 'Scale',
-          nameEn: 'Scale',
           description: 'For high-volume shipping companies that need permissions, branches, reports, and custom workflows.',
           price: 'Custom pricing',
           priceNote: 'Based on branches and workflows',
           bestFor: 'Best for multi-branch operations and many merchants.',
           features: ['High monthly shipment volume', 'Advanced users and roles', 'Scalable courier count', 'Multiple branches and zones', 'Fraud Detection', 'Advanced management reports', 'Custom workflows', 'Dedicated launch and operations support'],
           cta: 'Get custom pricing',
-          ctaTo: '/contact',
+          ctaTo: '/contact?topic=scale-pricing',
         },
       ],
     },
@@ -370,6 +365,8 @@ const pageCopy = {
       plans: ['Starter', 'Growth', 'Scale'],
       rows: [
         { feature: 'Shipments per month', values: ['Up to 1,000', 'Up to 10,000', 'Custom scope'] },
+        { feature: 'Users', values: ['3 admin users', '10 admin users', 'By branches and roles'] },
+        { feature: 'Couriers', values: ['Up to 10 couriers', 'Up to 75 couriers', 'Scales by zones'] },
         { feature: 'Merchant portal', values: ['One merchant', 'Multiple merchants', 'Multiple merchants and branches'] },
         { feature: 'Courier app', values: ['Basic', 'Full', 'Full with permissions'] },
         { feature: 'COD wallet', values: ['Basic review', 'Collection and settlement', 'Advanced settlement'] },
@@ -379,6 +376,8 @@ const pageCopy = {
         { feature: 'Fraud detection', values: ['Not included', 'Basic signals', 'Advanced rules'] },
         { feature: 'Reports and analytics', values: ['Basic reports', 'Operations reports', 'Advanced management reports'] },
         { feature: 'Support level', values: ['Email and WhatsApp', 'First launch support', 'Dedicated support'] },
+        { feature: 'Setup and launch support', values: ['Starter guide', 'Setup and first launch session', 'Custom setup and team training'] },
+        { feature: 'If usage exceeds the plan', values: ['We suggest moving to Growth', 'We review limits and cost', 'Capacity is adjusted by agreement'] },
       ],
     },
     reassurance: {
@@ -422,7 +421,24 @@ const pageCopy = {
 
 const copy = computed(() => (isArabic.value ? pageCopy.ar : pageCopy.en))
 
-setSeo(copy.value.seoTitle, copy.value.seoDescription)
+watchEffect(() => {
+  setSeo(copy.value.seoTitle, copy.value.seoDescription)
+})
+
+onMounted(() => {
+  const media = window.matchMedia('(min-width: 46.001rem)')
+  const updateComparisonFocus = () => {
+    comparisonTabIndex.value = media.matches ? 0 : null
+  }
+
+  updateComparisonFocus()
+  media.addEventListener('change', updateComparisonFocus)
+  removeComparisonFocusListener = () => media.removeEventListener('change', updateComparisonFocus)
+})
+
+onBeforeUnmount(() => {
+  removeComparisonFocusListener?.()
+})
 </script>
 
 <style scoped>
