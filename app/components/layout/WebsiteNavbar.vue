@@ -1,40 +1,22 @@
 <template>
   <header :class="['navbar', { 'navbar--scrolled': isScrolled }]" role="banner">
-    <nav class="app-container navbar__inner" :aria-label="locale === 'ar' ? 'التنقل الرئيسي' : 'Main navigation'">
-      <NuxtLink :to="localePath('/')" class="navbar__logo" :aria-label="locale === 'ar' ? 'تراكورا - الصفحة الرئيسية' : 'Trackora - Home'">
-        <span class="navbar__logo-img">
-          <img src="/logos/trackora_logo_full_white.png" alt="تراكورا" />
-        </span>
+    <nav class="navbar__inner" :aria-label="locale === 'ar' ? 'التنقل الرئيسي' : 'Main navigation'">
+      <NuxtLink :to="localePath('/')" class="navbar__logo" :aria-label="locale === 'ar' ? 'Trackora الرئيسية' : 'Trackora home'" @click="closeMobile">
+        <img src="/logos/trackora_logo_full_white.png" alt="Trackora" />
       </NuxtLink>
 
-      <ul class="navbar__links" :class="{ 'navbar__links--open': mobileOpen }">
+      <ul class="navbar__links">
         <li v-for="item in navItems" :key="item.key">
-          <NuxtLink v-if="!item.children" :to="localePath(item.pathAr)" class="navbar__link" @click="closeMobile">
+          <NuxtLink :to="localePath(item.pathAr)" class="navbar__link">
             {{ t(`nav.${item.key}`) }}
           </NuxtLink>
-          <div v-else class="navbar__dropdown">
-            <button class="navbar__link navbar__dropdown-toggle" type="button" aria-haspopup="true" :aria-expanded="openDropdown === item.key" @click="toggleDropdown(item.key)">
-              {{ t(`nav.${item.key}`) }}
-              <span class="navbar__chevron" aria-hidden="true">▾</span>
-            </button>
-            <ul v-if="openDropdown === item.key" class="navbar__dropdown-menu">
-              <li v-for="child in item.children" :key="child.key">
-                <NuxtLink :to="localePath(child.pathAr)" class="navbar__dropdown-link" @click="closeMobile">
-                  {{ t(`nav.${child.key}`) }}
-                </NuxtLink>
-              </li>
-            </ul>
-          </div>
         </li>
       </ul>
 
       <div class="navbar__actions">
-        <LanguageSwitcher />
-        <LoginDropdown />
-        <NuxtLink :to="localePath('/track')" class="btn btn--secondary btn--sm navbar__track-link">
-          {{ t('nav.trackShipment') }}
-        </NuxtLink>
-        <NuxtLink :to="localePath('/request-demo')" class="btn btn--primary btn--sm">
+        <LanguageSwitcher class="navbar__language" />
+        <LoginDropdown class="navbar__login" />
+        <NuxtLink :to="localePath('/request-demo')" class="navbar__demo-link">
           {{ t('nav.requestDemo') }}
         </NuxtLink>
         <MobileMenu :open="mobileOpen" @toggle="mobileOpen = !mobileOpen" @close="closeMobile" />
@@ -49,174 +31,176 @@ import { navigationItems } from '~/data/navigation'
 const { t, locale } = useI18n()
 const localePath = useLocalePath()
 const mobileOpen = ref(false)
-const openDropdown = ref<string | null>(null)
 const isScrolled = ref(false)
 
 const navItems = navigationItems
 
-function toggleDropdown(key: string) {
-  openDropdown.value = openDropdown.value === key ? null : key
-}
-
 function closeMobile() {
   mobileOpen.value = false
-  openDropdown.value = null
+}
+
+function onKeydown(event: KeyboardEvent) {
+  if (event.key === 'Escape') {
+    closeMobile()
+  }
 }
 
 onMounted(() => {
   function handleScroll() {
-    isScrolled.value = window.scrollY > 8
+    isScrolled.value = window.scrollY > 10
   }
+
   handleScroll()
   window.addEventListener('scroll', handleScroll, { passive: true })
-  onUnmounted(() => window.removeEventListener('scroll', handleScroll))
+  window.addEventListener('keydown', onKeydown)
+
+  onUnmounted(() => {
+    window.removeEventListener('scroll', handleScroll)
+    window.removeEventListener('keydown', onKeydown)
+  })
 })
 </script>
 
 <style scoped>
-
-.app-container {
-  width: 100%;
-  max-width: var(--container-max);
-  margin-inline: auto;
-  padding-inline: var(--spacing-6);
-}
-
-
-
-@media (max-width: 36rem) {
-  .app-container {
-    padding-inline: var(--spacing-4);
-  }
-}
 .navbar {
   position: sticky;
   top: 0;
-  z-index: 50;
-  background: rgba(16, 40, 68, 0.92);
-  backdrop-filter: blur(16px);
-  border-block-end: 1px solid rgba(255, 255, 255, 0.06);
-  transition: background 0.3s ease, box-shadow 0.3s ease;
+  z-index: 80;
+  border-block-end: 1px solid rgba(255, 255, 255, 0.08);
+  background:
+    linear-gradient(90deg, rgba(255, 107, 107, 0.08), transparent 28%),
+    rgba(10, 29, 52, 0.94);
+  backdrop-filter: blur(18px);
+  transition: background 240ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 240ms cubic-bezier(0.22, 1, 0.36, 1), border-color 240ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .navbar--scrolled {
-  background: rgba(16, 40, 68, 0.98);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(10, 29, 52, 0.98);
+  box-shadow: 0 18px 48px rgba(4, 16, 31, 0.22);
 }
 
 .navbar__inner {
+  width: min(100%, var(--container-wide, 88rem));
+  min-height: 4.75rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--spacing-4);
-  padding-block: var(--spacing-4);
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 3vw, 2rem);
 }
 
 .navbar__logo {
-  text-decoration: none;
-  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  min-width: 5.5rem;
+  border-radius: var(--radius-lg);
 }
 
-.navbar__logo-img {
-  display: inline-block;
-  width: 80px;
+.navbar__logo img {
+  width: 7.2rem;
   height: auto;
 }
 
 .navbar__links {
   display: none;
-  list-style: none;
-  gap: var(--spacing-6);
   align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  margin-inline: auto;
 }
 
 .navbar__link {
-  color: rgba(255, 255, 255, 0.75);
-  text-decoration: none;
-  font-size: var(--text-sm);
-  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  border-radius: 999px;
+  padding: 0.55rem 0.85rem;
+  color: rgba(255, 255, 255, 0.78);
   font-family: var(--font-heading);
-  transition: color 0.2s ease;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
+  font-size: var(--text-sm);
+  font-weight: 800;
+  line-height: 1.3;
+  transition: color 180ms ease, background-color 180ms ease;
 }
 
 .navbar__link:hover,
-.navbar__link:focus-visible {
-  color: var(--color-text-light);
-}
-
-.navbar__dropdown {
-  position: relative;
-}
-
-.navbar__dropdown-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--spacing-1);
-}
-
-.navbar__chevron {
-  font-size: var(--text-xs);
-}
-
-.navbar__dropdown-menu {
-  position: absolute;
-  top: 100%;
-  inset-inline-start: 0;
-  background: var(--glass-bg);
-  border: 1px solid rgba(27, 77, 92, 0.08);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-lg);
-  list-style: none;
-  min-width: 14rem;
-  padding: var(--spacing-2) 0;
-  z-index: 60;
-  backdrop-filter: blur(20px);
-}
-
-.navbar__dropdown-link {
-  display: block;
-  padding: var(--spacing-2) var(--spacing-4);
-  color: var(--color-text);
-  text-decoration: none;
-  font-size: var(--text-sm);
-  font-family: var(--font-heading);
-  transition: background-color 0.15s ease;
-}
-
-.navbar__dropdown-link:hover,
-.navbar__dropdown-link:focus-visible {
-  background-color: var(--color-bg-alt);
-  color: var(--color-primary);
+.navbar__link:focus-visible,
+.navbar__link.router-link-active {
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.09);
 }
 
 .navbar__actions {
   display: flex;
   align-items: center;
-  gap: var(--spacing-3);
-  flex-shrink: 0;
+  justify-content: flex-end;
+  gap: 0.55rem;
+  flex: 0 0 auto;
 }
 
-.btn--sm {
-  padding: var(--spacing-2) var(--spacing-4);
+.navbar__demo-link {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  border-radius: 999px;
+  padding: 0.65rem 1rem;
+  background: #FF6B6B;
+  color: #210F16;
   font-size: var(--text-sm);
-  border-radius: var(--radius-full);
+  font-weight: 900;
+  box-shadow: 0 12px 28px rgba(255, 107, 107, 0.24);
+  transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
 }
 
-.navbar__track-link {
+.navbar__demo-link:hover {
+  color: #210F16;
+  transform: translateY(-1px);
+  box-shadow: 0 16px 36px rgba(255, 107, 107, 0.34);
+}
+
+.navbar__logo:focus-visible,
+.navbar__link:focus-visible,
+.navbar__demo-link:focus-visible {
+  outline: 3px solid #FF6B6B;
+  outline-offset: 3px;
+}
+
+.navbar__login {
   display: none;
 }
 
-@media (min-width: 64rem) {
-  .navbar__links {
+@media (min-width: 48rem) {
+  .navbar__demo-link {
+    display: inline-flex;
+  }
+}
+
+@media (min-width: 68rem) {
+  .navbar__links,
+  .navbar__login {
     display: flex;
   }
+}
 
-  .navbar__track-link {
-    display: inline-flex;
+@media (max-width: 30rem) {
+  .navbar__language {
+    display: none;
+  }
+
+  .navbar__logo img {
+    width: 6.2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar,
+  .navbar__demo-link,
+  .navbar__link {
+    transition-duration: 0.01ms;
   }
 }
 </style>

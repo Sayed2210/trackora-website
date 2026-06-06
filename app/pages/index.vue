@@ -4,18 +4,18 @@
       <div class="hero__grid">
         <div class="hero__content">
           <p class="hero__label">نظام تشغيل الشحنات والتحصيل</p>
-          <h1 id="hero-title">إدارة التوصيل وCOD من أول طلب حتى تسوية المحفظة</h1>
+          <h1 id="hero-title">شغّل الشحنات وCOD من طلب المتجر حتى تسوية المحفظة</h1>
           <p class="hero__lead">
-            Trackora يجمع شركات الشحن، المتاجر، المناديب، التحصيل، والتتبع في نظام واحد واضح. ارفع الطلبات، وزع الشحنات، راقب المخاطر، وأغلق حسابات COD بدون جداول منفصلة أو اتصالات متكررة.
+            Trackora يعطي فريق الديسباتش، المناديب، التحصيل، والتجار سجل تشغيل واحدا: ارفع الطلبات، اكشف المخاطر، وزع الشحنات، تابع العميل، وأغلق COD بدون جداول منفصلة أو اتصالات متكررة.
           </p>
           <div class="hero__actions" aria-label="إجراءات رئيسية">
-            <NuxtLink class="home-btn home-btn--primary" to="/request-demo">اطلب عرض توضيحي</NuxtLink>
-            <NuxtLink class="home-btn home-btn--secondary" to="/track">تتبع شحنة</NuxtLink>
+            <NuxtLink class="home-btn home-btn--primary" to="/request-demo">اطلب عرضا على عملية شحنك</NuxtLink>
+            <NuxtLink class="home-btn home-btn--secondary" to="/track">تتبع شحنة كعميل</NuxtLink>
           </div>
           <div class="hero__proof" aria-label="ملخص تشغيلي">
-            <span>جاهز لشركات الشحن</span>
-            <span>يدعم المتاجر الإلكترونية</span>
-            <span>مصمم لعمليات COD</span>
+            <span>عرض مبني على مناطقك وحجم شحناتك</span>
+            <span>تسوية COD حسب التاجر والمندوب</span>
+            <span>تتبع عام يقلل مكالمات أين الشحنة</span>
           </div>
         </div>
 
@@ -44,14 +44,14 @@
 
             <div class="ops-console__rail">
               <div class="wallet-meter">
-                <span>COD قيد التسوية</span>
+                <span>COD جاهز للمراجعة</span>
                 <strong>74,250 ج.م</strong>
                 <div class="wallet-meter__bar"><span /></div>
               </div>
               <div class="risk-ticket">
                 <span>إشارة مخاطر</span>
-                <strong>12 طلب مكرر</strong>
-                <small>تم وضعها للمراجعة قبل الإرسال</small>
+                <strong>12 رقم مكرر</strong>
+                <small>موقوفة قبل خروج المندوب للطريق</small>
               </div>
               <div class="courier-stack">
                 <span>المناديب المتاحون</span>
@@ -97,11 +97,32 @@
         <p>
           بدل نقل البيانات بين ملفات واتساب وجداول وحسابات نقدية، Trackora يحول الشحنة إلى سجل حي: من إنشاء الطلب إلى إسناده، تحديث حالته، تحصيل قيمته، ثم تسوية المحفظة.
         </p>
-        <NuxtLink class="home-btn home-btn--primary" to="/request-demo">شاهد النظام على عمليتك</NuxtLink>
+        <NuxtLink class="home-btn home-btn--primary" to="/request-demo">شاهد Trackora على بيانات تشغيلك</NuxtLink>
       </div>
       <div class="connection-map" aria-label="خريطة ربط Trackora التشغيلية">
         <div class="connection-map__center">Trackora</div>
         <span v-for="node in solutionNodes" :key="node" class="connection-map__node">{{ node }}</span>
+      </div>
+    </section>
+
+    <section class="section intent-paths" aria-labelledby="intent-title">
+      <div class="intent-paths__header">
+        <span class="section-marker">اختر مسارك</span>
+        <h2 id="intent-title">كل فريق يرى نفس الشحنة من الزاوية التي تهمه</h2>
+        <p>
+          Trackora لا يبيع لوحة عامة لكل الناس. كل مسار يركز على قرار يومي واضح: من يوزع الشحنة، من يحصل COD، ومن يحتاج معرفة الحالة الآن.
+        </p>
+      </div>
+      <div class="intent-paths__grid">
+        <article v-for="path in intentPaths" :key="path.title" :class="['intent-card', path.featured ? 'intent-card--featured' : '']">
+          <span>{{ path.audience }}</span>
+          <h3>{{ path.title }}</h3>
+          <p>{{ path.text }}</p>
+          <ul>
+            <li v-for="item in path.points" :key="item">{{ item }}</li>
+          </ul>
+          <NuxtLink class="intent-card__link" :to="path.to">{{ path.cta }}</NuxtLink>
+        </article>
       </div>
     </section>
 
@@ -116,6 +137,10 @@
           <h3>{{ feature.title }}</h3>
           <p>{{ feature.text }}</p>
         </article>
+      </div>
+      <div class="section-cta">
+        <p>إذا كان فريقك يعمل بين واتساب، Excel، واتصالات العملاء، ابدأ بعرض يطابق دورة الشحنة عندك.</p>
+        <NuxtLink class="home-btn home-btn--primary" to="/request-demo">احجز عرض تشغيل Trackora</NuxtLink>
       </div>
     </section>
 
@@ -133,19 +158,24 @@
       </ol>
     </section>
 
-    <section class="section showcase" aria-labelledby="showcase-title">
+    <section class="section proof-board" aria-labelledby="showcase-title">
       <div class="showcase__header">
-        <span class="section-marker">لقطات من المنتج</span>
-        <h2 id="showcase-title">واجهات تعطي كل فريق ما يحتاجه بدون ضوضاء</h2>
+        <span class="section-marker">دليل تشغيلي</span>
+        <h2 id="showcase-title">تفاصيل من يوم شحن حقيقي، لا رسوم توضيحية عامة</h2>
       </div>
-      <div class="showcase-grid">
-        <article v-for="screen in screens" :key="screen.title" class="screen-card">
-          <div class="screen-card__chrome"><span /><span /><span /></div>
-          <h3>{{ screen.title }}</h3>
-          <p>{{ screen.text }}</p>
-          <div class="screen-card__mock">
-            <span v-for="line in screen.lines" :key="line">{{ line }}</span>
+      <div class="proof-ledger">
+        <article v-for="column in proofColumns" :key="column.title" class="proof-column">
+          <div class="proof-column__header">
+            <span>{{ column.kicker }}</span>
+            <h3>{{ column.title }}</h3>
           </div>
+          <ul>
+            <li v-for="row in column.rows" :key="row.label">
+              <span>{{ row.label }}</span>
+              <strong>{{ row.value }}</strong>
+              <small>{{ row.note }}</small>
+            </li>
+          </ul>
         </article>
       </div>
     </section>
@@ -166,7 +196,7 @@
           </ul>
         </article>
       </div>
-      <NuxtLink class="home-btn home-btn--outline" to="/pricing">عرض خطط الأسعار</NuxtLink>
+      <NuxtLink class="home-btn home-btn--outline" to="/pricing">اعرف السعر حسب حجم شحناتك</NuxtLink>
     </section>
 
     <section class="final-cta" aria-labelledby="final-cta-title">
@@ -177,7 +207,7 @@
           احجز عرضا توضيحيا مبنيا على شكل عمليتك: عدد الشحنات، مناطق التوصيل، طريقة التحصيل، واحتياج المتاجر للتتبع.
         </p>
       </div>
-      <NuxtLink class="home-btn home-btn--primary home-btn--accent" to="/request-demo">اطلب عرض توضيحي</NuxtLink>
+      <NuxtLink class="home-btn home-btn--primary home-btn--accent" to="/request-demo">اطلب عرضا على بيانات تشغيلك</NuxtLink>
     </section>
 
     <section class="section faq" aria-labelledby="faq-title">
@@ -210,10 +240,10 @@ const shipments = [
 ]
 
 const metrics = [
-  { value: '25K+', label: 'شحنة يمكن إدارتها شهريا' },
-  { value: '99%', label: 'وضوح لحالة التحصيل' },
-  { value: '5 دقائق', label: 'لرفع دفعة طلبات' },
-  { value: '24/7', label: 'تتبع متاح للعميل' },
+  { value: 'Excel', label: 'رفع دفعات الطلبات مع كشف الأخطاء قبل التشغيل' },
+  { value: 'COD', label: 'تسوية حسب التاجر والمندوب والمرتجع' },
+  { value: 'Risk', label: 'إشارات للأرقام المكررة والعناوين الناقصة' },
+  { value: 'Track', label: 'رابط تتبع عام يقلل اتصالات الحالة' },
 ]
 
 const problems = [
@@ -226,15 +256,43 @@ const problems = [
 
 const solutionNodes = ['المتاجر', 'الديسباتش', 'المناديب', 'محفظة COD', 'تتبع العميل']
 
+const intentPaths = [
+  {
+    audience: 'شركات الشحن',
+    title: 'سيطرة يومية على الديسباتش والتحصيل',
+    text: 'اعرف ما ينتظر الإسناد، ما خرج للطريق، ما فشل، وما يحتاج تسوية مالية قبل نهاية اليوم.',
+    points: ['إسناد حسب المنطقة وسعة المندوب', 'حالات فشل وتسليم قابلة للمراجعة', 'محفظة COD لكل تاجر ومندوب'],
+    cta: 'راجع حلول شركات الشحن',
+    to: '/solutions/shipping-companies',
+    featured: true,
+  },
+  {
+    audience: 'متاجر التجارة الإلكترونية',
+    title: 'رؤية واضحة للطلبات والمستحقات',
+    text: 'ارفع الطلبات، تابع حالة كل شحنة، واعرف المستحق والمعلق بدون سؤال شركة الشحن كل ساعة.',
+    points: ['رفع دفعات من ملفات الطلبات', 'تتبع حالات التسليم والمرتجع', 'تقارير COD جاهزة للمراجعة'],
+    cta: 'اطلب بوابة التاجر',
+    to: '/request-demo',
+  },
+  {
+    audience: 'السوشيال سيلرز',
+    title: 'تتبع أبسط لطلبات كثيرة وسريعة',
+    text: 'قلل ضياع الطلبات بين الرسائل، وامنح العميل رابط تتبع واضحا بدلا من متابعة كل محادثة يدويا.',
+    points: ['إدخال سريع للطلبات', 'رابط تتبع للعميل', 'تنبيه مبكر للبيانات الناقصة'],
+    cta: 'شاهد مسار السوشيال سيلرز',
+    to: '/request-demo',
+  },
+]
+
 const features = [
-  { tag: 'Dispatch', title: 'Smart Dispatch', text: 'إسناد الشحنات حسب المنطقة، السعة، حالة المندوب، وأولوية التحصيل.', featured: true },
-  { tag: 'Courier', title: 'Courier App', text: 'مهام يومية، تحديثات تسليم، تحصيل COD، وإثباتات ميدانية للمندوب.' },
-  { tag: 'Merchant', title: 'Merchant Portal', text: 'بوابة للتاجر لرفع الطلبات ومتابعة الحالات والاطلاع على مستحقات COD.' },
-  { tag: 'Wallet', title: 'COD Wallet', text: 'رصيد واضح للمحصل، المعلق، المرتجع، والمستحق للتسوية.' },
-  { tag: 'Tracking', title: 'Public Tracking', text: 'صفحة تتبع مفهومة للعميل تقلل المكالمات المتكررة على الدعم.' },
-  { tag: 'Risk', title: 'Fraud Detection', text: 'إشارات مبكرة للطلبات المكررة أو المشكوك فيها قبل خروجها للطريق.' },
-  { tag: 'Upload', title: 'Bulk Upload', text: 'رفع دفعات الشحنات من ملفات المتاجر مع تحقق واضح من الأخطاء.' },
-  { tag: 'Reports', title: 'Reports & Analytics', text: 'تقارير تشغيلية عن التسليم، الفشل، التحصيل، وأداء المناديب.' },
+  { tag: 'تشغيل الشحنات', title: 'Smart Dispatch', text: 'إسناد الشحنات حسب المنطقة، السعة، حالة المندوب، وأولوية التحصيل مع سجل تغيير واضح.', featured: true },
+  { tag: 'المندوب', title: 'Courier App', text: 'مهام يومية، تحديثات تسليم، تحصيل COD، وسبب الفشل من الميدان.' },
+  { tag: 'التاجر', title: 'Merchant Portal', text: 'بوابة للتاجر لرفع الطلبات ومتابعة الحالات والاطلاع على مستحقات COD.' },
+  { tag: 'التحصيل', title: 'COD Wallet', text: 'رصيد للمحصل، المعلق، المرتجع، والمستحق للتسوية حسب كل طرف.' },
+  { tag: 'العميل', title: 'Public Tracking', text: 'صفحة تتبع مفهومة تقلل مكالمات أين الشحنة ومتى تصل.' },
+  { tag: 'المخاطر', title: 'Fraud Detection', text: 'إشارات مبكرة للأرقام المكررة، العناوين الناقصة، والطلبات المشكوك فيها.' },
+  { tag: 'الدفعات', title: 'Bulk Upload', text: 'رفع دفعات الشحنات من ملفات المتاجر مع أخطاء واضحة قابلة للتصحيح.' },
+  { tag: 'الإدارة', title: 'Reports & Analytics', text: 'تقارير عن التسليم، الفشل، التحصيل، وأداء المناديب والمناطق.' },
 ]
 
 const workflow = [
@@ -245,11 +303,34 @@ const workflow = [
   { number: '05', title: 'تسوية المحفظة', text: 'أغلق مستحقات التجار والمناديب بتقارير قابلة للمراجعة.' },
 ]
 
-const screens = [
-  { title: 'لوحة التشغيل', text: 'رؤية يومية للشحنات، المناطق، المناديب، وحالات التأخير.', lines: ['128 بانتظار الإسناد', '43 في الطريق', '9 تحتاج مراجعة'] },
-  { title: 'مهمة المندوب', text: 'قائمة تسليم واضحة مع حالة COD وإثباتات التنفيذ.', lines: ['استلام من المخزن', 'تسليم العميل', 'تحصيل 850 ج.م'] },
-  { title: 'محفظة COD', text: 'تفصيل المحصل والمعلق والمستحق لكل تاجر أو مندوب.', lines: ['محصل 74,250', 'معلق 12,900', 'جاهز للتسوية'] },
-  { title: 'تتبع العميل', text: 'خط زمني بسيط يقلل أسئلة أين الشحنة ومتى تصل.', lines: ['تم الاستلام', 'خرجت للتوصيل', 'تم التسليم'] },
+const proofColumns = [
+  {
+    kicker: 'حالة الشحنة',
+    title: 'من الطلب إلى التسليم',
+    rows: [
+      { label: 'TRK-4821', value: 'خرجت للتوصيل', note: 'مندوب أحمد، منطقة التجمع، COD 850 ج.م' },
+      { label: 'TRK-4822', value: 'محاولة فاشلة', note: 'العميل غير متاح، إعادة جدولة للغد' },
+      { label: 'TRK-4823', value: 'مراجعة قبل الإرسال', note: 'رقم مكرر وعنوان ناقص' },
+    ],
+  },
+  {
+    kicker: 'محفظة COD',
+    title: 'تسوية قابلة للمراجعة',
+    rows: [
+      { label: 'المحصل اليوم', value: '74,250 ج.م', note: 'مقسم حسب المندوب والتاجر' },
+      { label: 'المعلق', value: '12,900 ج.م', note: 'شحنات مرتجعة أو لم تغلق بعد' },
+      { label: 'جاهز للتسوية', value: '61,350 ج.م', note: 'قابل للتصدير والمراجعة المالية' },
+    ],
+  },
+  {
+    kicker: 'المخاطر والتتبع',
+    title: 'أقل مفاجآت قبل الطريق',
+    rows: [
+      { label: 'Risk Flag', value: '12 رقم مكرر', note: 'موقوفة قبل الإسناد للمندوب' },
+      { label: 'Tracking', value: 'رابط عام', note: 'العميل يرى الاستلام، الطريق، التسليم' },
+      { label: 'Support', value: 'سبب واضح', note: 'فشل التسليم مسجل بدل مكالمة غير موثقة' },
+    ],
+  },
 ]
 
 const plans = [
@@ -702,6 +783,118 @@ details:focus-within {
   gap: 1.25rem;
 }
 
+.intent-paths {
+  display: grid;
+  gap: clamp(2rem, 4vw, 3.5rem);
+}
+
+.intent-paths__header {
+  display: grid;
+  gap: 1rem;
+  max-width: 62rem;
+}
+
+.intent-paths__header p {
+  max-width: 72ch;
+}
+
+.intent-paths__grid {
+  display: grid;
+  grid-template-columns: 1.18fr 0.91fr 0.91fr;
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.intent-card {
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+  min-height: 23rem;
+  padding: clamp(1.25rem, 2.5vw, 2rem);
+  border: 1px solid rgba(26, 59, 102, 0.12);
+  border-radius: 1.7rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(245, 245, 245, 0.72));
+  box-shadow: 0 16px 48px rgba(26, 59, 102, 0.08);
+}
+
+.intent-card--featured {
+  color: #FFFFFF;
+  background:
+    radial-gradient(circle at 15% 12%, rgba(255, 107, 107, 0.22), transparent 14rem),
+    linear-gradient(145deg, var(--trackora-primary), #0B1D33);
+  box-shadow: 0 28px 76px rgba(26, 59, 102, 0.2);
+}
+
+.intent-card > span {
+  width: fit-content;
+  border-radius: 999px;
+  padding: 0.36rem 0.75rem;
+  background: rgba(255, 107, 107, 0.12);
+  color: #8F1D2B;
+  font-size: 0.84rem;
+  font-weight: 900;
+}
+
+.intent-card--featured > span {
+  background: rgba(255, 255, 255, 0.12);
+  color: #FFFFFF;
+}
+
+.intent-card h3 {
+  color: var(--trackora-ink);
+  font-size: clamp(1.35rem, 2.4vw, 2.35rem);
+  line-height: 1.16;
+  text-wrap: balance;
+}
+
+.intent-card--featured h3,
+.intent-card--featured p,
+.intent-card--featured li {
+  color: #FFFFFF;
+}
+
+.intent-card--featured p,
+.intent-card--featured li {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.intent-card ul {
+  display: grid;
+  gap: 0.55rem;
+  margin-block: 0.25rem;
+}
+
+.intent-card li {
+  position: relative;
+  padding-inline-start: 1rem;
+  color: var(--trackora-muted);
+  line-height: 1.65;
+}
+
+.intent-card li::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0.72rem;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: var(--trackora-accent);
+}
+
+.intent-card__link {
+  align-self: end;
+  width: fit-content;
+  margin-top: auto;
+  color: var(--trackora-primary);
+  font-weight: 900;
+}
+
+.intent-card--featured .intent-card__link {
+  color: #FFD6D6;
+}
+
 .connection-map {
   position: relative;
   display: grid;
@@ -796,6 +989,25 @@ details:focus-within {
   max-width: 34ch;
 }
 
+.section-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+  padding: clamp(1rem, 2vw, 1.35rem);
+  border: 1px solid rgba(26, 59, 102, 0.12);
+  border-radius: 1.5rem;
+  background: linear-gradient(135deg, rgba(26, 59, 102, 0.06), rgba(255, 107, 107, 0.08));
+}
+
+.section-cta p {
+  max-width: 58ch;
+  color: var(--trackora-ink);
+  font-weight: 800;
+}
+
 @media (hover: hover) {
   .feature-tile:hover,
   .screen-card:hover,
@@ -836,6 +1048,83 @@ details:focus-within {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
+}
+
+.proof-board {
+  position: relative;
+}
+
+.proof-ledger {
+  display: grid;
+  grid-template-columns: 1fr 1.08fr 1fr;
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid rgba(26, 59, 102, 0.14);
+  border-radius: 2rem;
+  background: rgba(26, 59, 102, 0.14);
+  box-shadow: var(--trackora-shadow);
+}
+
+.proof-column {
+  display: grid;
+  gap: 1.2rem;
+  padding: clamp(1.25rem, 2.4vw, 2rem);
+  background: #FFFFFF;
+}
+
+.proof-column:nth-child(2) {
+  background:
+    radial-gradient(circle at 20% 10%, rgba(255, 107, 107, 0.12), transparent 14rem),
+    var(--trackora-surface);
+}
+
+.proof-column__header {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.proof-column__header span {
+  color: var(--trackora-accent);
+  font-size: 0.85rem;
+  font-weight: 900;
+}
+
+.proof-column__header h3 {
+  color: var(--trackora-ink);
+  font-size: clamp(1.25rem, 2vw, 1.8rem);
+  line-height: 1.2;
+}
+
+.proof-column ul {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.proof-column li {
+  display: grid;
+  gap: 0.28rem;
+  padding: 0.9rem 0;
+  border-top: 1px solid rgba(26, 59, 102, 0.1);
+}
+
+.proof-column li:first-child {
+  border-top: 0;
+}
+
+.proof-column li > span {
+  color: var(--trackora-muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.proof-column strong {
+  color: var(--trackora-primary);
+  font-size: clamp(1rem, 1.6vw, 1.28rem);
+}
+
+.proof-column small {
+  color: var(--trackora-muted);
+  line-height: 1.65;
 }
 
 .screen-card {
@@ -1033,8 +1322,15 @@ details p {
   }
 
   .feature-bento,
-  .workflow-steps {
+  .workflow-steps,
+  .intent-paths__grid,
+  .proof-ledger {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .intent-card--featured,
+  .proof-column:first-child {
+    grid-column: span 2;
   }
 
   .feature-tile--featured {
@@ -1073,11 +1369,18 @@ details p {
 
   .ops-console__body,
   .stats-strip,
+  .intent-paths__grid,
   .feature-bento,
   .workflow-steps,
   .showcase-grid,
-  .pricing-grid {
+  .pricing-grid,
+  .proof-ledger {
     grid-template-columns: 1fr;
+  }
+
+  .intent-card--featured,
+  .proof-column:first-child {
+    grid-column: auto;
   }
 
   .ops-console,
@@ -1099,6 +1402,25 @@ details p {
   .feature-tile--featured {
     grid-column: auto;
     grid-row: auto;
+  }
+
+  .intent-card,
+  .feature-tile,
+  .proof-column,
+  .plan-card {
+    min-height: auto;
+  }
+
+  .section-cta {
+    align-items: stretch;
+  }
+
+  .section-cta .home-btn {
+    width: 100%;
+  }
+
+  .proof-ledger {
+    border-radius: 1.5rem;
   }
 
   .connection-map {
