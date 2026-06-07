@@ -112,19 +112,22 @@
     "CANCELLED": "Cancelled"
   },
   "requestDemo": {
-    "heading": "Request a Demo",
-    "subtitle": "Tell us about your business and we will contact you within 24 hours.",
+    "heading": "Book a demo shaped around your operation",
+    "subtitle": "Trackora helps organize shipments, couriers, COD, tracking, dispatch, and reports from one operating record.",
     "fields": {
       "name": "Name",
-      "company": "Company name",
+      "company": "Company / store name",
       "email": "Email",
       "phone": "Phone number",
       "businessType": "Business type",
+      "monthlyVolume": "Monthly shipment volume",
+      "plan": "Interested plan",
+      "problem": "Main problem to solve",
       "message": "Additional message"
     },
-    "submit": "Submit Request",
-    "success": "Your request has been submitted successfully! We will contact you soon.",
-    "error": "An error occurred during submission. Please try again later."
+    "submit": "Send demo request",
+    "success": "Demo request recorded. We will review your operation size and follow up with clear next steps.",
+    "error": "Review the highlighted fields before sending the request."
   },
   "contact": {
     "heading": "Contact Us",
