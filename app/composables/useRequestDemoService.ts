@@ -10,7 +10,9 @@ export function useRequestDemoService() {
 
     try {
       await new Promise((resolve) => setTimeout(resolve, 1500))
-      console.log('Demo request submitted:', payload)
+      if (import.meta.dev) {
+        console.info('Demo request submitted:', payload)
+      }
       success.value = true
     } catch (err: unknown) {
       error.value = err instanceof Error ? err.message : 'An error occurred'
