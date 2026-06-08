@@ -46,63 +46,9 @@
       </AppContainer>
     </section>
 
-    <section class="contact-options" aria-labelledby="options-heading">
-      <AppContainer>
-        <div class="section-heading section-heading--split">
-          <div>
-            <h2 id="options-heading">{{ copy.options.title }}</h2>
-            <p>{{ copy.options.lead }}</p>
-          </div>
-          <span>{{ copy.options.signal }}</span>
-        </div>
-        <div class="option-board">
-          <article
-            v-for="option in copy.options.items"
-            :key="option.title"
-            class="option-card"
-            :class="{ 'is-selected': form.inquiryType === option.value }"
-          >
-            <div class="option-card__marker" aria-hidden="true">
-              {{ option.marker }}
-            </div>
-            <div>
-              <h3>{{ option.title }}</h3>
-              <p>{{ option.description }}</p>
-            </div>
-            <button
-              type="button"
-              :aria-pressed="form.inquiryType === option.value"
-              @click="selectInquiry(option.value)"
-            >
-              {{
-                form.inquiryType === option.value
-                  ? copy.options.selectedCta
-                  : option.cta
-              }}
-            </button>
-          </article>
-        </div>
-      </AppContainer>
-    </section>
-
     <section class="contact-form-section" aria-labelledby="form-heading">
       <AppContainer>
         <div class="form-shell">
-          <aside class="contact-details" aria-labelledby="details-heading">
-            <h2 id="details-heading">{{ copy.details.title }}</h2>
-            <p>{{ copy.details.lead }}</p>
-            <dl>
-              <div v-for="item in copy.details.items" :key="item.label">
-                <dt>{{ item.label }}</dt>
-                <dd>
-                  <a v-if="item.href" :href="item.href">{{ item.value }}</a>
-                  <span v-else>{{ item.value }}</span>
-                </dd>
-              </div>
-            </dl>
-            <p class="details-note">{{ copy.details.note }}</p>
-          </aside>
-
           <form
             id="contact-form"
             ref="formEl"
@@ -142,6 +88,9 @@
             >
               <strong>{{ copy.states.errorTitle }}</strong>
               <span>{{ submitError }}</span>
+              <a class="form-alert__link" :href="mailtoHref">
+                {{ copy.states.emailFallbackCta }}
+              </a>
             </div>
 
             <div v-if="!success" class="contact-form__body">
@@ -157,6 +106,7 @@
                     name="name"
                     type="text"
                     autocomplete="name"
+                    maxlength="120"
                     :placeholder="copy.fields.name.placeholder"
                     :aria-invalid="!!errors.name"
                     :aria-describedby="
@@ -185,6 +135,7 @@
                     name="company"
                     type="text"
                     autocomplete="organization"
+                    maxlength="160"
                     :placeholder="copy.fields.company.placeholder"
                   />
                 </div>
@@ -201,6 +152,7 @@
                     type="tel"
                     autocomplete="tel"
                     inputmode="tel"
+                    maxlength="40"
                     :placeholder="copy.fields.phone.placeholder"
                     :aria-invalid="!!errors.phone"
                     :aria-describedby="
@@ -234,6 +186,7 @@
                     name="email"
                     type="email"
                     autocomplete="email"
+                    maxlength="160"
                     :placeholder="copy.fields.email.placeholder"
                     :aria-invalid="!!errors.email"
                     :aria-describedby="
@@ -298,6 +251,7 @@
                   v-model.trim="form.message"
                   name="message"
                   rows="6"
+                  maxlength="2000"
                   :placeholder="copy.fields.message.placeholder"
                   :aria-invalid="!!errors.message"
                   :aria-describedby="
@@ -320,6 +274,18 @@
                 </p>
               </div>
 
+              <div class="field field--trap" aria-hidden="true">
+                <label for="contact-website">Website</label>
+                <input
+                  id="contact-website"
+                  v-model="form.website"
+                  name="website"
+                  type="text"
+                  tabindex="-1"
+                  autocomplete="off"
+                />
+              </div>
+
               <div class="contact-form__footer">
                 <button
                   class="contact-btn contact-btn--submit"
@@ -337,6 +303,42 @@
               </div>
             </div>
           </form>
+
+          <aside class="contact-details" aria-labelledby="details-heading">
+            <h2 id="details-heading">{{ copy.details.title }}</h2>
+            <p>{{ copy.details.lead }}</p>
+            <dl>
+              <div v-for="item in copy.details.items" :key="item.label">
+                <dt>{{ item.label }}</dt>
+                <dd>
+                  <a v-if="item.href" :href="item.href">{{ item.value }}</a>
+                  <span v-else>{{ item.value }}</span>
+                </dd>
+              </div>
+            </dl>
+            <p class="details-note">{{ copy.details.note }}</p>
+          </aside>
+        </div>
+      </AppContainer>
+    </section>
+
+    <section class="contact-options" aria-labelledby="options-heading">
+      <AppContainer>
+        <div class="section-heading section-heading--split">
+          <div>
+            <h2 id="options-heading">{{ copy.options.title }}</h2>
+            <p>{{ copy.options.lead }}</p>
+          </div>
+          <span>{{ copy.options.signal }}</span>
+        </div>
+        <div class="routing-strip" :aria-label="copy.options.routesLabel">
+          <article v-for="lane in copy.options.lanes" :key="lane.title">
+            <span aria-hidden="true">{{ lane.marker }}</span>
+            <div>
+              <h3>{{ lane.title }}</h3>
+              <p>{{ lane.description }}</p>
+            </div>
+          </article>
         </div>
       </AppContainer>
     </section>
@@ -420,6 +422,7 @@ const form = reactive({
   email: "",
   inquiryType: "" as InquiryValue | "",
   message: "",
+  website: "",
 });
 
 const errors = reactive<Record<FormKey, string>>({
@@ -464,58 +467,28 @@ const pageCopy = {
       ],
     },
     options: {
-      title: "اختر الباب الأقرب لاحتياجك",
-      lead: "كل رسالة تصل كمدخل تشغيل واضح، حتى يعرف الفريق هل المطلوب سعر، مساعدة، شراكة، أو متابعة عامة.",
-      signal: "توجيه مباشر للفريق المناسب",
-      selectedCta: "تم اختيار هذا المسار",
-      items: [
+      title: "كيف نوجه الرسالة بعد الإرسال",
+      lead: "نوع الاستفسار داخل النموذج يكفي لتوجيه الرسالة للفريق الأقرب دون خطوة إضافية.",
+      signal: "اختيار واحد فقط",
+      routesLabel: "مسارات توجيه رسائل التواصل",
+      lanes: [
         {
-          marker: "بيع",
-          value: "sales",
-          title: "المبيعات",
+          marker: "سعر",
+          title: "المبيعات والتسعير",
           description:
-            "للتسعير والعروض التوضيحية وربط Trackora بحجم الشحنات الحالي.",
-          cta: "اختيار المبيعات",
+            "للعروض التوضيحية، التسعير المخصص، وربط Trackora بحجم الشحنات الحالي.",
         },
         {
           marker: "دعم",
-          value: "support",
-          title: "الدعم",
+          title: "الدعم التشغيلي",
           description:
             "للمساعدة في التشغيل أو الاستفسارات الخاصة بالديسباتش، التتبع، وCOD.",
-          cta: "اختيار الدعم",
         },
         {
           marker: "ربط",
-          value: "partnerships",
-          title: "الشراكات",
+          title: "الشراكات والتكاملات",
           description:
-            "لشركات الشحن والتكاملات وفرص العمل المشتركة حول التوصيل والتحصيل.",
-          cta: "اختيار الشراكات",
-        },
-        {
-          marker: "سعر",
-          value: "custom-pricing",
-          title: "تسعير مخصص",
-          description:
-            "للفرق التي تحتاج خطة مبنية على حجم الشحنات، المناطق، وعدد المناديب.",
-          cta: "اختيار التسعير",
-        },
-        {
-          marker: "تكامل",
-          value: "integrations",
-          title: "التكاملات",
-          description:
-            "لربط Trackora مع متجر، نظام داخلي، أو مصدر بيانات قائم.",
-          cta: "اختيار التكاملات",
-        },
-        {
-          marker: "عام",
-          value: "general",
-          title: "عام",
-          description:
-            "لأي رسالة لا تدخل في مسار محدد أو تحتاج توجيها أوليا من الفريق.",
-          cta: "اختيار عام",
+            "لشركات الشحن، مصادر البيانات، وفرص العمل المشتركة حول التوصيل والتحصيل.",
         },
       ],
     },
@@ -545,7 +518,7 @@ const pageCopy = {
       optional: "اختياري",
       submit: "إرسال رسالة التواصل",
       submitNote:
-        "سيقوم فريق Trackora بمراجعة الاستفسار والتواصل معك عبر الهاتف أو البريد الإلكتروني.",
+        "سنستخدم هذه البيانات للرد على استفسارك فقط. إذا لم يكتمل الإرسال، يمكنك إرسال نفس التفاصيل عبر البريد.",
     },
     fields: {
       name: { label: "الاسم", placeholder: "مثال: أحمد حسن" },
@@ -592,7 +565,7 @@ const pageCopy = {
       loading: "جار إرسال الرسالة...",
       successTitle: "استلمنا رسالتك",
       successText:
-        "سيقوم فريق Trackora بمراجعة الاستفسار والتواصل معك عبر الهاتف أو البريد الإلكتروني.",
+        "تم تسليم الرسالة لقناة Trackora الرسمية، وسيراجعها الفريق المناسب خلال أيام العمل.",
       successSteps: [
         "تم استلام رسالتك.",
         "نراجع نوع الاستفسار.",
@@ -601,6 +574,12 @@ const pageCopy = {
       ],
       sendAnother: "إرسال رسالة أخرى",
       errorTitle: "لم تكتمل الرسالة",
+      deliveryNotConfigured:
+        "إرسال النموذج غير مفعّل الآن. استخدم رابط البريد أدناه لإرسال نفس التفاصيل إلى hello@trackora.com.",
+      deliveryFailed:
+        "لم نستطع تسليم الرسالة الآن. لم نفقد بياناتك، ويمكنك المحاولة مرة أخرى أو إرسالها عبر البريد.",
+      validationFailed: "راجع الحقول الموضحة قبل إرسال الرسالة.",
+      emailFallbackCta: "إرسال التفاصيل عبر البريد",
     },
     reassurance: {
       title: "نساعدك تبدأ من طريقة تشغيلك الحالية",
@@ -682,58 +661,28 @@ const pageCopy = {
       ],
     },
     options: {
-      title: "Choose the closest path",
-      lead: "Each message starts as a clear operating request so the team knows whether it needs sales, help, partnership review, or general follow-up.",
-      signal: "Routed to the right team",
-      selectedCta: "Selected path",
-      items: [
+      title: "How we route the message after submission",
+      lead: "The inquiry type inside the form is enough to route the message without an extra step.",
+      signal: "One choice only",
+      routesLabel: "Contact message routing paths",
+      lanes: [
         {
-          marker: "Sale",
-          value: "sales",
-          title: "Sales",
+          marker: "Price",
+          title: "Sales and pricing",
           description:
-            "For pricing, demos, and matching Trackora to your current shipment volume.",
-          cta: "Choose sales",
+            "For demos, custom pricing, and matching Trackora to current shipment volume.",
         },
         {
           marker: "Help",
-          value: "support",
-          title: "Support",
+          title: "Operations support",
           description:
             "For operational help or questions about dispatch, tracking, and COD workflows.",
-          cta: "Choose support",
         },
         {
           marker: "Link",
-          value: "partnerships",
-          title: "Partnerships",
+          title: "Partnerships and integrations",
           description:
-            "For shipping companies, integrations, and shared delivery or collection opportunities.",
-          cta: "Choose partnerships",
-        },
-        {
-          marker: "Price",
-          value: "custom-pricing",
-          title: "Custom Pricing",
-          description:
-            "For teams that need a plan based on shipment volume, zones, and courier count.",
-          cta: "Choose pricing",
-        },
-        {
-          marker: "API",
-          value: "integrations",
-          title: "Integrations",
-          description:
-            "For connecting Trackora with a store, internal system, or existing data source.",
-          cta: "Choose integrations",
-        },
-        {
-          marker: "Gen",
-          value: "general",
-          title: "General",
-          description:
-            "For messages that need initial routing or do not fit a defined path.",
-          cta: "Choose general",
+            "For shipping companies, data sources, and shared delivery or collection opportunities.",
         },
       ],
     },
@@ -763,7 +712,7 @@ const pageCopy = {
       optional: "Optional",
       submit: "Send contact message",
       submitNote:
-        "The Trackora team will review your inquiry and follow up by phone or email.",
+        "We use these details only to respond to your inquiry. If submission fails, you can send the same details by email.",
     },
     fields: {
       name: { label: "Name", placeholder: "Example: Ahmed Hassan" },
@@ -811,7 +760,7 @@ const pageCopy = {
       loading: "Sending message...",
       successTitle: "We received your message",
       successText:
-        "The Trackora team will review the inquiry and follow up by phone or email.",
+        "The message was delivered to Trackora's official channel, and the right team will review it during working days.",
       successSteps: [
         "We received your message.",
         "We review the inquiry type.",
@@ -820,6 +769,12 @@ const pageCopy = {
       ],
       sendAnother: "Send another message",
       errorTitle: "Message was not completed",
+      deliveryNotConfigured:
+        "Online form delivery is not enabled yet. Use the email link below to send the same details to hello@trackora.com.",
+      deliveryFailed:
+        "We could not deliver the message right now. Your details are still here, so you can retry or send them by email.",
+      validationFailed: "Review the highlighted fields before sending the message.",
+      emailFallbackCta: "Send details by email",
     },
     reassurance: {
       title: "We help you start from your current operation",
@@ -872,6 +827,25 @@ const pageCopy = {
 
 const copy = computed(() => (isArabic.value ? pageCopy.ar : pageCopy.en));
 
+const mailtoHref = computed(() => {
+  const subject = encodeURIComponent(
+    isArabic.value
+      ? `استفسار Trackora: ${getInquiryLabel()}`
+      : `Trackora inquiry: ${getInquiryLabel()}`,
+  );
+  const body = encodeURIComponent(
+    [
+      `${copy.value.fields.name.label}: ${form.name}`,
+      `${copy.value.fields.company.label}: ${form.company || "-"}`,
+      `${copy.value.fields.phone.label}: ${form.phone}`,
+      `${copy.value.fields.email.label}: ${form.email || "-"}`,
+      `${copy.value.fields.inquiryType.label}: ${getInquiryLabel()}`,
+      `${copy.value.fields.message.label}: ${form.message}`,
+    ].join("\n"),
+  );
+  return `mailto:hello@trackora.com?subject=${subject}&body=${body}`;
+});
+
 watchEffect(() => {
   setSeo(copy.value.seoTitle, copy.value.seoDescription);
 });
@@ -913,12 +887,26 @@ function validateForm() {
   );
 }
 
+function getInquiryLabel() {
+  return (
+    copy.value.inquiryTypes.find((option) => option.value === form.inquiryType)
+      ?.label || copy.value.fields.inquiryType.placeholder
+  );
+}
+
+function applyServerFieldErrors(fieldErrors: Record<string, string> | undefined) {
+  if (!fieldErrors) return;
+  (Object.keys(fieldErrors) as FormKey[]).forEach((field) => {
+    if (field in errors) validateField(field);
+  });
+}
+
 async function handleSubmit() {
   submitError.value = "";
   success.value = false;
 
   if (!validateForm()) {
-    submitError.value = copy.value.validation.general;
+    submitError.value = copy.value.states.validationFailed;
     await nextTick();
     formEl.value?.querySelector<HTMLElement>(".is-invalid")?.focus();
     return;
@@ -929,11 +917,12 @@ async function handleSubmit() {
     const payload = {
       ...form,
       locale: locale.value,
-      submittedAt: new Date().toISOString(),
     };
-    if (import.meta.dev)
-      console.info("Trackora contact form payload:", payload);
-    await new Promise((resolve) => window.setTimeout(resolve, 850));
+    await $fetch("/api/contact", {
+      method: "POST",
+      body: payload,
+      timeout: 10000,
+    });
     success.value = true;
     await nextTick();
     successEl.value?.focus({ preventScroll: true });
@@ -941,8 +930,28 @@ async function handleSubmit() {
       behavior: getScrollBehavior(),
       block: "center",
     });
-  } catch {
-    submitError.value = copy.value.validation.submitError;
+  } catch (error) {
+    const fetchError = error as {
+      statusCode?: number;
+      status?: number;
+      data?: {
+        fieldErrors?: Record<string, string>;
+        data?: { fieldErrors?: Record<string, string> };
+      };
+    };
+    const statusCode = fetchError.statusCode || fetchError.status;
+    applyServerFieldErrors(
+      fetchError.data?.fieldErrors || fetchError.data?.data?.fieldErrors,
+    );
+    if (statusCode === 400) {
+      submitError.value = copy.value.states.validationFailed;
+    } else if (statusCode === 503) {
+      submitError.value = copy.value.states.deliveryNotConfigured;
+    } else {
+      submitError.value = copy.value.states.deliveryFailed;
+    }
+    await nextTick();
+    formEl.value?.querySelector<HTMLElement>(".is-invalid")?.focus();
   } finally {
     loading.value = false;
   }
@@ -955,17 +964,15 @@ function resetForm() {
   form.email = "";
   form.inquiryType = "";
   form.message = "";
+  form.website = "";
   success.value = false;
   submitError.value = "";
   (Object.keys(errors) as FormKey[]).forEach((key) => {
     errors[key] = "";
   });
-}
-
-async function selectInquiry(value: string) {
-  form.inquiryType = value as InquiryValue;
-  errors.inquiryType = "";
-  await focusForm("select");
+  nextTick(() => {
+    formEl.value?.querySelector<HTMLElement>("input, select, textarea")?.focus();
+  });
 }
 
 async function focusForm(target?: Event | "select") {
@@ -1098,7 +1105,6 @@ function getScrollBehavior(): ScrollBehavior {
 }
 
 .contact-btn,
-.option-card button,
 .form-alert button {
   min-height: 3rem;
   display: inline-flex;
@@ -1121,7 +1127,6 @@ function getScrollBehavior(): ScrollBehavior {
 }
 
 .contact-btn:focus-visible,
-.option-card button:focus-visible,
 .form-alert button:focus-visible,
 input:focus-visible,
 select:focus-visible,
@@ -1145,7 +1150,6 @@ summary:focus-visible {
 }
 
 .contact-btn:hover,
-.option-card button:hover,
 .form-alert button:hover {
   transform: translateY(-2px);
 }
@@ -1253,7 +1257,7 @@ summary:focus-visible {
 .contact-form p,
 .contact-details p,
 .final-contact-cta p,
-.option-card p,
+.routing-strip p,
 .faq-list p {
   color: var(--contact-muted);
   line-height: 1.85;
@@ -1268,61 +1272,42 @@ summary:focus-visible {
   font-weight: 900;
 }
 
-.option-board {
+.routing-strip {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
-  gap: 1rem;
-}
-
-.option-card {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 1rem;
-  align-items: start;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   border: 1px solid rgba(27, 77, 92, 0.12);
   border-radius: 1.7rem;
-  padding: clamp(1.1rem, 2.3vw, 1.6rem);
+  overflow: hidden;
   background: #ffffff;
   box-shadow: var(--shadow-card);
-  transition:
-    transform 220ms var(--contact-ease),
-    box-shadow 220ms var(--contact-ease);
 }
 
-.option-card__marker {
+.routing-strip article {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.9rem;
+  align-items: start;
+  padding: clamp(1rem, 2.2vw, 1.45rem);
+}
+
+.routing-strip article + article {
+  border-inline-start: 1px solid rgba(27, 77, 92, 0.1);
+}
+
+.routing-strip span {
   display: grid;
   place-items: center;
-  min-width: 3.3rem;
-  height: 3.3rem;
-  border-radius: 1rem;
+  min-width: 3rem;
+  min-height: 2.55rem;
+  border-radius: 999px;
   color: var(--contact-primary);
   background: rgba(27, 77, 92, 0.07);
   font-weight: 900;
 }
 
-.option-card h3 {
+.routing-strip h3 {
   color: var(--contact-ink);
-  font-size: clamp(1.25rem, 2vw, 1.55rem);
-}
-
-.option-card button {
-  grid-column: 2;
-  width: fit-content;
-  color: var(--contact-primary);
-  border-color: rgba(27, 77, 92, 0.18);
-  background: #ffffff;
-}
-
-.option-card.is-selected {
-  border-color: var(--contact-accent);
-  background: linear-gradient(180deg, var(--color-accent-light), #ffffff 70%);
-  box-shadow: 0 18px 46px rgba(27, 77, 92, 0.12);
-}
-
-.option-card.is-selected .option-card__marker,
-.option-card button[aria-pressed="true"] {
-  color: var(--color-text-on-accent);
-  background: var(--contact-accent);
+  font-size: clamp(1.1rem, 1.6vw, 1.35rem);
 }
 
 .contact-form-section {
@@ -1330,7 +1315,7 @@ summary:focus-visible {
 }
 
 .form-shell {
-  grid-template-columns: minmax(18rem, 0.72fr) minmax(0, 1.28fr);
+  grid-template-columns: minmax(0, 1.28fr) minmax(18rem, 0.72fr);
   align-items: start;
 }
 
@@ -1525,6 +1510,35 @@ textarea:focus {
   background: #ffffff;
 }
 
+.form-alert__link {
+  width: fit-content;
+  min-height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(180, 35, 47, 0.22);
+  border-radius: 999px;
+  padding: 0.72rem 1rem;
+  color: #8f1d2a;
+  background: #ffffff;
+  font-weight: 900;
+}
+
+.form-alert__link:focus-visible {
+  outline: 3px solid var(--contact-accent);
+  outline-offset: 3px;
+}
+
+.field--trap {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 .spinner {
   width: 1rem;
   height: 1rem;
@@ -1621,13 +1635,6 @@ details p {
   color: rgba(255, 255, 255, 0.82);
 }
 
-@media (hover: hover) {
-  .option-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 22px 58px rgba(27, 77, 92, 0.13);
-  }
-}
-
 @media (max-width: 68rem) {
   .contact-hero__grid,
   .form-shell,
@@ -1640,25 +1647,50 @@ details p {
   .contact-details {
     position: static;
   }
+
+  .routing-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .routing-strip article + article {
+    border-inline-start: 0;
+    border-block-start: 1px solid rgba(27, 77, 92, 0.1);
+  }
 }
 
 @media (max-width: 50rem) {
+  .contact-hero {
+    padding-block: clamp(3.6rem, 12vw, 5rem) clamp(2.6rem, 9vw, 4rem);
+  }
+
   .contact-hero h1 {
     max-width: 100%;
     font-size: clamp(2.45rem, 13vw, 3.8rem);
   }
 
-  .option-board,
+  .contact-hero__lead {
+    line-height: 1.75;
+  }
+
+  .routing-ledger {
+    display: none;
+  }
+
+  .contact-options,
+  .contact-form-section,
+  .reassurance-section,
+  .faq-section {
+    padding-block: clamp(3rem, 12vw, 4.5rem);
+  }
+
   .field-grid {
     grid-template-columns: 1fr;
   }
 
-  .option-card,
   .routing-ledger__steps li {
     grid-template-columns: 1fr;
   }
 
-  .option-card button,
   .contact-hero__actions .contact-btn,
   .contact-form__footer .contact-btn,
   .final-contact-cta .contact-btn {
@@ -1669,8 +1701,6 @@ details p {
 
 @media (prefers-reduced-motion: reduce) {
   .contact-btn,
-  .option-card,
-  .option-card button,
   .form-alert button,
   input,
   select,
