@@ -276,39 +276,45 @@ h4 {
 }
 
 /* Scroll Reveal Animations */
+/* Content is visible by default. Animation-hidden state only applies when
+   JS adds .reveal-enabled to <html> AND the element has not yet been revealed.
+   This ensures content is always readable even if JS fails or hydrates late. */
+
 .reveal,
 .reveal-up,
-.reveal-scale {
-  opacity: 0;
+.reveal-scale,
+.reveal-stagger {
+  opacity: 1;
+  transform: none;
   transition-property: opacity, transform;
   transition-duration: var(--reveal-duration);
   transition-timing-function: var(--reveal-easing);
 }
 
-.reveal {
+html.reveal-enabled .reveal:not(.is-visible) {
+  opacity: 0;
   transform: translateY(var(--reveal-distance));
 }
 
-.reveal-up {
+html.reveal-enabled .reveal-up:not(.is-visible) {
+  opacity: 0;
   transform: translateY(calc(var(--reveal-distance) * 1.6));
 }
 
-.reveal-scale {
+html.reveal-enabled .reveal-scale:not(.is-visible) {
+  opacity: 0;
   transform: translateY(calc(var(--reveal-distance) * 0.4))
     scale(var(--reveal-scale));
 }
 
-.reveal-stagger {
+html.reveal-enabled .reveal-stagger:not(.is-visible) {
   opacity: 0;
   transform: translateY(var(--reveal-distance));
-  transition-property: opacity, transform;
-  transition-duration: var(--reveal-duration);
-  transition-timing-function: var(--reveal-easing);
 }
 
 .is-visible {
   opacity: 1;
-  transform: translateY(0) scale(1);
+  transform: none;
 }
 
 /* Navbar scroll state */
@@ -330,14 +336,11 @@ h4 {
   .reveal,
   .reveal-up,
   .reveal-scale,
-  .reveal-stagger {
-    opacity: 1;
-    transform: none;
-  }
-
+  .reveal-stagger,
   .is-visible {
-    opacity: 1;
-    transform: none;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 }
 
