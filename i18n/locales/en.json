@@ -141,7 +141,7 @@
       "message": "Message"
     },
     "submit": "Send contact message",
-    "success": "Message recorded. We will review the inquiry type and operating context, then route it to the right team.",
+    "success": "We received your message. We will review the inquiry type and operating context, then route it to the right team.",
     "error": "Review the highlighted fields before sending the message."
   },
   "pricing": {

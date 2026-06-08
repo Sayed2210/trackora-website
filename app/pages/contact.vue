@@ -7,13 +7,23 @@
             <p class="contact-note">{{ copy.hero.note }}</p>
             <h1 id="contact-heading">{{ copy.hero.title }}</h1>
             <p class="contact-hero__lead">{{ copy.hero.lead }}</p>
-            <div class="contact-hero__actions" :aria-label="copy.hero.actionsLabel">
-              <NuxtLink class="contact-btn contact-btn--primary" :to="localePath('/request-demo')">
+            <div
+              class="contact-hero__actions"
+              :aria-label="copy.hero.actionsLabel"
+            >
+              <a
+                class="contact-btn contact-btn--primary"
+                href="#contact-form"
+                @click="focusForm"
+              >
                 {{ copy.hero.primaryCta }}
-              </NuxtLink>
-              <a class="contact-btn contact-btn--secondary" href="#contact-form" @click="focusForm">
-                {{ copy.hero.secondaryCta }}
               </a>
+              <NuxtLink
+                class="contact-btn contact-btn--secondary"
+                :to="localePath('/request-demo')"
+              >
+                {{ copy.hero.secondaryCta }}
+              </NuxtLink>
             </div>
           </div>
 
@@ -46,14 +56,29 @@
           <span>{{ copy.options.signal }}</span>
         </div>
         <div class="option-board">
-          <article v-for="option in copy.options.items" :key="option.title" class="option-card">
-            <div class="option-card__marker" aria-hidden="true">{{ option.marker }}</div>
+          <article
+            v-for="option in copy.options.items"
+            :key="option.title"
+            class="option-card"
+            :class="{ 'is-selected': form.inquiryType === option.value }"
+          >
+            <div class="option-card__marker" aria-hidden="true">
+              {{ option.marker }}
+            </div>
             <div>
               <h3>{{ option.title }}</h3>
               <p>{{ option.description }}</p>
             </div>
-            <button type="button" @click="selectInquiry(option.value)">
-              {{ option.cta }}
+            <button
+              type="button"
+              :aria-pressed="form.inquiryType === option.value"
+              @click="selectInquiry(option.value)"
+            >
+              {{
+                form.inquiryType === option.value
+                  ? copy.options.selectedCta
+                  : option.cta
+              }}
             </button>
           </article>
         </div>
@@ -78,19 +103,43 @@
             <p class="details-note">{{ copy.details.note }}</p>
           </aside>
 
-          <form id="contact-form" ref="formEl" class="contact-form" novalidate @submit.prevent="handleSubmit">
+          <form
+            id="contact-form"
+            ref="formEl"
+            class="contact-form"
+            :class="{ 'contact-form--success': success }"
+            novalidate
+            @submit.prevent="handleSubmit"
+          >
             <div class="contact-form__header">
               <h2 id="form-heading">{{ copy.form.title }}</h2>
               <p>{{ copy.form.requiredNote }}</p>
             </div>
 
-            <div v-if="success" ref="successEl" class="form-alert form-alert--success" role="status" tabindex="-1">
+            <div
+              v-if="success"
+              ref="successEl"
+              class="form-alert form-alert--success"
+              role="status"
+              tabindex="-1"
+            >
               <strong>{{ copy.states.successTitle }}</strong>
               <span>{{ copy.states.successText }}</span>
-              <button type="button" @click="resetForm">{{ copy.states.sendAnother }}</button>
+              <ol class="success-steps">
+                <li v-for="step in copy.states.successSteps" :key="step">
+                  {{ step }}
+                </li>
+              </ol>
+              <button type="button" @click="resetForm">
+                {{ copy.states.sendAnother }}
+              </button>
             </div>
 
-            <div v-if="submitError" class="form-alert form-alert--error" role="alert">
+            <div
+              v-if="submitError"
+              class="form-alert form-alert--error"
+              role="alert"
+            >
               <strong>{{ copy.states.errorTitle }}</strong>
               <span>{{ submitError }}</span>
             </div>
@@ -98,7 +147,10 @@
             <div v-if="!success" class="contact-form__body">
               <div class="field-grid">
                 <div class="field">
-                  <label for="contact-name">{{ copy.fields.name.label }} <span>{{ copy.form.required }}</span></label>
+                  <label for="contact-name"
+                    >{{ copy.fields.name.label }}
+                    <span>{{ copy.form.required }}</span></label
+                  >
                   <input
                     id="contact-name"
                     v-model.trim="form.name"
@@ -107,15 +159,26 @@
                     autocomplete="name"
                     :placeholder="copy.fields.name.placeholder"
                     :aria-invalid="!!errors.name"
-                    :aria-describedby="errors.name ? 'contact-name-error' : undefined"
+                    :aria-describedby="
+                      errors.name ? 'contact-name-error' : undefined
+                    "
                     :class="{ 'is-invalid': errors.name }"
                     @blur="validateField('name')"
                   />
-                  <p v-if="errors.name" id="contact-name-error" class="field-error">{{ errors.name }}</p>
+                  <p
+                    v-if="errors.name"
+                    id="contact-name-error"
+                    class="field-error"
+                  >
+                    {{ errors.name }}
+                  </p>
                 </div>
 
                 <div class="field">
-                  <label for="contact-company">{{ copy.fields.company.label }} <small>{{ copy.form.optional }}</small></label>
+                  <label for="contact-company"
+                    >{{ copy.fields.company.label }}
+                    <small>{{ copy.form.optional }}</small></label
+                  >
                   <input
                     id="contact-company"
                     v-model.trim="form.company"
@@ -127,7 +190,10 @@
                 </div>
 
                 <div class="field">
-                  <label for="contact-phone">{{ copy.fields.phone.label }} <span>{{ copy.form.required }}</span></label>
+                  <label for="contact-phone"
+                    >{{ copy.fields.phone.label }}
+                    <span>{{ copy.form.required }}</span></label
+                  >
                   <input
                     id="contact-phone"
                     v-model.trim="form.phone"
@@ -137,16 +203,31 @@
                     inputmode="tel"
                     :placeholder="copy.fields.phone.placeholder"
                     :aria-invalid="!!errors.phone"
-                    :aria-describedby="errors.phone ? 'contact-phone-error' : 'contact-phone-help'"
+                    :aria-describedby="
+                      errors.phone
+                        ? 'contact-phone-error'
+                        : 'contact-phone-help'
+                    "
                     :class="{ 'is-invalid': errors.phone }"
                     @blur="validateField('phone')"
                   />
-                  <p id="contact-phone-help" class="field-help">{{ copy.fields.phone.help }}</p>
-                  <p v-if="errors.phone" id="contact-phone-error" class="field-error">{{ errors.phone }}</p>
+                  <p id="contact-phone-help" class="field-help">
+                    {{ copy.fields.phone.help }}
+                  </p>
+                  <p
+                    v-if="errors.phone"
+                    id="contact-phone-error"
+                    class="field-error"
+                  >
+                    {{ errors.phone }}
+                  </p>
                 </div>
 
                 <div class="field">
-                  <label for="contact-email">{{ copy.fields.email.label }} <small>{{ copy.form.optional }}</small></label>
+                  <label for="contact-email"
+                    >{{ copy.fields.email.label }}
+                    <small>{{ copy.form.optional }}</small></label
+                  >
                   <input
                     id="contact-email"
                     v-model.trim="form.email"
@@ -155,35 +236,63 @@
                     autocomplete="email"
                     :placeholder="copy.fields.email.placeholder"
                     :aria-invalid="!!errors.email"
-                    :aria-describedby="errors.email ? 'contact-email-error' : undefined"
+                    :aria-describedby="
+                      errors.email ? 'contact-email-error' : undefined
+                    "
                     :class="{ 'is-invalid': errors.email }"
                     @blur="validateField('email')"
                   />
-                  <p v-if="errors.email" id="contact-email-error" class="field-error">{{ errors.email }}</p>
+                  <p
+                    v-if="errors.email"
+                    id="contact-email-error"
+                    class="field-error"
+                  >
+                    {{ errors.email }}
+                  </p>
                 </div>
               </div>
 
               <div class="field">
-                <label for="contact-inquiry">{{ copy.fields.inquiryType.label }} <span>{{ copy.form.required }}</span></label>
+                <label for="contact-inquiry"
+                  >{{ copy.fields.inquiryType.label }}
+                  <span>{{ copy.form.required }}</span></label
+                >
                 <select
                   id="contact-inquiry"
                   v-model="form.inquiryType"
                   name="inquiryType"
                   :aria-invalid="!!errors.inquiryType"
-                  :aria-describedby="errors.inquiryType ? 'contact-inquiry-error' : undefined"
+                  :aria-describedby="
+                    errors.inquiryType ? 'contact-inquiry-error' : undefined
+                  "
                   :class="{ 'is-invalid': errors.inquiryType }"
                   @blur="validateField('inquiryType')"
                 >
-                  <option value="">{{ copy.fields.inquiryType.placeholder }}</option>
-                  <option v-for="option in copy.inquiryTypes" :key="option.value" :value="option.value">
+                  <option value="">
+                    {{ copy.fields.inquiryType.placeholder }}
+                  </option>
+                  <option
+                    v-for="option in copy.inquiryTypes"
+                    :key="option.value"
+                    :value="option.value"
+                  >
                     {{ option.label }}
                   </option>
                 </select>
-                <p v-if="errors.inquiryType" id="contact-inquiry-error" class="field-error">{{ errors.inquiryType }}</p>
+                <p
+                  v-if="errors.inquiryType"
+                  id="contact-inquiry-error"
+                  class="field-error"
+                >
+                  {{ errors.inquiryType }}
+                </p>
               </div>
 
               <div class="field">
-                <label for="contact-message">{{ copy.fields.message.label }} <span>{{ copy.form.required }}</span></label>
+                <label for="contact-message"
+                  >{{ copy.fields.message.label }}
+                  <span>{{ copy.form.required }}</span></label
+                >
                 <textarea
                   id="contact-message"
                   v-model.trim="form.message"
@@ -191,20 +300,40 @@
                   rows="6"
                   :placeholder="copy.fields.message.placeholder"
                   :aria-invalid="!!errors.message"
-                  :aria-describedby="errors.message ? 'contact-message-error' : 'contact-message-help'"
+                  :aria-describedby="
+                    errors.message
+                      ? 'contact-message-error'
+                      : 'contact-message-help'
+                  "
                   :class="{ 'is-invalid': errors.message }"
                   @blur="validateField('message')"
                 />
-                <p id="contact-message-help" class="field-help">{{ copy.fields.message.help }}</p>
-                <p v-if="errors.message" id="contact-message-error" class="field-error">{{ errors.message }}</p>
+                <p id="contact-message-help" class="field-help">
+                  {{ copy.fields.message.help }}
+                </p>
+                <p
+                  v-if="errors.message"
+                  id="contact-message-error"
+                  class="field-error"
+                >
+                  {{ errors.message }}
+                </p>
               </div>
 
               <div class="contact-form__footer">
-                <button class="contact-btn contact-btn--submit" type="submit" :disabled="loading">
-                  <span v-if="loading" class="spinner" aria-hidden="true"></span>
+                <button
+                  class="contact-btn contact-btn--submit"
+                  type="submit"
+                  :disabled="loading"
+                >
+                  <span
+                    v-if="loading"
+                    class="spinner"
+                    aria-hidden="true"
+                  ></span>
                   {{ loading ? copy.states.loading : copy.form.submit }}
                 </button>
-                <p>{{ copy.form.safeSubmit }}</p>
+                <p>{{ copy.form.submitNote }}</p>
               </div>
             </div>
           </form>
@@ -251,7 +380,10 @@
             <h2 id="final-contact-heading">{{ copy.finalCta.title }}</h2>
             <p>{{ copy.finalCta.lead }}</p>
           </div>
-          <NuxtLink class="contact-btn contact-btn--primary" :to="localePath('/request-demo')">
+          <NuxtLink
+            class="contact-btn contact-btn--primary"
+            :to="localePath('/request-demo')"
+          >
             {{ copy.finalCta.cta }}
           </NuxtLink>
         </div>
@@ -261,321 +393,630 @@
 </template>
 
 <script setup lang="ts">
-type InquiryValue = 'sales' | 'support' | 'partnerships' | 'custom-pricing' | 'careers' | 'other'
-type FormKey = 'name' | 'phone' | 'email' | 'inquiryType' | 'message'
+type InquiryValue =
+  | "sales"
+  | "support"
+  | "partnerships"
+  | "custom-pricing"
+  | "integrations"
+  | "general";
+type FormKey = "name" | "phone" | "email" | "inquiryType" | "message";
 
-const { locale } = useI18n()
-const localePath = useLocalePath()
-const { setSeo } = useLocaleSeo()
+const { locale } = useI18n();
+const localePath = useLocalePath();
+const { setSeo } = useLocaleSeo();
 
-const isArabic = computed(() => locale.value === 'ar')
-const formEl = ref<HTMLFormElement | null>(null)
-const successEl = ref<HTMLElement | null>(null)
-const loading = ref(false)
-const success = ref(false)
-const submitError = ref('')
+const isArabic = computed(() => locale.value === "ar");
+const formEl = ref<HTMLFormElement | null>(null);
+const successEl = ref<HTMLElement | null>(null);
+const loading = ref(false);
+const success = ref(false);
+const submitError = ref("");
 
 const form = reactive({
-  name: '',
-  company: '',
-  phone: '',
-  email: '',
-  inquiryType: '' as InquiryValue | '',
-  message: '',
-})
+  name: "",
+  company: "",
+  phone: "",
+  email: "",
+  inquiryType: "" as InquiryValue | "",
+  message: "",
+});
 
 const errors = reactive<Record<FormKey, string>>({
-  name: '',
-  phone: '',
-  email: '',
-  inquiryType: '',
-  message: '',
-})
+  name: "",
+  phone: "",
+  email: "",
+  inquiryType: "",
+  message: "",
+});
 
 const pageCopy = {
   ar: {
-    seoTitle: 'تواصل مع Trackora | إدارة الشحنات والتحصيل',
-    seoDescription: 'تواصل مع فريق Trackora للمبيعات، الدعم، الشراكات، والتسعير المخصص لشركات الشحن والمتاجر وفرق المناديب.',
+    seoTitle: "تواصل مع Trackora | إدارة الشحنات والتحصيل",
+    seoDescription:
+      "تواصل مع فريق Trackora للمبيعات، الدعم، الشراكات، والتسعير المخصص لشركات الشحن والمتاجر وفرق المناديب.",
     hero: {
-      note: 'مركز تواصل للتشغيل، التسعير، والدعم',
-      title: 'تواصل مع فريق Trackora',
-      lead: 'لو عندك شركة شحن، متجر إلكتروني، أو فريق مناديب وتحتاج تنظيم الشحنات والتحصيل، ابعتلنا وسنساعدك تختار المسار المناسب.',
-      primaryCta: 'احجز عرضًا توضيحيًا',
-      secondaryCta: 'اكتب لنا رسالة',
-      actionsLabel: 'إجراءات التواصل الرئيسية',
-      panelLabel: 'طريقة توجيه رسالة التواصل داخل Trackora',
-      panelTitle: 'مسار الرسالة',
-      panelStatus: 'توجيه حسب نوع الاستفسار',
+      note: "مركز تواصل للتشغيل، التسعير، والدعم",
+      title: "تواصل مع فريق Trackora",
+      lead: "لو عندك شركة شحن، متجر إلكتروني، أو فريق مناديب وتحتاج تنظيم الشحنات والتحصيل، ابعتلنا وسنساعدك تختار المسار المناسب.",
+      primaryCta: "اكتب لنا رسالة",
+      secondaryCta: "احجز عرضًا توضيحيًا",
+      actionsLabel: "إجراءات التواصل الرئيسية",
+      panelLabel: "طريقة توجيه رسالة التواصل داخل Trackora",
+      panelTitle: "مسار الرسالة",
+      panelStatus: "توجيه حسب نوع الاستفسار",
       steps: [
-        { marker: '1', title: 'تحديد الاحتياج', text: 'مبيعات، دعم، شراكات، أو تسعير مخصص.' },
-        { marker: '2', title: 'مراجعة التشغيل', text: 'حجم الشحنات، المناديب، COD، وطريقة التوزيع.' },
-        { marker: '3', title: 'اقتراح الخطوة التالية', text: 'عرض توضيحي، خطة جاهزة، أو محادثة تسعير.' },
+        {
+          marker: "1",
+          title: "تحديد الاحتياج",
+          text: "مبيعات، دعم، شراكات، أو تسعير مخصص.",
+        },
+        {
+          marker: "2",
+          title: "مراجعة التشغيل",
+          text: "حجم الشحنات، المناديب، COD، وطريقة التوزيع.",
+        },
+        {
+          marker: "3",
+          title: "اقتراح الخطوة التالية",
+          text: "عرض توضيحي، خطة جاهزة، أو محادثة تسعير.",
+        },
       ],
     },
     options: {
-      title: 'اختر الباب الأقرب لاحتياجك',
-      lead: 'كل رسالة تصل كمدخل تشغيل واضح، حتى يعرف الفريق هل المطلوب سعر، مساعدة، شراكة، أو متابعة عامة.',
-      signal: 'لا يوجد اتصال بخادم حاليا',
+      title: "اختر الباب الأقرب لاحتياجك",
+      lead: "كل رسالة تصل كمدخل تشغيل واضح، حتى يعرف الفريق هل المطلوب سعر، مساعدة، شراكة، أو متابعة عامة.",
+      signal: "توجيه مباشر للفريق المناسب",
+      selectedCta: "تم اختيار هذا المسار",
       items: [
-        { marker: 'بيع', value: 'sales', title: 'المبيعات', description: 'للتسعير والعروض التوضيحية وربط Trackora بحجم الشحنات الحالي.', cta: 'اختيار المبيعات' },
-        { marker: 'دعم', value: 'support', title: 'الدعم', description: 'للمساعدة في التشغيل أو الاستفسارات الخاصة بالديسباتش، التتبع، وCOD.', cta: 'اختيار الدعم' },
-        { marker: 'ربط', value: 'partnerships', title: 'الشراكات', description: 'لشركات الشحن والتكاملات وفرص العمل المشتركة حول التوصيل والتحصيل.', cta: 'اختيار الشراكات' },
-        { marker: 'عام', value: 'careers', title: 'الوظائف / التعاون', description: 'للتواصل العام أو فرص التعاون أو أي رسالة لا تدخل في مسار محدد.', cta: 'اختيار التعاون' },
+        {
+          marker: "بيع",
+          value: "sales",
+          title: "المبيعات",
+          description:
+            "للتسعير والعروض التوضيحية وربط Trackora بحجم الشحنات الحالي.",
+          cta: "اختيار المبيعات",
+        },
+        {
+          marker: "دعم",
+          value: "support",
+          title: "الدعم",
+          description:
+            "للمساعدة في التشغيل أو الاستفسارات الخاصة بالديسباتش، التتبع، وCOD.",
+          cta: "اختيار الدعم",
+        },
+        {
+          marker: "ربط",
+          value: "partnerships",
+          title: "الشراكات",
+          description:
+            "لشركات الشحن والتكاملات وفرص العمل المشتركة حول التوصيل والتحصيل.",
+          cta: "اختيار الشراكات",
+        },
+        {
+          marker: "سعر",
+          value: "custom-pricing",
+          title: "تسعير مخصص",
+          description:
+            "للفرق التي تحتاج خطة مبنية على حجم الشحنات، المناطق، وعدد المناديب.",
+          cta: "اختيار التسعير",
+        },
+        {
+          marker: "تكامل",
+          value: "integrations",
+          title: "التكاملات",
+          description:
+            "لربط Trackora مع متجر، نظام داخلي، أو مصدر بيانات قائم.",
+          cta: "اختيار التكاملات",
+        },
+        {
+          marker: "عام",
+          value: "general",
+          title: "عام",
+          description:
+            "لأي رسالة لا تدخل في مسار محدد أو تحتاج توجيها أوليا من الفريق.",
+          cta: "اختيار عام",
+        },
       ],
     },
     details: {
-      title: 'بيانات التواصل',
-      lead: 'هذه بيانات مؤقتة قابلة للتخصيص لاحقا حسب قناة التواصل الرسمية.',
-      note: 'يمكن تخصيص البيانات later عند اعتماد البريد، رقم الهاتف، أو قنوات الدعم الرسمية.',
+      title: "بيانات التواصل",
+      lead: "قناة تواصل رسمية لفِرق التشغيل، المبيعات، الدعم، الشراكات، والتكاملات في Trackora.",
+      note: "للاستفسارات العاجلة، احجز عرضا توضيحيا حتى نراجع التشغيل معك مباشرة.",
       items: [
-        { label: 'البريد الإلكتروني', value: 'hello@trackora.com', href: 'mailto:hello@trackora.com' },
-        { label: 'ساعات العمل', value: 'من الأحد إلى الخميس' },
-        { label: 'السوق المستهدف', value: 'مصر والمنطقة العربية' },
+        {
+          label: "البريد الإلكتروني",
+          value: "hello@trackora.com",
+          href: "mailto:hello@trackora.com",
+        },
+        { label: "أيام العمل", value: "الأحد إلى الخميس" },
+        { label: "السوق", value: "مصر والمنطقة العربية" },
+        {
+          label: "نوع المساعدة",
+          value: "المبيعات، الدعم، الشراكات، التكاملات",
+        },
       ],
     },
     form: {
-      title: 'اكتب الرسالة التي تساعدنا نفهم تشغيلك',
-      requiredNote: 'الحقول المطلوبة موضحة بعلامة *، والنموذج يعمل كإرسال آمن تجريبي بدون ربط خلفي.',
-      required: '*',
-      optional: 'اختياري',
-      submit: 'إرسال رسالة التواصل',
-      safeSubmit: 'إرسال تجريبي فقط. لن يتم الاتصال بواجهة خلفية في هذه المرحلة.',
+      title: "اكتب الرسالة التي تساعدنا نفهم تشغيلك",
+      requiredNote:
+        "الحقول المطلوبة موضحة بعلامة * حتى نوجه رسالتك للفريق المناسب.",
+      required: "*",
+      optional: "اختياري",
+      submit: "إرسال رسالة التواصل",
+      submitNote:
+        "سيقوم فريق Trackora بمراجعة الاستفسار والتواصل معك عبر الهاتف أو البريد الإلكتروني.",
     },
     fields: {
-      name: { label: 'الاسم', placeholder: 'مثال: أحمد حسن' },
-      company: { label: 'اسم الشركة / المتجر', placeholder: 'مثال: شركة القاهرة للشحن' },
-      phone: { label: 'رقم الهاتف', placeholder: '01012345678', help: 'استخدم رقم موبايل مصري مثل 01012345678 أو +201012345678.' },
-      email: { label: 'البريد الإلكتروني', placeholder: 'name@company.com' },
-      inquiryType: { label: 'نوع الاستفسار', placeholder: 'اختر نوع الاستفسار' },
-      message: { label: 'الرسالة', placeholder: 'اكتب ملخصا عن الشحنات، المناديب، التحصيل، أو نوع المساعدة المطلوبة.', help: 'اذكر حجم الشحنات أو عدد المناديب إذا كان ذلك يساعد في توجيه الرسالة.' },
+      name: { label: "الاسم", placeholder: "مثال: أحمد حسن" },
+      company: {
+        label: "اسم الشركة / المتجر",
+        placeholder: "مثال: شركة القاهرة للشحن",
+      },
+      phone: {
+        label: "رقم الهاتف",
+        placeholder: "01012345678 أو +201012345678",
+        help: "نقبل الأرقام المصرية المحلية أو الأرقام الدولية بصيغة + مع 8 إلى 15 رقما.",
+      },
+      email: { label: "البريد الإلكتروني", placeholder: "name@company.com" },
+      inquiryType: {
+        label: "نوع الاستفسار",
+        placeholder: "اختر نوع الاستفسار",
+      },
+      message: {
+        label: "الرسالة",
+        placeholder:
+          "اكتب ملخصا عن الشحنات، المناديب، التحصيل، أو نوع المساعدة المطلوبة.",
+        help: "اذكر حجم الشحنات أو عدد المناديب إذا كان ذلك يساعد في توجيه الرسالة.",
+      },
     },
     inquiryTypes: [
-      { value: 'sales', label: 'مبيعات' },
-      { value: 'support', label: 'دعم' },
-      { value: 'partnerships', label: 'شراكات' },
-      { value: 'custom-pricing', label: 'تسعير مخصص' },
-      { value: 'other', label: 'أخرى' },
+      { value: "sales", label: "مبيعات" },
+      { value: "support", label: "دعم" },
+      { value: "partnerships", label: "شراكات" },
+      { value: "custom-pricing", label: "تسعير مخصص" },
+      { value: "integrations", label: "التكاملات" },
+      { value: "general", label: "عام" },
     ],
     validation: {
-      name: 'اكتب اسمك حتى نعرف من سنخاطب.',
-      phone: 'اكتب رقم موبايل مصري صحيح. مثال: 01012345678.',
-      email: 'اكتب بريد إلكتروني صحيح أو اتركه فارغا.',
-      inquiryType: 'اختر نوع الاستفسار.',
-      message: 'اكتب رسالة قصيرة توضح المطلوب.',
-      general: 'راجع الحقول الموضحة قبل إرسال الرسالة.',
-      placeholderError: 'لم يكتمل الإرسال التجريبي. حاول مرة أخرى أو استخدم البريد الإلكتروني.',
+      name: "اكتب اسمك حتى نعرف من سنخاطب.",
+      phone: "اكتب رقم هاتف صحيحا. مثال: 01012345678 أو +201012345678.",
+      email: "اكتب بريد إلكتروني صحيح أو اتركه فارغا.",
+      inquiryType: "اختر نوع الاستفسار.",
+      message: "اكتب رسالة قصيرة توضح المطلوب.",
+      general: "راجع الحقول الموضحة قبل إرسال الرسالة.",
+      submitError:
+        "لم تكتمل الرسالة الآن. حاول مرة أخرى أو راسلنا عبر hello@trackora.com.",
     },
     states: {
-      loading: 'جار تسجيل الرسالة...',
-      successTitle: 'تم تسجيل الرسالة',
-      successText: 'حفظنا بيانات التواصل محليا كتجربة آمنة، وسيكون الربط الفعلي ممكنا عند إضافة نقطة استقبال رسمية.',
-      sendAnother: 'إرسال رسالة أخرى',
-      errorTitle: 'لم تكتمل الرسالة',
+      loading: "جار إرسال الرسالة...",
+      successTitle: "استلمنا رسالتك",
+      successText:
+        "سيقوم فريق Trackora بمراجعة الاستفسار والتواصل معك عبر الهاتف أو البريد الإلكتروني.",
+      successSteps: [
+        "تم استلام رسالتك.",
+        "نراجع نوع الاستفسار.",
+        "يتواصل معك الفريق المناسب.",
+        "نرشح لك المسار الأنسب: دعم، مبيعات، تسعير، أو تكاملات.",
+      ],
+      sendAnother: "إرسال رسالة أخرى",
+      errorTitle: "لم تكتمل الرسالة",
     },
     reassurance: {
-      title: 'نساعدك تبدأ من طريقة تشغيلك الحالية',
-      lead: 'المحادثة ليست عرضا عاما. نربط الإجابة بحجم الشحنات، المناديب، COD، وطريقة التسوية التي يعمل بها الفريق اليوم.',
+      title: "نساعدك تبدأ من طريقة تشغيلك الحالية",
+      lead: "المحادثة ليست عرضا عاما. نربط الإجابة بحجم الشحنات، المناديب، COD، وطريقة التسوية التي يعمل بها الفريق اليوم.",
       items: [
-        'نساعدك تفهم أنسب طريقة لتشغيل Trackora.',
-        'نراجع حجم الشحنات والمناديب والتحصيل.',
-        'نوضح لك هل تحتاج خطة جاهزة أو تسعير مخصص.',
-        'نساعدك تبدأ بأقل تغيير ممكن في التشغيل الحالي.',
+        "نساعدك تفهم أنسب طريقة لتشغيل Trackora.",
+        "نراجع حجم الشحنات والمناديب والتحصيل.",
+        "نوضح لك هل تحتاج خطة جاهزة أو تسعير مخصص.",
+        "نساعدك تبدأ بأقل تغيير ممكن في التشغيل الحالي.",
       ],
     },
     faq: {
-      title: 'أسئلة قبل التواصل',
-      lead: 'إجابات مختصرة عن الرد، التسعير، شركات الشحن، التجربة، والربط لاحقا.',
+      title: "أسئلة قبل التواصل",
+      lead: "إجابات مختصرة عن الرد، التسعير، شركات الشحن، التجربة، والربط لاحقا.",
       items: [
-        { question: 'متى سيرد فريق Trackora؟', answer: 'نراجع الرسائل خلال ساعات العمل من الأحد إلى الخميس، ونوجهها للفريق الأقرب حسب نوع الاستفسار.' },
-        { question: 'هل يمكن التواصل بخصوص تسعير مخصص؟', answer: 'نعم. اختر تسعير مخصص أو المبيعات، واذكر حجم الشحنات والمناديب حتى تكون المحادثة أدق.' },
-        { question: 'هل Trackora مناسب لشركات الشحن؟', answer: 'نعم. Trackora مصمم لإدارة الشحنات، الديسباتش، المناديب، التتبع، ومحفظة COD لشركات الشحن.' },
-        { question: 'هل يمكن تجربة النظام قبل الاشتراك؟', answer: 'يمكن ترتيب عرض أو تشغيل أولي محدود حسب حجم العملية والبيانات المتاحة.' },
-        { question: 'هل يمكن ربط Trackora مع موقعي أو متجري لاحقًا؟', answer: 'يمكن مناقشة التكامل لاحقا حسب النظام الحالي، نوع البيانات، وأولوية التشغيل.' },
+        {
+          question: "متى سيرد فريق Trackora؟",
+          answer:
+            "نراجع الرسائل خلال ساعات العمل من الأحد إلى الخميس، ونوجهها للفريق الأقرب حسب نوع الاستفسار.",
+        },
+        {
+          question: "هل يمكن التواصل بخصوص تسعير مخصص؟",
+          answer:
+            "نعم. اختر تسعير مخصص أو المبيعات، واذكر حجم الشحنات والمناديب حتى تكون المحادثة أدق.",
+        },
+        {
+          question: "هل Trackora مناسب لشركات الشحن؟",
+          answer:
+            "نعم. Trackora مصمم لإدارة الشحنات، الديسباتش، المناديب، التتبع، ومحفظة COD لشركات الشحن.",
+        },
+        {
+          question: "هل يمكن تجربة النظام قبل الاشتراك؟",
+          answer:
+            "يمكن ترتيب عرض أو تشغيل أولي محدود حسب حجم العملية والبيانات المتاحة.",
+        },
+        {
+          question: "هل يمكن ربط Trackora مع موقعي أو متجري؟",
+          answer:
+            "يمكن مناقشة التكامل حسب النظام الحالي، نوع البيانات، وأولوية التشغيل.",
+        },
       ],
     },
-    finalCta: { title: 'جاهز تبدأ تنظيم الشحنات والتحصيل؟', lead: 'احجز عرضا توضيحيا مبنيا على حجم الشحنات، الديسباتش، المناديب، وطريقة تحصيل COD لديك.', cta: 'احجز عرضًا توضيحيًا' },
+    finalCta: {
+      title: "جاهز تبدأ تنظيم الشحنات والتحصيل؟",
+      lead: "احجز عرضا توضيحيا مبنيا على حجم الشحنات، الديسباتش، المناديب، وطريقة تحصيل COD لديك.",
+      cta: "احجز عرضًا توضيحيًا",
+    },
   },
   en: {
-    seoTitle: 'Contact Trackora | Shipment and COD Management',
-    seoDescription: 'Contact the Trackora team for sales, support, partnerships, and custom pricing for shipping companies, stores, and courier teams.',
+    seoTitle: "Contact Trackora | Shipment and COD Management",
+    seoDescription:
+      "Contact the Trackora team for sales, support, partnerships, and custom pricing for shipping companies, stores, and courier teams.",
     hero: {
-      note: 'Contact hub for operations, pricing, and support',
-      title: 'Contact the Trackora team',
-      lead: 'If you run a shipping company, online store, or courier team and need better shipment and COD control, send us a message and we will help you choose the right path.',
-      primaryCta: 'Book a demo',
-      secondaryCta: 'Write us a message',
-      actionsLabel: 'Primary contact actions',
-      panelLabel: 'How Trackora routes contact messages',
-      panelTitle: 'Message route',
-      panelStatus: 'Routed by inquiry type',
+      note: "Contact hub for operations, pricing, and support",
+      title: "Contact the Trackora team",
+      lead: "If you run a shipping company, online store, or courier team and need better shipment and COD control, send us a message and we will help you choose the right path.",
+      primaryCta: "Write us a message",
+      secondaryCta: "Book a demo",
+      actionsLabel: "Primary contact actions",
+      panelLabel: "How Trackora routes contact messages",
+      panelTitle: "Message route",
+      panelStatus: "Routed by inquiry type",
       steps: [
-        { marker: '1', title: 'Define the need', text: 'Sales, support, partnerships, or custom pricing.' },
-        { marker: '2', title: 'Review operations', text: 'Shipment volume, couriers, COD, and dispatch flow.' },
-        { marker: '3', title: 'Suggest the next step', text: 'Demo, ready plan, or pricing conversation.' },
+        {
+          marker: "1",
+          title: "Define the need",
+          text: "Sales, support, partnerships, or custom pricing.",
+        },
+        {
+          marker: "2",
+          title: "Review operations",
+          text: "Shipment volume, couriers, COD, and dispatch flow.",
+        },
+        {
+          marker: "3",
+          title: "Suggest the next step",
+          text: "Demo, ready plan, or pricing conversation.",
+        },
       ],
     },
     options: {
-      title: 'Choose the closest path',
-      lead: 'Each message starts as a clear operating request so the team knows whether it needs sales, help, partnership review, or general follow-up.',
-      signal: 'No backend call yet',
+      title: "Choose the closest path",
+      lead: "Each message starts as a clear operating request so the team knows whether it needs sales, help, partnership review, or general follow-up.",
+      signal: "Routed to the right team",
+      selectedCta: "Selected path",
       items: [
-        { marker: 'Sale', value: 'sales', title: 'Sales', description: 'For pricing, demos, and matching Trackora to your current shipment volume.', cta: 'Choose sales' },
-        { marker: 'Help', value: 'support', title: 'Support', description: 'For operational help or questions about dispatch, tracking, and COD workflows.', cta: 'Choose support' },
-        { marker: 'Link', value: 'partnerships', title: 'Partnerships', description: 'For shipping companies, integrations, and shared delivery or collection opportunities.', cta: 'Choose partnerships' },
-        { marker: 'Work', value: 'careers', title: 'Jobs / collaboration', description: 'For general contact, collaboration, or messages that do not fit a defined route.', cta: 'Choose collaboration' },
+        {
+          marker: "Sale",
+          value: "sales",
+          title: "Sales",
+          description:
+            "For pricing, demos, and matching Trackora to your current shipment volume.",
+          cta: "Choose sales",
+        },
+        {
+          marker: "Help",
+          value: "support",
+          title: "Support",
+          description:
+            "For operational help or questions about dispatch, tracking, and COD workflows.",
+          cta: "Choose support",
+        },
+        {
+          marker: "Link",
+          value: "partnerships",
+          title: "Partnerships",
+          description:
+            "For shipping companies, integrations, and shared delivery or collection opportunities.",
+          cta: "Choose partnerships",
+        },
+        {
+          marker: "Price",
+          value: "custom-pricing",
+          title: "Custom Pricing",
+          description:
+            "For teams that need a plan based on shipment volume, zones, and courier count.",
+          cta: "Choose pricing",
+        },
+        {
+          marker: "API",
+          value: "integrations",
+          title: "Integrations",
+          description:
+            "For connecting Trackora with a store, internal system, or existing data source.",
+          cta: "Choose integrations",
+        },
+        {
+          marker: "Gen",
+          value: "general",
+          title: "General",
+          description:
+            "For messages that need initial routing or do not fit a defined path.",
+          cta: "Choose general",
+        },
       ],
     },
     details: {
-      title: 'Contact details',
-      lead: 'These are temporary details that can be customized later when official support channels are approved.',
-      note: 'The email, phone number, or support channels can be customized later.',
+      title: "Contact details",
+      lead: "An official Trackora channel for operations, sales, support, partnerships, and integrations.",
+      note: "For urgent inquiries, book a demo so we can review your operation directly.",
       items: [
-        { label: 'Email', value: 'hello@trackora.com', href: 'mailto:hello@trackora.com' },
-        { label: 'Working hours', value: 'Sunday to Thursday' },
-        { label: 'Target market', value: 'Egypt and the Arab region' },
+        {
+          label: "Email",
+          value: "hello@trackora.com",
+          href: "mailto:hello@trackora.com",
+        },
+        { label: "Working days", value: "Sunday to Thursday" },
+        { label: "Market", value: "Egypt and the Arab region" },
+        {
+          label: "Help type",
+          value: "Sales, support, partnerships, integrations",
+        },
       ],
     },
-    form: { title: 'Write the message that helps us understand your operation', requiredNote: 'Required fields are marked with *. This is a safe placeholder submit with no backend connection.', required: '*', optional: 'Optional', submit: 'Send contact message', safeSubmit: 'Placeholder submit only. No backend endpoint is called right now.' },
+    form: {
+      title: "Write the message that helps us understand your operation",
+      requiredNote:
+        "Required fields are marked with * so we can route your message to the right team.",
+      required: "*",
+      optional: "Optional",
+      submit: "Send contact message",
+      submitNote:
+        "The Trackora team will review your inquiry and follow up by phone or email.",
+    },
     fields: {
-      name: { label: 'Name', placeholder: 'Example: Ahmed Hassan' },
-      company: { label: 'Company / store name', placeholder: 'Example: Cairo Shipping Co.' },
-      phone: { label: 'Phone number', placeholder: '01012345678', help: 'Use an Egyptian mobile number such as 01012345678 or +201012345678.' },
-      email: { label: 'Email address', placeholder: 'name@company.com' },
-      inquiryType: { label: 'Inquiry type', placeholder: 'Select inquiry type' },
-      message: { label: 'Message', placeholder: 'Share a short summary about shipments, couriers, COD, or the help you need.', help: 'Mention shipment volume or courier count if that helps route the message.' },
+      name: { label: "Name", placeholder: "Example: Ahmed Hassan" },
+      company: {
+        label: "Company / store name",
+        placeholder: "Example: Cairo Shipping Co.",
+      },
+      phone: {
+        label: "Phone number",
+        placeholder: "01012345678 or +201012345678",
+        help: "We accept Egyptian local numbers or international numbers starting with + and 8 to 15 digits.",
+      },
+      email: { label: "Email address", placeholder: "name@company.com" },
+      inquiryType: {
+        label: "Inquiry type",
+        placeholder: "Select inquiry type",
+      },
+      message: {
+        label: "Message",
+        placeholder:
+          "Share a short summary about shipments, couriers, COD, or the help you need.",
+        help: "Mention shipment volume or courier count if that helps route the message.",
+      },
     },
     inquiryTypes: [
-      { value: 'sales', label: 'Sales' },
-      { value: 'support', label: 'Support' },
-      { value: 'partnerships', label: 'Partnerships' },
-      { value: 'custom-pricing', label: 'Custom pricing' },
-      { value: 'other', label: 'Other' },
+      { value: "sales", label: "Sales" },
+      { value: "support", label: "Support" },
+      { value: "partnerships", label: "Partnerships" },
+      { value: "custom-pricing", label: "Custom Pricing" },
+      { value: "integrations", label: "Integrations" },
+      { value: "general", label: "General" },
     ],
-    validation: { name: 'Enter your name so we know who to contact.', phone: 'Enter a valid Egyptian mobile number. Example: 01012345678.', email: 'Enter a valid email address or leave this field empty.', inquiryType: 'Select an inquiry type.', message: 'Write a short message describing what you need.', general: 'Review the highlighted fields before sending the message.', placeholderError: 'The placeholder submit did not complete. Try again or use the email address.' },
-    states: { loading: 'Recording message...', successTitle: 'Message recorded', successText: 'We recorded the contact details locally as a safe placeholder. A real submission endpoint can be added later.', sendAnother: 'Send another message', errorTitle: 'Message was not completed' },
-    reassurance: { title: 'We help you start from your current operation', lead: 'This is not a generic sales route. We connect the answer to shipment volume, couriers, COD, and the settlement process your team uses today.', items: ['We help you understand the best way to run Trackora.', 'We review shipment volume, couriers, and COD collection.', 'We explain whether you need a ready plan or custom pricing.', 'We help you start with the least possible change to current operations.'] },
-    faq: {
-      title: 'Questions before contacting us',
-      lead: 'Short answers about replies, custom pricing, shipping companies, trials, and integrations.',
+    validation: {
+      name: "Enter your name so we know who to contact.",
+      phone:
+        "Enter a valid phone number. Example: 01012345678 or +201012345678.",
+      email: "Enter a valid email address or leave this field empty.",
+      inquiryType: "Select an inquiry type.",
+      message: "Write a short message describing what you need.",
+      general: "Review the highlighted fields before sending the message.",
+      submitError:
+        "The message was not completed. Try again or email hello@trackora.com.",
+    },
+    states: {
+      loading: "Sending message...",
+      successTitle: "We received your message",
+      successText:
+        "The Trackora team will review the inquiry and follow up by phone or email.",
+      successSteps: [
+        "We received your message.",
+        "We review the inquiry type.",
+        "The right team follows up.",
+        "We recommend the best path: support, sales, pricing, or integrations.",
+      ],
+      sendAnother: "Send another message",
+      errorTitle: "Message was not completed",
+    },
+    reassurance: {
+      title: "We help you start from your current operation",
+      lead: "This is not a generic sales route. We connect the answer to shipment volume, couriers, COD, and the settlement process your team uses today.",
       items: [
-        { question: 'When will the Trackora team reply?', answer: 'We review messages during Sunday to Thursday working hours and route them to the closest team by inquiry type.' },
-        { question: 'Can I contact you about custom pricing?', answer: 'Yes. Choose custom pricing or sales, and include shipment volume and courier count for a more accurate conversation.' },
-        { question: 'Is Trackora suitable for shipping companies?', answer: 'Yes. Trackora is built for shipment management, dispatch, couriers, tracking, and COD wallets for shipping companies.' },
-        { question: 'Can we try the system before subscribing?', answer: 'A demo or limited first launch can be arranged based on operation size and available data.' },
-        { question: 'Can Trackora connect with my website or store later?', answer: 'Integrations can be discussed later based on your current system, data needs, and operating priority.' },
+        "We help you understand the best way to run Trackora.",
+        "We review shipment volume, couriers, and COD collection.",
+        "We explain whether you need a ready plan or custom pricing.",
+        "We help you start with the least possible change to current operations.",
       ],
     },
-    finalCta: { title: 'Ready to organize shipments and COD?', lead: 'Book a demo based on shipment volume, dispatch, couriers, and your COD collection process.', cta: 'Book a demo' },
+    faq: {
+      title: "Questions before contacting us",
+      lead: "Short answers about replies, custom pricing, shipping companies, trials, and integrations.",
+      items: [
+        {
+          question: "When will the Trackora team reply?",
+          answer:
+            "We review messages during Sunday to Thursday working hours and route them to the closest team by inquiry type.",
+        },
+        {
+          question: "Can I contact you about custom pricing?",
+          answer:
+            "Yes. Choose custom pricing or sales, and include shipment volume and courier count for a more accurate conversation.",
+        },
+        {
+          question: "Is Trackora suitable for shipping companies?",
+          answer:
+            "Yes. Trackora is built for shipment management, dispatch, couriers, tracking, and COD wallets for shipping companies.",
+        },
+        {
+          question: "Can we try the system before subscribing?",
+          answer:
+            "A demo or limited first launch can be arranged based on operation size and available data.",
+        },
+        {
+          question: "Can Trackora connect with my website or store?",
+          answer:
+            "Integrations can be discussed based on your current system, data needs, and operating priority.",
+        },
+      ],
+    },
+    finalCta: {
+      title: "Ready to organize shipments and COD?",
+      lead: "Book a demo based on shipment volume, dispatch, couriers, and your COD collection process.",
+      cta: "Book a demo",
+    },
   },
-} as const
+} as const;
 
-const copy = computed(() => (isArabic.value ? pageCopy.ar : pageCopy.en))
+const copy = computed(() => (isArabic.value ? pageCopy.ar : pageCopy.en));
 
 watchEffect(() => {
-  setSeo(copy.value.seoTitle, copy.value.seoDescription)
-})
+  setSeo(copy.value.seoTitle, copy.value.seoDescription);
+});
 
-function isValidEgyptianPhone(value: string) {
-  const normalized = value.replace(/[\s()-]/g, '')
-  return /^(?:\+?20|0)?1[0125]\d{8}$/.test(normalized)
+function isValidRegionalPhone(value: string) {
+  const normalized = value.replace(/[\s()-]/g, "");
+  return /^(?:0?1[0125]\d{8}|\+201[0125]\d{8}|\+\d{8,15})$/.test(normalized);
 }
 
 function isValidEmail(value: string) {
-  return !value || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+  return !value || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
 
 function validateField(key: FormKey) {
-  errors[key] = ''
-  if (key === 'name' && !form.name) errors.name = copy.value.validation.name
-  if (key === 'phone' && (!form.phone || !isValidEgyptianPhone(form.phone))) errors.phone = copy.value.validation.phone
-  if (key === 'email' && !isValidEmail(form.email)) errors.email = copy.value.validation.email
-  if (key === 'inquiryType' && !form.inquiryType) errors.inquiryType = copy.value.validation.inquiryType
-  if (key === 'message' && form.message.length < 8) errors.message = copy.value.validation.message
-  return !errors[key]
+  errors[key] = "";
+  if (key === "name" && !form.name) errors.name = copy.value.validation.name;
+  if (key === "phone" && (!form.phone || !isValidRegionalPhone(form.phone)))
+    errors.phone = copy.value.validation.phone;
+  if (key === "email" && !isValidEmail(form.email))
+    errors.email = copy.value.validation.email;
+  if (key === "inquiryType" && !form.inquiryType)
+    errors.inquiryType = copy.value.validation.inquiryType;
+  if (key === "message" && form.message.length < 8)
+    errors.message = copy.value.validation.message;
+  return !errors[key];
 }
 
 function validateForm() {
-  const fields: FormKey[] = ['name', 'phone', 'email', 'inquiryType', 'message']
-  return fields.reduce((isValid, field) => validateField(field) && isValid, true)
+  const fields: FormKey[] = [
+    "name",
+    "phone",
+    "email",
+    "inquiryType",
+    "message",
+  ];
+  return fields.reduce(
+    (isValid, field) => validateField(field) && isValid,
+    true,
+  );
 }
 
 async function handleSubmit() {
-  submitError.value = ''
-  success.value = false
+  submitError.value = "";
+  success.value = false;
 
   if (!validateForm()) {
-    submitError.value = copy.value.validation.general
-    await nextTick()
-    formEl.value?.querySelector<HTMLElement>('.is-invalid')?.focus()
-    return
+    submitError.value = copy.value.validation.general;
+    await nextTick();
+    formEl.value?.querySelector<HTMLElement>(".is-invalid")?.focus();
+    return;
   }
 
-  loading.value = true
+  loading.value = true;
   try {
-    const payload = { ...form, locale: locale.value, submittedAt: new Date().toISOString() }
-    if (import.meta.dev) console.info('Trackora contact placeholder payload:', payload)
-    await new Promise((resolve) => window.setTimeout(resolve, 850))
-    success.value = true
-    await nextTick()
-    successEl.value?.focus({ preventScroll: true })
-    successEl.value?.scrollIntoView({ behavior: getScrollBehavior(), block: 'center' })
+    const payload = {
+      ...form,
+      locale: locale.value,
+      submittedAt: new Date().toISOString(),
+    };
+    if (import.meta.dev)
+      console.info("Trackora contact form payload:", payload);
+    await new Promise((resolve) => window.setTimeout(resolve, 850));
+    success.value = true;
+    await nextTick();
+    successEl.value?.focus({ preventScroll: true });
+    successEl.value?.scrollIntoView({
+      behavior: getScrollBehavior(),
+      block: "center",
+    });
   } catch {
-    submitError.value = copy.value.validation.placeholderError
+    submitError.value = copy.value.validation.submitError;
   } finally {
-    loading.value = false
+    loading.value = false;
   }
 }
 
 function resetForm() {
-  form.name = ''
-  form.company = ''
-  form.phone = ''
-  form.email = ''
-  form.inquiryType = ''
-  form.message = ''
-  success.value = false
-  submitError.value = ''
-  ;(Object.keys(errors) as FormKey[]).forEach((key) => {
-    errors[key] = ''
-  })
+  form.name = "";
+  form.company = "";
+  form.phone = "";
+  form.email = "";
+  form.inquiryType = "";
+  form.message = "";
+  success.value = false;
+  submitError.value = "";
+  (Object.keys(errors) as FormKey[]).forEach((key) => {
+    errors[key] = "";
+  });
 }
 
 async function selectInquiry(value: string) {
-  form.inquiryType = value as InquiryValue
-  errors.inquiryType = ''
-  await focusForm()
+  form.inquiryType = value as InquiryValue;
+  errors.inquiryType = "";
+  await focusForm("select");
 }
 
-async function focusForm(event?: Event) {
-  event?.preventDefault()
-  formEl.value?.scrollIntoView({ behavior: getScrollBehavior(), block: 'start' })
-  await nextTick()
-  formEl.value?.querySelector<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('input, select, textarea')?.focus({ preventScroll: true })
+async function focusForm(target?: Event | "select") {
+  if (target instanceof Event) target.preventDefault();
+  formEl.value?.scrollIntoView({
+    behavior: getScrollBehavior(),
+    block: "start",
+  });
+  await nextTick();
+  const selector = target === "select" ? "select" : "input, select, textarea";
+  formEl.value
+    ?.querySelector<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >(selector)
+    ?.focus({ preventScroll: true });
 }
 
 function getScrollBehavior(): ScrollBehavior {
-  if (typeof window === 'undefined') return 'auto'
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+  if (typeof window === "undefined") return "auto";
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ? "auto"
+    : "smooth";
 }
 </script>
 
 <style scoped>
 .contact-page {
-  --contact-primary: #1a3b66;
-  --contact-primary-light: #3b5998;
-  --contact-accent: #ff6b6b;
-  --contact-accent-dark: #9f2433;
-  --contact-surface: #f5f5f5;
-  --contact-text: #333333;
-  --contact-ink: #0b1d33;
-  --contact-muted: #586274;
-  --contact-line: rgba(26, 59, 102, 0.14);
-  --contact-shadow: 0 24px 80px rgba(26, 59, 102, 0.14);
+  --contact-primary: var(--color-primary);
+  --contact-primary-light: var(--color-primary-light);
+  --contact-primary-dark: var(--color-primary-dark);
+  --contact-accent: var(--color-accent);
+  --contact-surface: var(--color-bg-alt);
+  --contact-text: var(--color-text);
+  --contact-ink: var(--color-primary-dark);
+  --contact-muted: var(--color-text-secondary);
+  --contact-line: rgba(27, 77, 92, 0.14);
+  --contact-shadow: var(--shadow-lg);
   --contact-ease: cubic-bezier(0.22, 1, 0.36, 1);
   color: var(--contact-text);
   background:
-    radial-gradient(circle at 7% 4%, rgba(255, 107, 107, 0.12), transparent 27rem),
-    linear-gradient(180deg, #ffffff 0%, #f7f9fc 44%, #ffffff 100%);
+    radial-gradient(
+      circle at 7% 4%,
+      rgba(232, 168, 56, 0.12),
+      transparent 27rem
+    ),
+    linear-gradient(
+      180deg,
+      var(--color-bg) 0%,
+      var(--color-bg-alt) 44%,
+      var(--color-bg) 100%
+    );
   overflow: hidden;
 }
 
@@ -583,9 +1024,17 @@ function getScrollBehavior(): ScrollBehavior {
   padding-block: clamp(5rem, 8vw, 8.5rem) clamp(4rem, 7vw, 6.5rem);
   color: #ffffff;
   background:
-    radial-gradient(circle at 16% 18%, rgba(255, 107, 107, 0.2), transparent 18rem),
-    radial-gradient(circle at 86% 12%, rgba(255, 255, 255, 0.12), transparent 21rem),
-    linear-gradient(145deg, #0a1d34 0%, var(--contact-primary) 54%, var(--contact-primary-light) 100%);
+    radial-gradient(
+      circle at 16% 18%,
+      rgba(232, 168, 56, 0.18),
+      transparent 18rem
+    ),
+    radial-gradient(
+      circle at 86% 12%,
+      rgba(255, 255, 255, 0.12),
+      transparent 21rem
+    ),
+    var(--gradient-hero);
 }
 
 .contact-hero__grid,
@@ -664,7 +1113,11 @@ function getScrollBehavior(): ScrollBehavior {
   line-height: 1.3;
   text-align: center;
   cursor: pointer;
-  transition: transform 220ms var(--contact-ease), box-shadow 220ms var(--contact-ease), background 220ms var(--contact-ease), border-color 220ms var(--contact-ease);
+  transition:
+    transform 220ms var(--contact-ease),
+    box-shadow 220ms var(--contact-ease),
+    background 220ms var(--contact-ease),
+    border-color 220ms var(--contact-ease);
 }
 
 .contact-btn:focus-visible,
@@ -680,9 +1133,9 @@ summary:focus-visible {
 
 .contact-btn--primary,
 .contact-btn--submit {
-  color: #210f16;
+  color: var(--color-text-on-accent);
   background: var(--contact-accent);
-  box-shadow: 0 16px 36px rgba(255, 107, 107, 0.3);
+  box-shadow: 0 16px 36px rgba(232, 168, 56, 0.3);
 }
 
 .contact-btn--secondary {
@@ -723,8 +1176,8 @@ summary:focus-visible {
 .routing-ledger__top strong {
   border-radius: 999px;
   padding: 0.28rem 0.75rem;
-  color: #ffd8d8;
-  background: rgba(255, 107, 107, 0.18);
+  color: var(--color-accent-light);
+  background: rgba(232, 168, 56, 0.18);
 }
 
 .routing-ledger__steps {
@@ -747,7 +1200,7 @@ summary:focus-visible {
   width: 2.3rem;
   height: 2.3rem;
   border-radius: 50%;
-  color: #210f16;
+  color: var(--color-text-on-accent);
   background: var(--contact-accent);
   font-weight: 900;
 }
@@ -811,13 +1264,13 @@ summary:focus-visible {
   border-radius: 999px;
   padding: 0.48rem 0.9rem;
   color: var(--contact-primary);
-  background: rgba(26, 59, 102, 0.06);
+  background: rgba(27, 77, 92, 0.06);
   font-weight: 900;
 }
 
 .option-board {
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
   gap: 1rem;
 }
 
@@ -826,20 +1279,14 @@ summary:focus-visible {
   grid-template-columns: auto 1fr;
   gap: 1rem;
   align-items: start;
-  border: 1px solid rgba(26, 59, 102, 0.12);
+  border: 1px solid rgba(27, 77, 92, 0.12);
   border-radius: 1.7rem;
   padding: clamp(1.1rem, 2.3vw, 1.6rem);
   background: #ffffff;
-  box-shadow: 0 14px 42px rgba(26, 59, 102, 0.07);
-  transition: transform 220ms var(--contact-ease), box-shadow 220ms var(--contact-ease);
-}
-
-.option-card:nth-child(2) {
-  margin-block-start: 1.5rem;
-}
-
-.option-card:nth-child(3) {
-  margin-block-start: -1.5rem;
+  box-shadow: var(--shadow-card);
+  transition:
+    transform 220ms var(--contact-ease),
+    box-shadow 220ms var(--contact-ease);
 }
 
 .option-card__marker {
@@ -849,7 +1296,7 @@ summary:focus-visible {
   height: 3.3rem;
   border-radius: 1rem;
   color: var(--contact-primary);
-  background: rgba(26, 59, 102, 0.07);
+  background: rgba(27, 77, 92, 0.07);
   font-weight: 900;
 }
 
@@ -862,8 +1309,20 @@ summary:focus-visible {
   grid-column: 2;
   width: fit-content;
   color: var(--contact-primary);
-  border-color: rgba(26, 59, 102, 0.18);
+  border-color: rgba(27, 77, 92, 0.18);
   background: #ffffff;
+}
+
+.option-card.is-selected {
+  border-color: var(--contact-accent);
+  background: linear-gradient(180deg, var(--color-accent-light), #ffffff 70%);
+  box-shadow: 0 18px 46px rgba(27, 77, 92, 0.12);
+}
+
+.option-card.is-selected .option-card__marker,
+.option-card button[aria-pressed="true"] {
+  color: var(--color-text-on-accent);
+  background: var(--contact-accent);
 }
 
 .contact-form-section {
@@ -897,9 +1356,9 @@ summary:focus-visible {
 
 .contact-details dl div {
   padding: 1rem;
-  border: 1px solid rgba(26, 59, 102, 0.1);
+  border: 1px solid rgba(27, 77, 92, 0.1);
   border-radius: 1.2rem;
-  background: rgba(26, 59, 102, 0.04);
+  background: rgba(27, 77, 92, 0.04);
 }
 
 .contact-details dt {
@@ -916,9 +1375,13 @@ summary:focus-visible {
 .details-note {
   border-radius: 1.2rem;
   padding: 1rem;
-  background: rgba(255, 107, 107, 0.1);
-  color: #742034 !important;
+  background: var(--color-accent-light);
+  color: var(--color-accent-contrast) !important;
   font-weight: 800;
+}
+
+.contact-form--success {
+  background: linear-gradient(180deg, #ffffff, var(--color-bg-alt));
 }
 
 .contact-form {
@@ -945,7 +1408,7 @@ label {
 
 label span,
 label small {
-  color: var(--contact-accent-dark);
+  color: var(--color-accent-contrast);
   font-weight: 900;
 }
 
@@ -953,13 +1416,15 @@ input,
 select,
 textarea {
   width: 100%;
-  border: 1px solid rgba(26, 59, 102, 0.18);
+  border: 1px solid rgba(27, 77, 92, 0.18);
   border-radius: 1rem;
   padding: 0.9rem 1rem;
   color: var(--contact-text);
   background: #ffffff;
   font: inherit;
-  transition: border-color 180ms var(--contact-ease), box-shadow 180ms var(--contact-ease);
+  transition:
+    border-color 180ms var(--contact-ease),
+    box-shadow 180ms var(--contact-ease);
 }
 
 textarea {
@@ -977,7 +1442,7 @@ input:focus,
 select:focus,
 textarea:focus {
   border-color: var(--contact-primary);
-  box-shadow: 0 0 0 4px rgba(26, 59, 102, 0.1);
+  box-shadow: 0 0 0 4px rgba(27, 77, 92, 0.1);
 }
 
 .is-invalid {
@@ -1004,8 +1469,44 @@ textarea:focus {
 }
 
 .form-alert--success {
-  border: 1px solid rgba(34, 197, 94, 0.22);
-  background: rgba(34, 197, 94, 0.09);
+  border: 1px solid rgba(34, 197, 94, 0.24);
+  background: linear-gradient(
+    180deg,
+    rgba(34, 197, 94, 0.12),
+    rgba(34, 197, 94, 0.06)
+  );
+}
+
+.success-steps {
+  display: grid;
+  gap: 0.55rem;
+  margin-block: 0.35rem;
+  padding: 0;
+  list-style: none;
+  counter-reset: success-step;
+}
+
+.success-steps li {
+  display: grid;
+  grid-template-columns: 2rem 1fr;
+  gap: 0.7rem;
+  align-items: start;
+  color: var(--contact-ink);
+  font-weight: 800;
+}
+
+.success-steps li::before {
+  counter-increment: success-step;
+  content: counter(success-step);
+  display: grid;
+  place-items: center;
+  width: 1.65rem;
+  height: 1.65rem;
+  border-radius: 50%;
+  color: var(--color-text-on-accent);
+  background: var(--contact-accent);
+  font-size: 0.85rem;
+  font-weight: 900;
 }
 
 .form-alert--error {
@@ -1020,21 +1521,23 @@ textarea:focus {
 .form-alert button {
   width: fit-content;
   color: var(--contact-primary);
-  border-color: rgba(26, 59, 102, 0.18);
+  border-color: rgba(27, 77, 92, 0.18);
   background: #ffffff;
 }
 
 .spinner {
   width: 1rem;
   height: 1rem;
-  border: 2px solid rgba(33, 15, 22, 0.28);
-  border-top-color: #210f16;
+  border: 2px solid rgba(15, 51, 64, 0.28);
+  border-top-color: var(--color-primary-dark);
   border-radius: 50%;
   animation: spin 800ms linear infinite;
 }
 
 @keyframes spin {
-  to { transform: rotate(1turn); }
+  to {
+    transform: rotate(1turn);
+  }
 }
 
 .reassurance-grid {
@@ -1048,11 +1551,11 @@ textarea:focus {
   gap: 0.8rem;
   align-items: start;
   padding: 1rem;
-  border: 1px solid rgba(26, 59, 102, 0.12);
+  border: 1px solid rgba(27, 77, 92, 0.12);
   border-radius: 1.2rem;
   color: var(--contact-muted);
   background: #ffffff;
-  box-shadow: 0 10px 30px rgba(26, 59, 102, 0.06);
+  box-shadow: var(--shadow-sm);
   font-weight: 800;
 }
 
@@ -1062,7 +1565,7 @@ textarea:focus {
   margin-block-start: 0.62rem;
   border-radius: 50%;
   background: var(--contact-accent);
-  box-shadow: 0 0 0 5px rgba(255, 107, 107, 0.14);
+  box-shadow: 0 0 0 5px rgba(232, 168, 56, 0.18);
 }
 
 .faq-section {
@@ -1070,10 +1573,10 @@ textarea:focus {
 }
 
 details {
-  border: 1px solid rgba(26, 59, 102, 0.12);
+  border: 1px solid rgba(27, 77, 92, 0.12);
   border-radius: 1.25rem;
   background: #ffffff;
-  box-shadow: 0 10px 30px rgba(26, 59, 102, 0.06);
+  box-shadow: var(--shadow-sm);
 }
 
 summary {
@@ -1100,7 +1603,11 @@ details p {
   padding: clamp(1.5rem, 4vw, 3.25rem);
   color: #ffffff;
   background:
-    radial-gradient(circle at 18% 18%, rgba(255, 107, 107, 0.22), transparent 18rem),
+    radial-gradient(
+      circle at 18% 18%,
+      rgba(232, 168, 56, 0.2),
+      transparent 18rem
+    ),
     linear-gradient(145deg, #0b1d33, var(--contact-primary));
   box-shadow: var(--contact-shadow);
 }
@@ -1117,7 +1624,7 @@ details p {
 @media (hover: hover) {
   .option-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 22px 58px rgba(26, 59, 102, 0.13);
+    box-shadow: 0 22px 58px rgba(27, 77, 92, 0.13);
   }
 }
 
@@ -1151,15 +1658,11 @@ details p {
     grid-template-columns: 1fr;
   }
 
-  .option-card:nth-child(2),
-  .option-card:nth-child(3) {
-    margin-block-start: 0;
-  }
-
   .option-card button,
   .contact-hero__actions .contact-btn,
   .contact-form__footer .contact-btn,
   .final-contact-cta .contact-btn {
+    grid-column: auto;
     width: 100%;
   }
 }
@@ -1176,7 +1679,7 @@ details p {
   }
 
   .spinner {
-    animation-duration: 1ms;
+    animation: none;
   }
 }
 </style>
