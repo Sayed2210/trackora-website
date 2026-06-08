@@ -130,17 +130,19 @@
     "error": "Review the highlighted fields before sending the request."
   },
   "contact": {
-    "heading": "Contact Us",
-    "subtitle": "We are not far away. Send us a message and we will reply as soon as possible.",
+    "heading": "Contact the Trackora team",
+    "subtitle": "If you run a shipping company, online store, or courier team and need better shipment and COD control, send us a message and we will help you choose the right path.",
     "fields": {
       "name": "Name",
-      "email": "Email",
-      "subject": "Subject",
+      "company": "Company / store name",
+      "phone": "Phone number",
+      "email": "Email address",
+      "inquiryType": "Inquiry type",
       "message": "Message"
     },
-    "submit": "Send",
-    "success": "Your message has been sent successfully!",
-    "error": "An error occurred during submission. Please try again later."
+    "submit": "Send contact message",
+    "success": "We received your message. We will review the inquiry type and operating context, then route it to the right team.",
+    "error": "Review the highlighted fields before sending the message."
   },
   "pricing": {
     "heading": "Trackora Plans & Pricing",
