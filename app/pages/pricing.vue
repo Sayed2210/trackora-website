@@ -1,7 +1,7 @@
 <template>
   <div class="pricing-page" :dir="isArabic ? 'rtl' : 'ltr'">
     <section class="pricing-hero" aria-labelledby="pricing-heading">
-      <AppContainer>
+      <AppContainer wide>
         <div class="pricing-hero__grid">
           <div class="pricing-hero__content">
             <p class="pricing-kicker">{{ copy.hero.kicker }}</p>
@@ -35,7 +35,7 @@
     </section>
 
     <section class="pricing-section pricing-section--plans" aria-labelledby="plans-heading">
-      <AppContainer>
+      <AppContainer wide>
         <div class="pricing-section__header pricing-section__header--center">
           <p class="pricing-kicker pricing-kicker--light">{{ copy.plans.kicker }}</p>
           <h2 id="plans-heading">{{ copy.plans.title }}</h2>
@@ -68,7 +68,7 @@
     </section>
 
     <section class="pricing-section comparison-section" aria-labelledby="comparison-heading">
-      <AppContainer>
+      <AppContainer wide>
         <div class="pricing-section__header">
           <p class="pricing-kicker pricing-kicker--light">{{ copy.comparison.kicker }}</p>
           <h2 id="comparison-heading">{{ copy.comparison.title }}</h2>
@@ -97,7 +97,7 @@
     </section>
 
     <section class="pricing-section reassurance-section" aria-labelledby="reassurance-heading">
-      <AppContainer>
+      <AppContainer wide>
         <div class="reassurance-grid">
           <div class="reassurance-copy">
             <h2 id="reassurance-heading">{{ copy.reassurance.title }}</h2>
@@ -117,7 +117,7 @@
     </section>
 
     <section class="pricing-section enterprise-section" aria-labelledby="enterprise-heading">
-      <AppContainer>
+      <AppContainer wide>
         <div class="enterprise-card">
           <div>
             <h2 id="enterprise-heading">{{ copy.enterprise.title }}</h2>
@@ -134,7 +134,7 @@
     </section>
 
     <section class="pricing-section faq-section" aria-labelledby="faq-heading">
-      <AppContainer narrow>
+      <AppContainer wide>
         <div class="pricing-section__header pricing-section__header--center">
           <h2 id="faq-heading">{{ copy.faq.title }}</h2>
         </div>
@@ -148,7 +148,7 @@
     </section>
 
     <section class="final-pricing-cta" aria-labelledby="final-pricing-heading">
-      <AppContainer>
+      <AppContainer wide>                          
         <div class="final-pricing-cta__inner">
           <div>
             <h2 id="final-pricing-heading">{{ copy.finalCta.title }}</h2>
@@ -162,6 +162,8 @@
     </section>
   </div>
 </template>
+
+
 
 <script setup lang="ts">
 const { locale } = useI18n()

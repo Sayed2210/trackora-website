@@ -1,7 +1,7 @@
 <template>
   <div>
     <section class="track-input section" aria-labelledby="track-heading">
-      <AppContainer>
+      <AppContainer wide>
         <div class="track-input__layout">
           <div class="track-input__story reveal-up">
             <p class="track-input__eyebrow">{{ t('track.lookupKicker') }}</p>

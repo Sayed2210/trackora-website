@@ -1,213 +1,305 @@
+import type { LocalizedText } from './features'
+
+export type SolutionKey = 'shipping-companies' | 'ecommerce-stores' | 'social-sellers'
+export type SolutionArtifactKind = 'command-board' | 'merchant-dashboard' | 'seller-flow'
+
+export interface SolutionMetric {
+  label: LocalizedText
+  value: LocalizedText
+  tone?: 'teal' | 'gold' | 'danger' | 'success'
+}
+
+export interface SolutionArtifactTable {
+  columns: LocalizedText[]
+  rows: LocalizedText[][]
+}
+
+export interface SolutionArtifact {
+  kind: SolutionArtifactKind
+  title: LocalizedText
+  text: LocalizedText
+  metrics?: SolutionMetric[]
+  table?: SolutionArtifactTable
+  flow?: Array<{
+    title: LocalizedText
+    text: LocalizedText
+    status: LocalizedText
+  }>
+  trackingNumbers?: string[]
+}
+
+export interface SolutionWorkflowStep {
+  title: LocalizedText
+  text: LocalizedText
+}
+
+export interface SolutionFaqItem {
+  question: LocalizedText
+  answer: LocalizedText
+}
+
 export interface SolutionDetail {
-  key: string
-  icon: string
-  titleAr: string
-  titleEn: string
-  summaryAr: string
-  summaryEn: string
+  key: SolutionKey
   path: string
-  audienceAr: string
-  audienceEn: string
-  painPointsAr: string[]
-  painPointsEn: string[]
-  solutionAr: string
-  solutionEn: string
-  benefitsAr: string[]
-  benefitsEn: string[]
-  workflowAr: string[]
-  workflowEn: string[]
+  title: LocalizedText
+  eyebrow: LocalizedText
+  summary: LocalizedText
+  heroNote: LocalizedText
+  cta: LocalizedText
+  painTitle: LocalizedText
+  painLead: LocalizedText
+  painPoints: LocalizedText[]
+  solutionTitle: LocalizedText
+  solutionLead: LocalizedText
+  solutionPoints: LocalizedText[]
+  artifact: SolutionArtifact
+  workflowTitle: LocalizedText
+  workflowLead: LocalizedText
+  workflow: SolutionWorkflowStep[]
+  benefitsTitle: LocalizedText
+  benefitsLead: LocalizedText
+  benefits: LocalizedText[]
   relatedFeatureKeys: string[]
-  relatedSolutionKeys: string[]
-  seoTitleAr: string
-  seoTitleEn: string
-  seoDescriptionAr: string
-  seoDescriptionEn: string
+  relatedSolutionKeys: SolutionKey[]
+  faq: SolutionFaqItem[]
+  finalTitle: LocalizedText
+  finalText: LocalizedText
+  seoTitle: LocalizedText
+  seoDescription: LocalizedText
 }
 
 export const solutions: SolutionDetail[] = [
   {
     key: 'shipping-companies',
-    icon: '🚚',
-    titleAr: 'شركات الشحن',
-    titleEn: 'Shipping Companies',
-    summaryAr: 'إدارة شاملة لعمليات الشحن من الإرسال إلى التوصيل والتحصيل.',
-    summaryEn: 'Complete management of shipping operations from dispatch to delivery and COD collection.',
     path: '/solutions/shipping-companies',
-    audienceAr: 'شركات الشحن وشركات النقل والمشغّلين اللوجستيين',
-    audienceEn: 'Shipping companies, carriers, and logistics operators',
-    painPointsAr: [
-      'توزيع يدوي للشحنات يستهلك وقتاً طويلاً ويسبّب أخطاء',
-      'صعوبة متابعة السعاة ومواقعهم لحظياً',
-      'تحصيل النقدي عند التوصيل معقّد ومعرّض للخسائر',
-      'غياب رؤية شاملة على حركة الشحنات والأداء',
-      'تأخيرات متكررة في التوصيل تؤثر على رضا العملاء',
+    eyebrow: { ar: 'لشركات الشحن والتوصيل', en: 'For shipping and delivery operators' },
+    title: {
+      ar: 'غرفة تشغيل تضبط التجار والمناديب وCOD في يوم واحد',
+      en: 'A command room for merchants, couriers, and COD in one operating day',
+    },
+    summary: {
+      ar: 'Trackora يساعد شركة الشحن على إدارة شحنات التجار، توزيع المناديب، متابعة الحالات، تحصيل COD، وتسوية النقدية من سجل تشغيل واحد واضح.',
+      en: 'Trackora helps shipping companies manage merchant shipments, courier assignment, shipment states, COD collection, and cash settlement from one clear operating record.',
+    },
+    heroNote: {
+      ar: 'مصمم لمدير تشغيل يراجع الحمولة، النقد مع المناديب، الشحنات المتأخرة، ومخاطر اليوم قبل أن تتسع الفجوة.',
+      en: 'Designed for operations leaders reviewing load, courier-held cash, delayed shipments, and daily risk before gaps widen.',
+    },
+    cta: { ar: 'اطلب عرض لشركة الشحن', en: 'Request a shipping company demo' },
+    painTitle: { ar: 'الخطأ اليدوي لا يبقى صغيرا في شركة شحن', en: 'Manual errors do not stay small in a shipping company' },
+    painLead: {
+      ar: 'عندما تتحرك شحنات التجار والمناديب والتحصيل في ملفات ومكالمات منفصلة، يصبح قرار واحد غير واضح كافيا لتعطيل الطريق أو تأخير التسوية.',
+      en: 'When merchant shipments, couriers, and collections move through separate files and calls, one unclear decision can delay a route or settlement.',
+    },
+    painPoints: [
+      { ar: 'شحنات التجار موزعة بين ملفات ورسائل ولا تظهر كحمل تشغيلي واحد.', en: 'Merchant shipments are split across files and messages instead of one operating load.' },
+      { ar: 'توزيع المناديب يعتمد على الذاكرة، لا على المنطقة والحمولة والنقد المتوقع.', en: 'Courier assignment relies on memory instead of zone, capacity, and expected cash.' },
+      { ar: 'حالات الشحنات تتأخر في الظهور، فيزيد ضغط الدعم والتاجر.', en: 'Shipment states appear late, increasing pressure from support and merchants.' },
+      { ar: 'COD يبقى مع مناديب مختلفين بدون رؤية فورية للتسوية المعلقة.', en: 'COD stays with different couriers without immediate visibility into pending settlement.' },
+      { ar: 'التقارير تأتي بعد المشكلة، لا أثناء اليوم التشغيلي.', en: 'Reports arrive after the problem, not during the operating day.' },
     ],
-    painPointsEn: [
-      'Manual shipment assignment wastes time and causes errors',
-      'Difficulty tracking couriers and their real-time locations',
-      'COD collection is complex and prone to losses',
-      'No comprehensive visibility into shipment flow and performance',
-      'Frequent delivery delays impacting customer satisfaction',
+    solutionTitle: { ar: 'Trackora يربط قرار التوزيع بحركة النقد والتقرير', en: 'Trackora ties dispatch decisions to cash movement and reporting' },
+    solutionLead: {
+      ar: 'ترى الشركة التاجر، عدد الشحنات، سعة المندوب، COD المحصل، التسوية المعلقة، التأخير، وإشارات الخطر في نفس اللوحة. كل تغيير في الطريق يترك أثرا يمكن مراجعته.',
+      en: 'The operator sees merchant, shipment count, courier capacity, collected COD, pending settlement, delays, and risk flags in one board. Every route change leaves a reviewable trail.',
+    },
+    solutionPoints: [
+      { ar: 'إدارة شحنات التجار من شاشة واحدة بدل متابعة كل تاجر وحده.', en: 'Manage merchant shipments from one screen instead of following each merchant separately.' },
+      { ar: 'توزيع المناديب حسب المناطق والحمولة والنقد المتوقع على الطريق.', en: 'Assign couriers by zones, load, and expected cash on the route.' },
+      { ar: 'متابعة حالات الشحنات لحظة بلحظة من الديسباتش إلى التسليم أو المرتجع.', en: 'Follow shipment states from dispatch to delivery or return.' },
+      { ar: 'ربط تحصيل COD بالمندوب والتاجر والشحنة قبل التسوية.', en: 'Connect COD collection to courier, merchant, and shipment before settlement.' },
     ],
-    solutionAr: 'تراكورا يقدّم لشركات الشحن منصة متكاملة: إرسال ذكي يوزّع الشحنات تلقائياً على أفضل ساعٍ، تطبيق جوّال للسعاة بمشاركة موقع لحظي، محفظة نقدي تدير التحصيل والتسويات، وتقارير مفصّلة تعطيك رؤية كاملة على العمليات.',
-    solutionEn: 'Trackora provides shipping companies with an integrated platform: smart dispatch that automatically assigns shipments to the best courier, a mobile app for couriers with live location sharing, a COD wallet managing collection and settlements, and detailed reports giving you full operational visibility.',
-    benefitsAr: [
-      'توزيع آليل للشحنات يوفّر ساعات يومياً',
-      'متابعة لحظية لمواقع السعاة وحالة التوصيل',
-      'إدارة كاملة لدورة النقدي عند التوصيل',
-      'تقارير أداء شاملة لاتّخاذ قرارات أفضل',
-      'تحسين رضا العملاء عبر التوصيل الأسرع',
-      'تقليل خسائر الاحتيال والأخطاء التشغيلية',
+    artifact: {
+      kind: 'command-board',
+      title: { ar: 'لوحة قيادة العمليات', en: 'Operations command board' },
+      text: {
+        ar: 'لقطة تجمع الحمل التشغيلي والمالي في صفوف يمكن لفريق التشغيل والمحاسبة قراءتها معا.',
+        en: 'A view that combines operating load and cash exposure in rows operations and finance can read together.',
+      },
+      table: {
+        columns: [
+          { ar: 'التاجر', en: 'Merchant' },
+          { ar: 'عدد الشحنات', en: 'Shipment count' },
+          { ar: 'سعة المندوب', en: 'Courier capacity' },
+          { ar: 'COD محصل', en: 'COD collected' },
+          { ar: 'تسوية معلقة', en: 'Pending settlement' },
+          { ar: 'متأخرة', en: 'Delayed' },
+          { ar: 'إشارات خطر', en: 'Risk flags' },
+        ],
+        rows: [
+          [{ ar: 'متجر النور', en: 'Nour Store' }, { ar: '١٤٨', en: '148' }, { ar: '18 / 24', en: '18 / 24' }, { ar: '٣٨,٤٥٠ ج.م', en: 'EGP 38,450' }, { ar: '١٢,٢٠٠ ج.م', en: 'EGP 12,200' }, { ar: '٧', en: '7' }, { ar: 'COD مرتفع', en: 'High COD' }],
+          [{ ar: 'سوق سريع', en: 'Fast Souq' }, { ar: '٩٣', en: '93' }, { ar: '11 / 18', en: '11 / 18' }, { ar: '٢١,٨٧٠ ج.م', en: 'EGP 21,870' }, { ar: '٤,٣٠٠ ج.م', en: 'EGP 4,300' }, { ar: '٢', en: '2' }, { ar: 'عنوان ضعيف', en: 'Weak address' }],
+          [{ ar: 'بيتك ستور', en: 'Baytak Store' }, { ar: '٦٥', en: '65' }, { ar: '20 / 20', en: '20 / 20' }, { ar: '١٧,٦٢٠ ج.م', en: 'EGP 17,620' }, { ar: '٠', en: 'EGP 0' }, { ar: '١١', en: '11' }, { ar: 'حمولة كاملة', en: 'Full load' }],
+        ],
+      },
+    },
+    workflowTitle: { ar: 'من استلام شحنات التجار حتى إغلاق التسوية', en: 'From merchant intake to settlement close' },
+    workflowLead: { ar: 'المسار مصمم حول سجل واحد، وليس نقل بيانات بين فرق.', en: 'The flow is built around one record, not hand-copying data between teams.' },
+    workflow: [
+      { title: { ar: 'تجميع شحنات التجار', en: 'Collect merchant shipments' }, text: { ar: 'تدخل الشحنات مفردة أو دفعات مع التاجر والمنطقة وقيمة COD.', en: 'Shipments enter individually or in batches with merchant, zone, and COD value.' } },
+      { title: { ar: 'قراءة الحمولة والسعة', en: 'Read load and capacity' }, text: { ar: 'تظهر الشحنات حسب المناطق وسعة المناديب والنقد المتوقع.', en: 'Shipments appear by zone, courier capacity, and expected cash.' } },
+      { title: { ar: 'إسناد ومتابعة الحالات', en: 'Assign and follow states' }, text: { ar: 'يتحرك كل تحديث من المندوب إلى لوحة التشغيل والتاجر.', en: 'Each courier update moves to operations and merchant visibility.' } },
+      { title: { ar: 'تحصيل ومطابقة وتسوية', en: 'Collect, reconcile, settle' }, text: { ar: 'تغلق المحاسبة النقد حسب الشحنة والمندوب والتاجر.', en: 'Finance closes cash by shipment, courier, and merchant.' } },
     ],
-    benefitsEn: [
-      'Automatic dispatch saves hours daily',
-      'Real-time tracking of courier locations and delivery status',
-      'Full management of the COD collection cycle',
-      'Comprehensive performance reports for better decisions',
-      'Improved customer satisfaction through faster delivery',
-      'Reduced fraud losses and operational errors',
+    benefitsTitle: { ar: 'ما يتغير في اليوم التشغيلي', en: 'What changes in the operating day' },
+    benefitsLead: { ar: 'النتيجة ليست لوحة أجمل، بل قرارات أقل عشوائية عند الضغط.', en: 'The result is not a prettier dashboard, it is less guesswork under pressure.' },
+    benefits: [
+      { ar: 'تقليل الأخطاء اليدوية في التوزيع والتسوية.', en: 'Reduce manual errors in assignment and settlement.' },
+      { ar: 'رؤية أسرع للشحنات المتأخرة قبل تراكم شكاوى التجار.', en: 'See delayed shipments before merchant complaints pile up.' },
+      { ar: 'معرفة النقد الموجود مع كل مندوب وما ينتظر التسوية.', en: 'Know cash held by each courier and what is awaiting settlement.' },
+      { ar: 'تقارير تشغيل وتحصيل قابلة للاجتماع اليومي.', en: 'Operations and collection reports ready for the daily review.' },
     ],
-    workflowAr: [
-      'ارفع الشحنات على النظام مفردة أو مجمّعاً',
-      'تراكورا يوزّع تلقائياً على أفضل ساعٍ',
-      'السعاة يتلقون الإشعارات ويبدأون التوصيل',
-      'تتبّع كل شحنة لحظياً من المستودع للعميل',
-      'حصّل النقدي وأدر التسويات والتقارير',
-    ],
-    workflowEn: [
-      'Upload shipments individually or in bulk',
-      'Trackora automatically assigns to the best courier',
-      'Couriers receive notifications and start delivery',
-      'Track every shipment in real time from warehouse to customer',
-      'Collect COD and manage settlements and reports',
-    ],
-    relatedFeatureKeys: ['smart-dispatch', 'courier-app', 'cod-wallet'],
+    relatedFeatureKeys: ['smart-dispatch', 'courier-app', 'cod-wallet', 'fraud-detection'],
     relatedSolutionKeys: ['ecommerce-stores', 'social-sellers'],
-    seoTitleAr: 'حلول شركات الشحن — إدارة شاملة للعمليات | تراكورا',
-    seoTitleEn: 'Solutions for Shipping Companies — Complete Operations Management | Trackora',
-    seoDescriptionAr: 'حل متكامل لشركات الشحن: إرسال ذكي، تطبيق سعاة، محفظة نقدي، وتقارير أداء. حسّن عملياتك مع تراكورا.',
-    seoDescriptionEn: 'Integrated solution for shipping companies: smart dispatch, courier app, COD wallet, and performance reports. Improve your operations with Trackora.',
+    faq: [
+      { question: { ar: 'هل يناسب Trackora أكثر من تاجر في نفس اليوم؟', en: 'Does Trackora handle many merchants in the same day?' }, answer: { ar: 'نعم. اللوحة تعرض الحمل حسب التاجر والمنطقة والمندوب والتحصيل حتى لا تضيع الأولويات بين حسابات مختلفة.', en: 'Yes. The board shows load by merchant, zone, courier, and collection so priorities do not get lost between accounts.' } },
+      { question: { ar: 'كيف يساعد في تسوية COD؟', en: 'How does it help COD settlement?' }, answer: { ar: 'كل مبلغ يرتبط بالشحنة والمندوب والتاجر، فتظهر التحصيلات والمبالغ المعلقة قبل اعتماد التسوية.', en: 'Each amount is tied to shipment, courier, and merchant, so collected and pending amounts are visible before settlement approval.' } },
+      { question: { ar: 'هل يمكن تعديل الإسناد يدويا؟', en: 'Can assignment be adjusted manually?' }, answer: { ar: 'نعم. يستطيع المشرف تعديل القرار عندما يحتاج معرفة محلية، مع بقاء الشحنة داخل نفس السجل.', en: 'Yes. Supervisors can adjust decisions when local context matters while keeping the shipment in the same record.' } },
+    ],
+    finalTitle: { ar: 'شاهد Trackora على يوم تشغيل حقيقي لشركتك', en: 'See Trackora on a real operating day for your company' },
+    finalText: { ar: 'شاركنا عدد التجار، الشحنات، المناديب، وطريقة تسوية COD. سنعرض المسار كما سيظهر لفريقك.', en: 'Share merchant count, shipment volume, couriers, and COD settlement flow. We will show the path as your team would use it.' },
+    seoTitle: { ar: 'حل Trackora لشركات الشحن وإدارة COD والديسباتش', en: 'Trackora for Shipping Companies, COD, and Dispatch' },
+    seoDescription: { ar: 'حل عربي لشركات الشحن لإدارة شحنات التجار، توزيع المناديب، متابعة الحالات، تحصيل COD، التسويات، والتقارير.', en: 'Arabic-first solution for shipping operators managing merchant shipments, courier assignment, shipment states, COD, settlements, and reports.' },
   },
   {
     key: 'ecommerce-stores',
-    icon: '🛒',
-    titleAr: 'المتاجر الإلكترونية',
-    titleEn: 'E-commerce Stores',
-    summaryAr: 'تتبّع شحنات متجرك وحقّق تجربة توصيل ممتازة لعملائك.',
-    summaryEn: 'Track your store shipments and deliver an excellent delivery experience.',
     path: '/solutions/ecommerce-stores',
-    audienceAr: 'أصحاب المتاجر الإلكترونية ومدراء العمليات',
-    audienceEn: 'E-commerce store owners and operations managers',
-    painPointsAr: [
-      'العملاء يسألون باستمرار عن حالة شحناتهم',
-      'صعوبة تتبّع شحنات متعددة من منصات مختلفة',
-      'تحصيل النقدي عند التوصيل يتطلب متابعة يدوية',
-      'لا وجود لوحة تحكم مركزية لكل الشحنات والطلبات',
-      'المرتجعات والاستبدالات معقّدة بدون تتبّع واضح',
+    eyebrow: { ar: 'للمتاجر الإلكترونية', en: 'For e-commerce stores' },
+    title: { ar: 'رؤية للشحنة والمحفظة بدون مطاردة شركة الشحن', en: 'Shipment and wallet visibility without chasing the carrier' },
+    summary: { ar: 'Trackora يعطي المتجر بوابة لإنشاء الشحنات، رفع دفعات كثيرة، متابعة الحالات، معرفة تحصيل COD، وتقليل المرتجعات والطلبات الوهمية.', en: 'Trackora gives stores a portal to create shipments, upload batches, follow status, see COD collection, and reduce returns and fake orders.' },
+    heroNote: { ar: 'مناسب لفريق متجر يريد معرفة ما حدث لكل طلب، وما تم تحصيله، وما يجب إرساله للعميل كرابط تتبع.', en: 'Built for store teams that need to know what happened to each order, what was collected, and what tracking link to send customers.' },
+    cta: { ar: 'اطلب عرض لمتجرك', en: 'Request a demo for your store' },
+    painTitle: { ar: 'غياب الرؤية يحول التوصيل إلى خدمة دعم مستمرة', en: 'Lack of visibility turns delivery into constant support work' },
+    painLead: { ar: 'عندما لا يرى المتجر حالة الطلب أو رصيد COD بنفسه، يعود كل سؤال إلى محادثة مع شركة الشحن أو العميل.', en: 'When a store cannot see order status or COD balance directly, every question becomes a conversation with the carrier or customer.' },
+    painPoints: [
+      { ar: 'إنشاء الشحنات يدويا يستهلك وقت الفريق مع كل حملة بيع.', en: 'Manual shipment creation drains the team with every sales campaign.' },
+      { ar: 'رفع الشحنات الكثيرة بدون تحقق يترك أرقاما وعناوين ناقصة.', en: 'Uploading many shipments without validation leaves missing phones and addresses.' },
+      { ar: 'حالة كل شحنة غير واضحة للدعم أو العميل.', en: 'Each shipment state is unclear to support or the customer.' },
+      { ar: 'تحصيل COD والرصيد يحتاجان متابعة من أكثر من مصدر.', en: 'COD collection and wallet balance need follow-up from multiple sources.' },
+      { ar: 'المرتجعات والطلبات الوهمية تظهر بعد خروج المندوب للطريق.', en: 'Returns and fake orders are discovered after the courier is already on the route.' },
     ],
-    painPointsEn: [
-      'Customers constantly asking about their shipment status',
-      'Difficulty tracking multiple shipments across different platforms',
-      'COD collection requires manual follow-up',
-      'No centralized dashboard for all shipments and orders',
-      'Returns and exchanges are complex without clear tracking',
+    solutionTitle: { ar: 'بوابة تاجر تضع الطلب والتتبع والمحفظة في نفس الشاشة', en: 'A merchant portal that puts orders, tracking, and wallet in one screen' },
+    solutionLead: { ar: 'يدخل فريق المتجر شحنة واحدة أو ملف طلبات، يراجع الأخطاء، يتابع الحالات، يرى COD المعلق، ويشارك رقم تتبع عام مع العميل بدون كشف بيانات حساسة.', en: 'Store teams create a shipment or upload an order file, review errors, follow states, see pending COD, and share public tracking with customers without exposing sensitive data.' },
+    solutionPoints: [
+      { ar: 'إنشاء شحنات بسهولة من بيانات العميل والمنطقة ومبلغ COD.', en: 'Create shipments easily from customer data, zone, and COD amount.' },
+      { ar: 'رفع شحنات كثيرة مرة واحدة مع مراجعة الصفوف الناقصة.', en: 'Upload many shipments at once while reviewing missing rows.' },
+      { ar: 'متابعة الحالة: جديدة، خارج للتوصيل، تم التسليم، مرتجعة.', en: 'Follow status: new, out for delivery, delivered, returned.' },
+      { ar: 'رؤية المحفظة والرصيد بدل انتظار تقرير منفصل.', en: 'See wallet and balance instead of waiting for a separate report.' },
     ],
-    solutionAr: 'تراكورا يمنح المتاجر الإلكترونية بوابة شاملة: رفع مجمّع للطلبات، تتبّع لحظي لكل شحنة، محفظة نقدي شاملة، وتقارير تساعدك على فهم أداء التوصيل وتحسينه.',
-    solutionEn: 'Trackora gives e-commerce stores a comprehensive portal: bulk order upload, real-time tracking for every shipment, a full COD wallet, and reports that help you understand and improve delivery performance.',
-    benefitsAr: [
-      'رفع آلاف الطلبات دفعة واحدة',
-      'تتبّع لحظي لحالة كل شحنة',
-      'إدارة كاملة للنقدي عند التوصيل',
-      'بوابة واحدة لكل الطلبات والشحنات',
-      'تقارير أداء توصيل واضحة ومفصّلة',
-      'كشف الطلبات المشبوهة وحماية متجرك',
+    artifact: {
+      kind: 'merchant-dashboard',
+      title: { ar: 'لوحة شحنات المتجر', en: 'Merchant shipment dashboard' },
+      text: { ar: 'واجهة تركز على ما يسأل عنه فريق المتجر يوميا: الجديد، الخارج للتوصيل، المسلّم، المرتجع، COD، والمحفظة.', en: 'A view focused on what store teams ask daily: new, out for delivery, delivered, returned, COD, and wallet.' },
+      metrics: [
+        { label: { ar: 'شحنات جديدة', en: 'New shipments' }, value: { ar: '٤٦', en: '46' }, tone: 'teal' },
+        { label: { ar: 'خارج للتوصيل', en: 'Out for delivery' }, value: { ar: '٨٢', en: '82' }, tone: 'gold' },
+        { label: { ar: 'تم التسليم', en: 'Delivered' }, value: { ar: '١٣٤', en: '134' }, tone: 'success' },
+        { label: { ar: 'مرتجع', en: 'Returned' }, value: { ar: '٩', en: '9' }, tone: 'danger' },
+        { label: { ar: 'COD معلق', en: 'COD pending' }, value: { ar: '٢٦,٤٠٠ ج.م', en: 'EGP 26,400' }, tone: 'gold' },
+        { label: { ar: 'رصيد المحفظة', en: 'Wallet balance' }, value: { ar: '٧٤,٩٥٠ ج.م', en: 'EGP 74,950' }, tone: 'teal' },
+      ],
+      trackingNumbers: ['TRK-82014', 'TRK-82021', 'TRK-82028', 'TRK-82034'],
+    },
+    workflowTitle: { ar: 'من طلب المتجر إلى رابط تتبع العميل', en: 'From store order to customer tracking link' },
+    workflowLead: { ar: 'كل خطوة تقلل سؤالا متكررا بين المتجر وشركة الشحن والعميل.', en: 'Each step removes a repeated question between store, carrier, and customer.' },
+    workflow: [
+      { title: { ar: 'إنشاء أو رفع الطلبات', en: 'Create or upload orders' }, text: { ar: 'يدخل الفريق شحنة واحدة أو يرفع ملف طلبات كامل.', en: 'The team enters one shipment or uploads a full order file.' } },
+      { title: { ar: 'تحقق من البيانات', en: 'Validate data' }, text: { ar: 'تظهر الأرقام المكررة والعناوين الناقصة قبل الإرسال.', en: 'Repeated phones and missing addresses appear before dispatch.' } },
+      { title: { ar: 'متابعة الحالة', en: 'Follow status' }, text: { ar: 'يرى الفريق كل تحديث من شركة الشحن أو المندوب.', en: 'The team sees every update from the carrier or courier.' } },
+      { title: { ar: 'مراجعة COD والتتبع', en: 'Review COD and tracking' }, text: { ar: 'تظهر المبالغ المعلقة ورقم التتبع الذي يرسل للعميل.', en: 'Pending amounts and the customer tracking number are visible.' } },
     ],
-    benefitsEn: [
-      'Upload thousands of orders at once',
-      'Real-time tracking for every shipment',
-      'Full COD collection management',
-      'One portal for all orders and shipments',
-      'Clear and detailed delivery performance reports',
-      'Suspicious order detection to protect your store',
+    benefitsTitle: { ar: 'ما يهم المتجر بعد أول أسبوع', en: 'What matters to the store after week one' },
+    benefitsLead: { ar: 'وضوح أقل تكلفة من متابعة كل طلب بالرسائل.', en: 'Visibility costs less than chasing every order through messages.' },
+    benefits: [
+      { ar: 'تقليل رسائل أين الطلب؟ لأن رقم التتبع جاهز.', en: 'Fewer where-is-my-order messages because tracking is ready.' },
+      { ar: 'معرفة COD المعلق والرصيد المتاح للمراجعة.', en: 'Know pending COD and wallet balance for review.' },
+      { ar: 'إيقاف أخطاء الملفات قبل أن تصبح شحنات فاشلة.', en: 'Stop file errors before they become failed shipments.' },
+      { ar: 'قراءة المرتجعات والطلبات الوهمية من نفس لوحة الشحنات.', en: 'Read returns and fake-order signals from the same shipment view.' },
     ],
-    workflowAr: [
-      'ارفع طلباتك مفردة أو عبر ملف Excel',
-      'شحناتك تُرسل تلقائياً عبر الإرسال الذكي',
-      'تابع حالة كل شحنة لحظياً من البوابة',
-      'حصّل النقدي واطّلع على التقارير',
-    ],
-    workflowEn: [
-      'Upload orders individually or via Excel',
-      'Shipments are automatically dispatched via smart dispatch',
-      'Track every shipment\'s status in real time from the portal',
-      'Collect COD and review reports',
-    ],
-    relatedFeatureKeys: ['merchant-portal', 'bulk-upload', 'cod-wallet'],
+    relatedFeatureKeys: ['merchant-portal', 'bulk-upload', 'cod-wallet', 'fraud-detection', 'public-tracking'],
     relatedSolutionKeys: ['shipping-companies', 'social-sellers'],
-    seoTitleAr: 'حلول المتاجر الإلكترونية — تتبّع وتحصيل ذكي | تراكورا',
-    seoTitleEn: 'Solutions for E-commerce Stores — Smart Tracking & Collection | Trackora',
-    seoDescriptionAr: 'بوابة شاملة للمتاجر الإلكترونية: رفع مجمّع، تتبّع لحظي، محفظة نقدي، وكشف احتيال. حسّن تجربة التوصيل مع تراكورا.',
-    seoDescriptionEn: 'Comprehensive portal for e-commerce stores: bulk upload, real-time tracking, COD wallet, and fraud detection. Improve delivery experience with Trackora.',
+    faq: [
+      { question: { ar: 'هل يستطيع العميل تتبع الشحنة؟', en: 'Can customers track shipments?' }, answer: { ar: 'نعم. يمكن مشاركة رقم أو رابط تتبع عام يعرض الحالة اللازمة بدون إظهار بيانات حساسة.', en: 'Yes. A public tracking number or link can show the needed state without exposing sensitive data.' } },
+      { question: { ar: 'هل تدعم الصفحة رفع شحنات كثيرة؟', en: 'Does this support bulk shipment upload?' }, answer: { ar: 'نعم. الرفع المجمع يراجع الصفوف والأخطاء قبل انتقال الطلبات إلى التشغيل.', en: 'Yes. Bulk upload reviews rows and errors before orders move to operations.' } },
+      { question: { ar: 'كيف أعرف رصيد COD؟', en: 'How do I know COD balance?' }, answer: { ar: 'تظهر المحفظة المبالغ المعلقة، الجاهزة للتسوية، وما تم تسويته حسب الشحنات.', en: 'The wallet shows pending, ready-to-settle, and settled amounts by shipment.' } },
+    ],
+    finalTitle: { ar: 'اعرض Trackora على طلبات متجرك الفعلية', en: 'See Trackora using your actual store orders' },
+    finalText: { ar: 'أخبرنا بعدد الطلبات اليومي، طريقة الرفع، وشركة الشحن الحالية. سنعرض لك مسارا واضحا من الإنشاء حتى التتبع وCOD.', en: 'Tell us daily order volume, upload method, and current carrier. We will show a clear path from creation to tracking and COD.' },
+    seoTitle: { ar: 'حل Trackora للمتاجر الإلكترونية وتتبع COD والشحنات', en: 'Trackora for E-commerce Stores, COD, and Shipment Tracking' },
+    seoDescription: { ar: 'بوابة عربية للمتاجر لإنشاء الشحنات، الرفع المجمع، تتبع الحالة، محفظة COD، تقليل المرتجعات، ومشاركة التتبع مع العميل.', en: 'Arabic-first merchant portal for shipment creation, bulk upload, status tracking, COD wallet, return reduction, and customer tracking.' },
   },
   {
     key: 'social-sellers',
-    icon: '📱',
-    titleAr: 'البائعون عبر الهاتف',
-    titleEn: 'Social Sellers',
-    summaryAr: 'ارفع طلباتك بسهولة وتابع التوصيل والتحصيل بلا تعقيد.',
-    summaryEn: 'Upload orders easily and track delivery and COD collection without complexity.',
     path: '/solutions/social-sellers',
-    audienceAr: 'البائعون على إنستغرام وواتساب وتيك توك والمتاجر الصغيرة',
-    audienceEn: 'Sellers on Instagram, WhatsApp, TikTok, and small shops',
-    painPointsAr: [
-      'إدخال الطلبات يدوياً واحداً تلو الآخر يستنزف الوقت',
-      'صعوبة تتبّع من دفع ومن لم يدفع',
-      'التحصيل النقدي متعب وعرضة للأخطاء',
-      'الطلبات المزعجة أو الاحتيالية تسبّب خسائر',
-      'لا يوجد نظام بسيط يتناسب مع حجم العمل',
+    eyebrow: { ar: 'للبائعين عبر إنستغرام وفيسبوك وتيك توك', en: 'For Instagram, Facebook, and TikTok sellers' },
+    title: { ar: 'حوّل رسائل العملاء إلى شحنات منظمة بدون نظام ثقيل', en: 'Turn customer messages into organized shipments without a heavy system' },
+    summary: { ar: 'Trackora يعطي البائع الصغير مسارا خفيفا لإدخال الطلبات، متابعة التحصيل والمرتجعات، مشاركة التتبع، وتقليل اللخبطة مع المناديب.', en: 'Trackora gives small sellers a lightweight path to enter orders, follow COD and returns, share tracking, and reduce confusion with couriers.' },
+    heroNote: { ar: 'مصمم لمن يبيع من الرسائل ويحتاج بداية بسيطة بدل الشيتات وسكرينشوتات الطلبات.', en: 'Designed for sellers taking orders from messages who need a simple start instead of sheets and order screenshots.' },
+    cta: { ar: 'ابدأ تنظيم طلباتك', en: 'Start organizing your orders' },
+    painTitle: { ar: 'الشيتات والرسائل تعمل حتى يزداد عدد الطلبات', en: 'Sheets and messages work until order volume rises' },
+    painLead: { ar: 'مع كل حملة أو بث مباشر، تتداخل بيانات العملاء والتحصيل والمرتجعات مع محادثات كثيرة ومندوبين ينتظرون عناوين واضحة.', en: 'With every campaign or live sale, customer data, collections, and returns mix with many chats and couriers waiting for clear addresses.' },
+    painPoints: [
+      { ar: 'الطلبات تعيش بين رسائل واتساب وشيتات وصور محادثات.', en: 'Orders live across WhatsApp messages, sheets, and chat screenshots.' },
+      { ar: 'إدخال الشحنة يأخذ وقتا لأن بيانات العميل ليست في نموذج واحد.', en: 'Shipment entry takes time because customer data is not in one form.' },
+      { ar: 'التحصيل والمرتجعات يتداخلان مع متابعة المندوبين.', en: 'COD and returns get mixed with courier follow-up.' },
+      { ar: 'العميل يسأل عن التتبع ولا يوجد رقم جاهز للمشاركة.', en: 'Customers ask for tracking but there is no ready number to share.' },
+      { ar: 'البداية على نظام كبير تبدو معقدة مقارنة بحجم الفريق.', en: 'Starting with a large system feels too complex for a small team.' },
     ],
-    painPointsEn: [
-      'Manual order entry one by one wastes time',
-      'Difficulty tracking who paid and who did not',
-      'COD collection is tedious and error-prone',
-      'Fraudulent or suspicious orders cause losses',
-      'No simple system that fits the scale of operations',
+    solutionTitle: { ar: 'مسار بسيط: رسالة، شحنة، مندوب، تحصيل، تتبع', en: 'A simple path: message, shipment, courier, collection, tracking' },
+    solutionLead: { ar: 'يسجل البائع الطلب بسرعة، تتحول البيانات إلى شحنة، يتم إسنادها لمندوب، يظهر COD عند التحصيل، ثم يشارك رقم تتبع مع العميل وتحدث المحفظة.', en: 'The seller records the order quickly, data becomes a shipment, a courier is assigned, COD appears on collection, then tracking is shared and the wallet updates.' },
+    solutionPoints: [
+      { ar: 'تنظيم الطلبات بدل الشيتات والرسائل المتفرقة.', en: 'Organize orders instead of scattered sheets and messages.' },
+      { ar: 'إدخال شحنات بسرعة من بيانات العميل الأساسية.', en: 'Enter shipments quickly from basic customer data.' },
+      { ar: 'متابعة التحصيل والمرتجعات بدون سؤال كل مندوب.', en: 'Follow COD and returns without asking every courier.' },
+      { ar: 'مشاركة رقم تتبع مع العميل من نفس المسار.', en: 'Share a tracking number with the customer from the same flow.' },
     ],
-    solutionAr: 'تراكورا يقدّم للبائعين عبر الهاتف حلاً بسيطاً: رفع سريع للطلبات، تتبّع يسير للشحنات، محفظة نقدي واضحة، وكشف تلقائي للطلبات المشبوهة.',
-    solutionEn: 'Trackora provides social sellers with a simple solution: quick order upload, easy shipment tracking, a clear COD wallet, and automatic suspicious order detection.',
-    benefitsAr: [
-      'رفع الطلبات بسرعة وسهولة',
-      'متابعة بسيطة لحالة التوصيل',
-      'محفظة نقدي واضحة تعرض الأرصدة والتسويات',
-      'كشف تلقائي للطلبات المشبوهة',
-      'واجهة عربية بسيطة تناسب البائعين',
-      'لا حاجة لأنظمة معقّدة أو تدريب طويل',
+    artifact: {
+      kind: 'seller-flow',
+      title: { ar: 'مسار من الطلب إلى الشحنة', en: 'Order-to-shipment flow' },
+      text: { ar: 'تمثيل خفيف للعمل اليومي من أول رسالة عميل حتى تحديث المحفظة.', en: 'A lightweight representation of daily work from first customer message to wallet update.' },
+      flow: [
+        { title: { ar: 'رسالة العميل', en: 'Customer message' }, text: { ar: 'الاسم، الهاتف، العنوان، والمنتج من المحادثة.', en: 'Name, phone, address, and item from the chat.' }, status: { ar: 'تم الالتقاط', en: 'Captured' } },
+        { title: { ar: 'إنشاء الشحنة', en: 'Shipment created' }, text: { ar: 'رقم تتبع وقيمة COD جاهزان قبل التسليم للمندوب.', en: 'Tracking number and COD value are ready before courier handoff.' }, status: { ar: 'TRK-90418', en: 'TRK-90418' } },
+        { title: { ar: 'إسناد المندوب', en: 'Courier assigned' }, text: { ar: 'المندوب يرى العنوان والمبلغ والحالة المطلوبة.', en: 'Courier sees address, amount, and required state.' }, status: { ar: 'جاهز للطريق', en: 'Ready for route' } },
+        { title: { ar: 'تحصيل COD', en: 'COD collected' }, text: { ar: 'المبلغ ينتقل للمحفظة أو يظهر كمرتجع عند الفشل.', en: 'The amount moves to wallet or appears as returned when delivery fails.' }, status: { ar: 'محصل', en: 'Collected' } },
+        { title: { ar: 'مشاركة التتبع', en: 'Tracking shared' }, text: { ar: 'العميل يحصل على رقم يتابع منه الحالة.', en: 'Customer receives a number to follow status.' }, status: { ar: 'تم الإرسال', en: 'Shared' } },
+        { title: { ar: 'تحديث المحفظة', en: 'Wallet updated' }, text: { ar: 'الرصيد يظهر للبائع بدون تجميع يدوي آخر اليوم.', en: 'Balance appears without manual end-of-day tallying.' }, status: { ar: 'رصيد جديد', en: 'New balance' } },
+      ],
+    },
+    workflowTitle: { ar: 'بداية بسيطة لا تطلب تغيير طريقة البيع', en: 'A simple start that does not change how you sell' },
+    workflowLead: { ar: 'Trackora يدخل بعد المحادثة، عندما تحتاج تحويل الطلب إلى شحنة قابلة للمتابعة.', en: 'Trackora enters after the chat, when the order needs to become a trackable shipment.' },
+    workflow: [
+      { title: { ar: 'انسخ بيانات الطلب', en: 'Copy order details' }, text: { ar: 'ضع بيانات العميل ومبلغ COD والمنتج في نموذج واضح.', en: 'Put customer details, COD amount, and item into a clear form.' } },
+      { title: { ar: 'راجع النواقص', en: 'Check missing data' }, text: { ar: 'تظهر البيانات الناقصة أو رقم العميل المتكرر قبل الطريق.', en: 'Missing data or repeated customer numbers appear before routing.' } },
+      { title: { ar: 'تابع مع المندوب', en: 'Follow with courier' }, text: { ar: 'تعرف إن كانت الشحنة خرجت أو سلمت أو رجعت.', en: 'Know whether the shipment is out, delivered, or returned.' } },
+      { title: { ar: 'أغلق التحصيل', en: 'Close collection' }, text: { ar: 'راجع COD والمرتجعات ورصيد المحفظة في نهاية اليوم.', en: 'Review COD, returns, and wallet balance at day end.' } },
     ],
-    benefitsEn: [
-      'Upload orders quickly and easily',
-      'Simple delivery status tracking',
-      'Clear COD wallet showing balances and settlements',
-      'Automatic suspicious order detection',
-      'Simple Arabic interface designed for sellers',
-      'No complex systems or long training needed',
+    benefitsTitle: { ar: 'نظام كاف للفريق الصغير', en: 'Enough system for a small team' },
+    benefitsLead: { ar: 'الهدف ليس إضافة تعقيد، بل إزالة اللخبطة من الطلبات المتكررة.', en: 'The goal is not more process, it is removing confusion from repeat orders.' },
+    benefits: [
+      { ar: 'طلبات منظمة بدل الاعتماد على ذاكرة البائع أو الشيت.', en: 'Organized orders instead of relying on seller memory or sheets.' },
+      { ar: 'لخبطة أقل مع المناديب لأن كل شحنة لها رقم وحالة.', en: 'Less confusion with couriers because each shipment has a number and state.' },
+      { ar: 'تتبع أسهل للعميل بدون رسائل متابعة طويلة.', en: 'Easier customer tracking without long follow-up messages.' },
+      { ar: 'رؤية أوضح للتحصيل والمرتجعات قبل تراكمها.', en: 'Clearer COD and return visibility before they pile up.' },
     ],
-    workflowAr: [
-      'ارفع طلباتك بسرعة عبر النموذج أو ملف Excel',
-      'تراكورا يتحقّق من البيانات ويكشف الطلبات المشبوهة',
-      'تابع حالة التوصيل بسهولة',
-      'حصّل النقدي واطّلع على رصيدك بوضوح',
-    ],
-    workflowEn: [
-      'Upload orders quickly via form or Excel file',
-      'Trackora verifies data and flags suspicious orders',
-      'Track delivery status with ease',
-      'Collect COD and view your balance clearly',
-    ],
-    relatedFeatureKeys: ['bulk-upload', 'cod-wallet', 'fraud-detection'],
+    relatedFeatureKeys: ['bulk-upload', 'fraud-detection', 'public-tracking', 'cod-wallet'],
     relatedSolutionKeys: ['shipping-companies', 'ecommerce-stores'],
-    seoTitleAr: 'حلول البائعين عبر الهاتف — بساطة وقوة | تراكورا',
-    seoTitleEn: 'Solutions for Social Sellers — Simple & Powerful | Trackora',
-    seoDescriptionAr: 'حل بسيط للبائعين عبر الهاتف: رفع طلبات سريع، تتبّع توصيل، محفظة نقدي، وكشف احتيال. ابدأ مع تراكورا.',
-    seoDescriptionEn: 'Simple solution for social sellers: quick order upload, delivery tracking, COD wallet, and fraud detection. Start with Trackora.',
+    faq: [
+      { question: { ar: 'هل أحتاج فريق تشغيل كامل لاستخدام Trackora؟', en: 'Do I need a full operations team to use Trackora?' }, answer: { ar: 'لا. هذه الصفحة مصممة كبداية خفيفة للبائع أو الفريق الصغير الذي يريد تنظيم الطلبات والشحنات.', en: 'No. This path is designed as a lightweight start for a seller or small team organizing orders and shipments.' } },
+      { question: { ar: 'هل يمكن مشاركة رقم تتبع مع العميل؟', en: 'Can I share a tracking number with the customer?' }, answer: { ar: 'نعم. كل شحنة يمكن أن تحمل رقما يستخدمه العميل لمتابعة الحالة الأساسية.', en: 'Yes. Each shipment can carry a number customers use to follow the basic state.' } },
+      { question: { ar: 'هل يساعد في المرتجعات؟', en: 'Does it help with returns?' }, answer: { ar: 'نعم. تظهر الشحنات المرتجعة بجانب التحصيل والمحفظة حتى تعرف ما تم تسليمه وما عاد.', en: 'Yes. Returned shipments appear alongside COD and wallet data so you know what was delivered and what came back.' } },
+    ],
+    finalTitle: { ar: 'ابدأ من طلباتك الحالية، لا من نظام معقد', en: 'Start from your current orders, not a complex system' },
+    finalText: { ar: 'أخبرنا كيف تستقبل الطلبات اليوم وعدد الشحنات الأسبوعي. سنعرض طريقة بسيطة لتحويل الرسائل إلى شحنات منظمة.', en: 'Tell us how you receive orders today and weekly shipment volume. We will show a simple way to turn messages into organized shipments.' },
+    seoTitle: { ar: 'حل Trackora للبائعين عبر السوشيال وتنظيم الطلبات', en: 'Trackora for Social Sellers and Order Organization' },
+    seoDescription: { ar: 'حل خفيف للبائعين عبر إنستغرام وفيسبوك وتيك توك لتنظيم الطلبات، إنشاء الشحنات، متابعة COD والمرتجعات، ومشاركة التتبع.', en: 'Lightweight solution for Instagram, Facebook, and TikTok sellers to organize orders, create shipments, follow COD and returns, and share tracking.' },
   },
 ]
+
+export function getSolutionDetail(key: string) {
+  return solutions.find(solution => solution.key === key)
+}
+
+export function getLocalized(text: LocalizedText, locale: string) {
+  return locale === 'ar' ? text.ar : text.en
+}

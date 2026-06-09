@@ -1,10 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap");
 
 :root {
-  --color-primary: #1b4d5c;
-  --color-primary-light: #2d6e7d;
+  --color-primary: #1A3B66;
+  --color-primary-light: #3B5998;
   --color-primary-dark: #0f3340;
-  --color-accent: #e8a838;
+  --color-accent: #FF6B6B;
   --color-accent-hover: #d99a24;
   --color-accent-light: #fff7e3;
   --color-accent-contrast: #4c3508;
@@ -101,9 +101,9 @@
   --shadow-card:
     0 4px 16px rgba(27, 77, 92, 0.06), 0 1px 3px rgba(27, 77, 92, 0.04);
 
-  --container-max: 76rem;
-  --container-wide: 88rem;
-  --container-narrow: 48rem;
+  --container-max: 84rem;
+  --container-wide: 96rem;
+  --container-narrow: 54rem;
 
   --reveal-duration: 650ms;
   --reveal-easing: cubic-bezier(0.22, 1, 0.36, 1);
