@@ -847,7 +847,7 @@ const mailtoHref = computed(() => {
 });
 
 watchEffect(() => {
-  setSeo(copy.value.seoTitle, copy.value.seoDescription);
+  setSeo(copy.value.seoTitle, copy.value.seoDescription, '/contact');
 });
 
 function isValidRegionalPhone(value: string) {

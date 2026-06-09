@@ -2,7 +2,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
 
-  modules: ['@nuxtjs/i18n', '@nuxt/content'],
+  modules: ['@nuxtjs/i18n', '@nuxt/content', '@nuxtjs/sitemap'],
 
   app: {
     head: {
@@ -25,6 +25,7 @@ export default defineNuxtConfig({
     public: {
       apiBaseUrl: process.env.NUXT_PUBLIC_API_BASE_URL || '',
       enableMockTracking: process.env.NUXT_PUBLIC_ENABLE_MOCK_TRACKING === 'true',
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://trackora.com',
     },
   },
 
@@ -36,6 +37,10 @@ export default defineNuxtConfig({
     defaultLocale: 'ar',
     langDir: 'locales',
     strategy: 'prefix_except_default',
+  },
+
+  sitemap: {
+    autoI18n: true,
   },
 
   components: [

@@ -1,5 +1,5 @@
 <template>
-  <div class="home-redesign" dir="rtl">
+  <div class="home-redesign">
     <section class="hero" aria-labelledby="hero-title">
       
       <div class="hero__grid">
@@ -9,18 +9,18 @@
           <p class="hero__lead">
             Trackora يعطي فريق الديسباتش، المناديب، التحصيل، والتجار سجل تشغيل واحدا: ارفع الطلبات، اكشف المخاطر، وزع الشحنات، تابع العميل، وأغلق COD بدون جداول منفصلة أو اتصالات متكررة.
           </p>
-          <div class="hero__actions" aria-label="إجراءات رئيسية">
+          <div class="hero__actions" :aria-label="locale === 'ar' ? 'إجراءات رئيسية' : 'Key actions'">
             <NuxtLink class="home-btn home-btn--primary" to="/request-demo">اطلب عرضا على عملية شحنك</NuxtLink>
             <NuxtLink class="home-btn home-btn--secondary" to="/track">تتبع شحنة كعميل</NuxtLink>
           </div>
-          <div class="hero__proof" aria-label="ملخص تشغيلي">
+          <div class="hero__proof" :aria-label="locale === 'ar' ? 'ملخص تشغيلي' : 'Operations summary'">
             <span>عرض مبني على مناطقك وحجم شحناتك</span>
             <span>تسوية COD حسب التاجر والمندوب</span>
             <span>تتبع عام يقلل مكالمات أين الشحنة</span>
           </div>
         </div>
 
-        <div class="ops-console" aria-label="مثال على لوحة Trackora التشغيلية">
+        <div class="ops-console" :aria-label="locale === 'ar' ? 'مثال على لوحة Trackora التشغيلية' : 'Trackora operating console example'">
           <div class="ops-console__topbar">
             <span>لوحة التشغيل اليوم</span>
             <strong>حي</strong>
@@ -68,7 +68,7 @@
       </div>
     </section>
 
-    <section class="stats-strip" aria-label="مؤشرات تشغيلية">
+    <section class="stats-strip" :aria-label="locale === 'ar' ? 'مؤشرات تشغيلية' : 'Operations metrics'">
       <div v-for="metric in metrics" :key="metric.label" class="stat-item">
         <strong>{{ metric.value }}</strong>
         <span>{{ metric.label }}</span>
@@ -100,7 +100,7 @@
         </p>
         <NuxtLink class="home-btn home-btn--primary" to="/request-demo">شاهد Trackora على بيانات تشغيلك</NuxtLink>
       </div>
-      <div class="connection-map" aria-label="خريطة ربط Trackora التشغيلية">
+      <div class="connection-map" :aria-label="locale === 'ar' ? 'خريطة ربط Trackora التشغيلية' : 'Trackora operations connection map'">
         <div class="connection-map__center">Trackora</div>
         <span v-for="node in solutionNodes" :key="node" class="connection-map__node">{{ node }}</span>
       </div>
@@ -228,10 +228,12 @@
 
 <script setup lang="ts">
 const { setSeo } = useLocaleSeo()
+const { locale } = useI18n()
 
 setSeo(
   'Trackora | إدارة الشحنات وCOD لشركات الشحن',
-  'منصة عربية لإدارة الشحنات، التوزيع، تطبيق المناديب، محافظ COD، التتبع العام، وكشف مخاطر الطلبات.'
+  'منصة عربية لإدارة الشحنات، التوزيع، تطبيق المناديب، محافظ COD، التتبع العام، وكشف مخاطر الطلبات.',
+  '/',
 )
 
 const shipments = [

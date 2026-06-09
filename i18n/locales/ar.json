@@ -206,5 +206,29 @@
       "heading": "حلول البائعين عبر التواصل",
       "subtitle": "ارفع طلباتك بسهولة وتابع التوصيل والتحصيل بلا تعقيد."
     }
+  },
+  "seo": {
+    "trackPrivacyNote": "صفحة التتبع تعرض حالة الشحنة والبيانات اللازمة فقط."
+  },
+  "a11y": {
+    "switchToEnglish": "التبديل إلى الإنجليزية",
+    "switchToArabic": "التبديل إلى العربية",
+    "mainNav": "التنقل الرئيسي",
+    "footerNav": "روابط التذييل",
+    "homeLink": "Trackora الرئيسية",
+    "contactCta": "دعوة للتواصل",
+    "keyActions": "إجراءات رئيسية",
+    "operationsSummary": "ملخص تشغيلي",
+    "operationsConsole": "لوحة تشغيل Trackora",
+    "operationsMetrics": "مؤشرات تشغيلية",
+    "connectionMap": "خريطة ربط Trackora التشغيلية",
+    "articleContent": "محتوى المقال",
+    "articleToc": "فهرس المقال",
+    "articleCategories": "تصنيفات المقالات",
+    "keyTakeaways": "أهم ما ستتعلمه",
+    "solutionActions": "إجراءات الحل",
+    "adoptionQuestions": "أسئلة التطبيق",
+    "featurePreview": "معاينة تشغيلية للميزة",
+    "featurePageActions": "إجراءات صفحة المزايا"
   }
 }

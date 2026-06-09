@@ -95,7 +95,8 @@ setSeo(
   locale.value === 'ar' ? 'تتبّع شحنتك' : 'Track Your Shipment',
   locale.value === 'ar'
     ? 'أدخل رقم الشحنة لمعرفة حالة التوصيل عبر تراكورا.'
-    : 'Enter your tracking number to check delivery status via Trackora.'
+    : 'Enter your tracking number to check delivery status via Trackora.',
+  '/track',
 )
 
 async function handleTrack() {

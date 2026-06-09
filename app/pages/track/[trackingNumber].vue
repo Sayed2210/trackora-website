@@ -120,7 +120,9 @@ setSeo(
   locale.value === 'ar' ? `تتبّع ${trackingNumber.value}` : `Track ${trackingNumber.value}`,
   locale.value === 'ar'
     ? `تتبّع حالة الشحنة ${trackingNumber.value} عبر تراكورا.`
-    : `Track shipment status for ${trackingNumber.value} via Trackora.`
+    : `Track shipment status for ${trackingNumber.value} via Trackora.`,
+  `/track/${trackingNumber.value}`,
+  { robots: { index: false } },
 )
 
 onMounted(() => {

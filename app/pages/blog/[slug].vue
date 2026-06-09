@@ -1,5 +1,5 @@
 <template>
-  <main class="article-page" dir="rtl">
+  <main class="article-page" :dir="locale === 'ar' ? 'rtl' : 'ltr'">
     <template v-if="article">
       <section class="article-hero" aria-labelledby="article-heading">
         <AppContainer wide>
@@ -26,12 +26,12 @@
         </AppContainer>
       </section>
 
-      <section class="article-shell" aria-label="محتوى المقال">
+      <section class="article-shell" :aria-label="locale === 'ar' ? 'محتوى المقال' : 'Article content'">
         <AppContainer wide>
           <div class="article-shell__layout">
             <aside v-if="article.body.length > 2" class="article-toc" aria-labelledby="toc-heading">
               <h2 id="toc-heading">داخل المقال</h2>
-              <nav aria-label="فهرس المقال">
+              <nav :aria-label="locale === 'ar' ? 'فهرس المقال' : 'Article table of contents'">
                 <a v-for="section in article.body" :key="section.id" :href="`#${section.id}`">{{ section.title }}</a>
               </nav>
             </aside>
@@ -94,21 +94,45 @@
 </template>
 
 <script setup lang="ts">
-import { getBlogArticle, getRelatedArticles } from '~/data/blog'
+import { getBlogArticle, getRelatedArticles, type BlogArticle } from '~/data/blog'
 
 const route = useRoute()
+const { locale, t } = useI18n()
 const { setSeo } = useLocaleSeo()
 
 const slug = Array.isArray(route.params.slug) ? route.params.slug[0] : route.params.slug
 const article = computed(() => getBlogArticle(String(slug || '')))
 const relatedArticles = computed(() => article.value ? getRelatedArticles(article.value) : [])
 
+function getLocalizedArticleField(article: BlogArticle, field: 'seoTitle' | 'seoDescription'): string {
+  if (locale.value === 'en') {
+    const enField = field === 'seoTitle' ? article.seoTitleEn : article.seoDescriptionEn
+    if (enField) return enField
+  }
+  return article[field]
+}
+
 if (article.value) {
-  setSeo(article.value.seoTitle, article.value.seoDescription, `/blog/${article.value.slug}`)
+  const art = article.value
+  setSeo(
+    getLocalizedArticleField(art, 'seoTitle'),
+    getLocalizedArticleField(art, 'seoDescription'),
+    `/blog/${art.slug}`,
+    {
+      ogType: 'article',
+      article: {
+        publishedTime: art.publishedAt,
+        author: art.author,
+        section: locale.value === 'ar' ? art.category : art.categoryEn,
+      },
+    },
+  )
 } else {
   setSeo(
-    'المقال غير موجود | مدونة Trackora',
-    'لم نتمكن من العثور على مقال Trackora المطلوب. عد إلى المدونة لقراءة أدلة الشحن، COD، المناديب، والتتبع.',
+    locale.value === 'ar' ? 'المقال غير موجود | مدونة Trackora' : 'Article Not Found | Trackora Blog',
+    locale.value === 'ar'
+      ? 'لم نتمكن من العثور على مقال Trackora المطلوب. عد إلى المدونة لقراءة أدلة الشحن، COD، المناديب، والتتبع.'
+      : 'Could not find the requested Trackora article. Return to the blog for shipping, COD, courier, and tracking guides.',
     '/blog',
   )
 }

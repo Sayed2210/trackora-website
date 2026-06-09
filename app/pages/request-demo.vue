@@ -1001,7 +1001,7 @@ const planContext = computed(() => {
 });
 
 watchEffect(() => {
-  setSeo(copy.value.seoTitle, copy.value.seoDescription);
+  setSeo(copy.value.seoTitle, copy.value.seoDescription, '/request-demo');
 });
 
 watch(

@@ -1,5 +1,5 @@
 <template>
-  <main class="blog-page" dir="rtl">
+  <main class="blog-page" :dir="locale === 'ar' ? 'rtl' : 'ltr'">
     <section class="blog-hero" aria-labelledby="blog-heading">
       <AppContainer wide>
         <div class="blog-hero__content">
@@ -22,7 +22,7 @@
           <h2 id="filter-heading">اختر مساحة التشغيل</h2>
           <p>صف المقالات حسب المشكلة التي تريد حلها الآن.</p>
         </div>
-        <div class="category-filter" role="list" aria-label="تصنيفات المقالات">
+        <div class="category-filter" role="list" :aria-label="locale === 'ar' ? 'تصنيفات المقالات' : 'Article categories'">
           <button
             v-for="category in blogCategories"
             :key="category"
@@ -48,7 +48,7 @@
           </div>
           <h2 id="featured-heading">{{ visibleFeaturedArticle.title }}</h2>
           <p>{{ visibleFeaturedArticle.summary }}</p>
-          <ul class="featured-article__takeaways" aria-label="أهم ما ستتعلمه">
+          <ul class="featured-article__takeaways" :aria-label="locale === 'ar' ? 'أهم ما ستتعلمه' : 'Key takeaways'">
             <li v-for="takeaway in visibleFeaturedArticle.keyTakeaways" :key="takeaway">{{ takeaway }}</li>
           </ul>
           <NuxtLink class="blog-link blog-link--primary" :to="`/blog/${visibleFeaturedArticle.slug}`">اقرأ المقال المميز</NuxtLink>
@@ -104,13 +104,18 @@
 <script setup lang="ts">
 import { blogArticles, blogCategories } from '~/data/blog'
 
+const { locale, t } = useI18n()
 const { setSeo } = useLocaleSeo()
 
-setSeo(
-  'المدونة | أدلة تشغيل للشحن والتحصيل',
-  'مدونة Trackora العربية لشركات الشحن والمتاجر: أدلة عملية عن الشحنات، المناديب، تحصيل COD، التسوية، التتبع، المرتجعات، والمخاطر.',
-  '/blog',
-)
+watchEffect(() => {
+  setSeo(
+    locale.value === 'ar' ? 'المدونة | أدلة تشغيل للشحن والتحصيل' : 'Blog | Operations Guides for Shipping and COD',
+    locale.value === 'ar'
+      ? 'مدونة Trackora العربية لشركات الشحن والمتاجر: أدلة عملية عن الشحنات، المناديب، تحصيل COD، التسوية، التتبع، المرتجعات، والمخاطر.'
+      : 'Trackora blog for shipping companies and stores: practical guides on shipments, couriers, COD collection, settlement, tracking, returns, and risk.',
+    '/blog',
+  )
+})
 
 const selectedCategory = ref<(typeof blogCategories)[number]>('كل المقالات')
 
