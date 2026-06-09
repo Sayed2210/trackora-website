@@ -12,9 +12,6 @@
               <NuxtLink class="solution-button solution-button--primary" :to="localePath('/request-demo')">
                 {{ l(solution.cta) }}
               </NuxtLink>
-              <NuxtLink class="solution-button solution-button--ghost" :to="localePath('/features')">
-                {{ locale === 'ar' ? 'راجع المزايا المرتبطة' : 'Review related features' }}
-              </NuxtLink>
             </div>
           </div>
 
@@ -23,16 +20,12 @@
       </AppContainer>
     </section>
 
-    <section class="solution-section solution-section--pain" aria-labelledby="pain-heading">
+    <section class="solution-skim" aria-labelledby="skim-heading">
       <AppContainer wide>
-        <div class="solution-split">
-          <div class="solution-section__intro reveal-up">
-            <span class="solution-label">{{ locale === 'ar' ? 'نقاط الضغط' : 'Pain points' }}</span>
-            <h2 id="pain-heading">{{ l(solution.painTitle) }}</h2>
-            <p>{{ l(solution.painLead) }}</p>
-          </div>
-          <ul class="pain-stack" role="list">
-            <li v-for="point in solution.painPoints" :key="point.en" class="pain-stack__item reveal-stagger">
+        <div class="solution-skim__inner reveal-up">
+          <h2 id="skim-heading">{{ locale === 'ar' ? 'اقرأ الصفحة في ٣٠ ثانية' : 'Read the page in 30 seconds' }}</h2>
+          <ul role="list" class="skim-list">
+            <li v-for="point in solution.skimPoints" :key="point.en">
               <span aria-hidden="true"></span>
               <p>{{ l(point) }}</p>
             </li>
@@ -41,30 +34,15 @@
       </AppContainer>
     </section>
 
-    <section class="solution-section solution-section--fit" aria-labelledby="fit-heading">
+    <section class="solution-section solution-section--proof" aria-labelledby="proof-heading">
       <AppContainer wide>
-        <div class="solution-fit reveal-up">
-          <div>
-            <span class="solution-label">Trackora</span>
-            <h2 id="fit-heading">{{ l(solution.solutionTitle) }}</h2>
+        <div class="proof-stage reveal-up">
+          <div class="proof-stage__copy">
+            <h2 id="proof-heading">{{ l(solution.solutionTitle) }}</h2>
             <p>{{ l(solution.solutionLead) }}</p>
-          </div>
-          <ul role="list">
-            <li v-for="point in solution.solutionPoints" :key="point.en">
-              {{ l(point) }}
-            </li>
-          </ul>
-        </div>
-      </AppContainer>
-    </section>
-
-    <section class="solution-section solution-section--artifact" aria-labelledby="artifact-heading">
-      <AppContainer wide>
-        <div class="artifact-stage reveal-up">
-          <div class="artifact-stage__heading">
-            <span class="solution-label">{{ locale === 'ar' ? 'لقطة المنتج' : 'Product artifact' }}</span>
-            <h2 id="artifact-heading">{{ l(solution.artifact.title) }}</h2>
-            <p>{{ l(solution.artifact.text) }}</p>
+            <ul role="list" class="proof-list">
+              <li v-for="point in solution.solutionPoints" :key="point.en">{{ l(point) }}</li>
+            </ul>
           </div>
 
           <SolutionArtifactPreview :solution="solution" :locale="locale" expanded />
@@ -72,11 +50,10 @@
       </AppContainer>
     </section>
 
-    <section class="solution-section solution-section--workflow" aria-labelledby="workflow-heading">
+    <section class="solution-section solution-section--operating" aria-labelledby="workflow-heading">
       <AppContainer wide>
-        <div class="workflow-layout">
-          <div class="solution-section__intro reveal-up">
-            <span class="solution-label">{{ locale === 'ar' ? 'سير العمل' : 'Workflow' }}</span>
+        <div class="operating-panel reveal-up">
+          <div class="operating-panel__heading">
             <h2 id="workflow-heading">{{ l(solution.workflowTitle) }}</h2>
             <p>{{ l(solution.workflowLead) }}</p>
           </div>
@@ -89,20 +66,8 @@
               </div>
             </li>
           </ol>
-        </div>
-      </AppContainer>
-    </section>
-
-    <section class="solution-section solution-section--benefits" aria-labelledby="benefits-heading">
-      <AppContainer wide>
-        <div class="benefits-panel reveal-up">
-          <div class="benefits-panel__copy">
-            <span class="solution-label">{{ locale === 'ar' ? 'الفائدة العملية' : 'Operating benefits' }}</span>
-            <h2 id="benefits-heading">{{ l(solution.benefitsTitle) }}</h2>
-            <p>{{ l(solution.benefitsLead) }}</p>
-          </div>
-          <div class="benefits-list" role="list">
-            <div v-for="benefit in solution.benefits" :key="benefit.en" class="benefits-list__item reveal-stagger" role="listitem">
+          <div class="benefits-strip" role="list" :aria-label="l(solution.benefitsTitle)">
+            <div v-for="benefit in solution.benefits" :key="benefit.en" class="benefits-strip__item reveal-stagger" role="listitem">
               <span aria-hidden="true"></span>
               <p>{{ l(benefit) }}</p>
             </div>
@@ -111,65 +76,25 @@
       </AppContainer>
     </section>
 
-    <section class="solution-section solution-section--features" aria-labelledby="features-heading">
+    <section class="solution-final" aria-labelledby="final-heading">
       <AppContainer wide>
-        <div class="solution-section__intro solution-section__intro--wide reveal-up">
-          <span class="solution-label">{{ locale === 'ar' ? 'مزايا مرتبطة' : 'Related features' }}</span>
-          <h2 id="features-heading">{{ locale === 'ar' ? 'القدرات التي تجعل هذا الحل يعمل' : 'Capabilities that make this solution work' }}</h2>
-        </div>
-        <div class="related-feature-list">
-          <NuxtLink v-for="feature in relatedFeatures" :key="feature.key" class="related-feature reveal-stagger" :to="localePath(feature.path)">
-            <span>{{ locale === 'ar' ? feature.titleAr : feature.titleEn }}</span>
-            <p>{{ locale === 'ar' ? feature.summaryAr : feature.summaryEn }}</p>
-            <strong>{{ locale === 'ar' ? 'افتح الميزة' : 'Open feature' }}</strong>
-          </NuxtLink>
-        </div>
-      </AppContainer>
-    </section>
-
-    <section class="solution-section solution-section--faq" aria-labelledby="faq-heading">
-      <AppContainer wide>
-        <div class="faq-layout">
-          <div class="solution-section__intro reveal-up">
-            <span class="solution-label">{{ locale === 'ar' ? 'أسئلة الفريق' : 'Team questions' }}</span>
-            <h2 id="faq-heading">{{ locale === 'ar' ? 'أسئلة قبل العرض' : 'Questions before the demo' }}</h2>
-          </div>
-          <div class="faq-list">
-            <details v-for="item in solution.faq" :key="item.question.en" class="faq-item reveal-stagger">
-              <summary>{{ l(item.question) }}</summary>
-              <p>{{ l(item.answer) }}</p>
-            </details>
-          </div>
-        </div>
-      </AppContainer>
-    </section>
-
-    <section class="solution-section solution-section--related" aria-labelledby="related-heading">
-      <AppContainer wide>
-        <div class="related-solutions reveal-up">
-          <div>
-            <span class="solution-label">{{ locale === 'ar' ? 'حلول أخرى' : 'Other solutions' }}</span>
-            <h2 id="related-heading">{{ locale === 'ar' ? 'قارن حسب نوع الفريق' : 'Compare by team type' }}</h2>
-          </div>
-          <div class="related-solutions__links">
-            <NuxtLink v-for="item in relatedSolutions" :key="item.key" :to="localePath(item.path)">
-              <span>{{ l(item.eyebrow) }}</span>
-              <strong>{{ l(item.title) }}</strong>
+        <div class="solution-final__inner reveal-up">
+          <div class="solution-final__copy">
+            <h2 id="final-heading">{{ l(solution.finalTitle) }}</h2>
+            <p>{{ l(solution.finalText) }}</p>
+            <NuxtLink class="solution-button solution-button--primary" :to="localePath('/request-demo')">
+              {{ l(solution.cta) }}
             </NuxtLink>
           </div>
-        </div>
-      </AppContainer>
-    </section>
-
-    <section class="solution-final" aria-labelledby="final-heading">
-      <AppContainer narrow>
-        <div class="solution-final__inner reveal-up">
-          <span class="solution-label">{{ locale === 'ar' ? 'الخطوة التالية' : 'Next step' }}</span>
-          <h2 id="final-heading">{{ l(solution.finalTitle) }}</h2>
-          <p>{{ l(solution.finalText) }}</p>
-          <NuxtLink class="solution-button solution-button--primary" :to="localePath('/request-demo')">
-            {{ l(solution.cta) }}
-          </NuxtLink>
+          <div class="solution-final__adoption">
+            <h3>{{ locale === 'ar' ? 'ما نحسمه في العرض' : 'What the demo resolves' }}</h3>
+            <div class="adoption-list" :aria-label="locale === 'ar' ? 'أسئلة التطبيق' : 'Adoption questions'">
+              <details v-for="item in solution.adoptionFaq" :key="item.question.en" class="faq-item reveal-stagger">
+                <summary>{{ l(item.question) }}</summary>
+                <p>{{ l(item.answer) }}</p>
+              </details>
+            </div>
+          </div>
         </div>
       </AppContainer>
     </section>
@@ -177,8 +102,7 @@
 </template>
 
 <script setup lang="ts">
-import { features } from '~/data/features'
-import { getLocalized, getSolutionDetail, solutions, type SolutionDetail } from '~/data/solutions'
+import { getLocalized, getSolutionDetail } from '~/data/solutions'
 
 const props = defineProps<{
   solutionKey: string
@@ -196,14 +120,6 @@ const solution = computed(() => {
 
   return found
 })
-
-const relatedFeatures = computed(() => solution.value.relatedFeatureKeys
-  .map(key => features.find(feature => feature.key === key))
-  .filter(Boolean))
-
-const relatedSolutions = computed(() => solution.value.relatedSolutionKeys
-  .map(key => solutions.find(item => item.key === key))
-  .filter(Boolean) as SolutionDetail[])
 
 function l(text: { ar: string, en: string }) {
   return getLocalized(text, locale.value)
@@ -250,7 +166,7 @@ useHead(() => ({
 
 .solution-hero {
   isolation: isolate;
-  padding-block: clamp(5rem, 10vw, 8.5rem);
+  padding-block: clamp(4.75rem, 9vw, 7.75rem) clamp(4rem, 7vw, 6.5rem);
 }
 
 .solution-hero::after {
@@ -263,44 +179,45 @@ useHead(() => ({
   background: var(--color-bg);
 }
 
+.solution-hero__layout,
+.proof-stage,
+.operating-panel,
+.solution-final__inner {
+  display: grid;
+  gap: clamp(var(--spacing-8), 5vw, var(--spacing-14, 3.5rem));
+}
+
 .solution-hero__layout {
   position: relative;
   z-index: 1;
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(22rem, 1.1fr);
-  gap: clamp(2rem, 5vw, 5rem);
+  grid-template-columns: minmax(0, 0.86fr) minmax(22rem, 1.14fr);
   align-items: center;
 }
 
-.solution-hero__copy {
+.solution-hero__copy,
+.proof-stage__copy,
+.operating-panel__heading,
+.solution-final__copy {
   display: grid;
   gap: var(--spacing-5);
 }
 
-.solution-pill,
-.solution-label {
+.solution-pill {
   display: inline-flex;
   width: fit-content;
   align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: var(--radius-full);
   padding: 0.42rem 0.85rem;
+  color: rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.08);
   font-size: var(--text-sm);
   font-weight: 900;
   line-height: 1.35;
 }
 
-.solution-pill {
-  color: rgba(255, 255, 255, 0.84);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.solution-label {
-  color: var(--color-primary);
-  background: rgba(45, 110, 125, 0.08);
-}
-
 .solution-hero h1,
+.solution-skim h2,
 .solution-section h2,
 .solution-final h2 {
   text-wrap: balance;
@@ -309,39 +226,39 @@ useHead(() => ({
 .solution-hero h1 {
   max-width: 13ch;
   color: var(--color-text-light);
-  font-size: clamp(2.7rem, 7vw, 5.8rem);
+  font-size: clamp(2.65rem, 7vw, 5.65rem);
   line-height: 1.08;
   letter-spacing: -0.035em;
 }
 
-html[lang='ar'] .solution-hero h1 {
+html[lang='ar'] .solution-hero h1,
+html[lang='ar'] .solution-skim h2,
+html[lang='ar'] .solution-section h2,
+html[lang='ar'] .solution-final h2 {
   letter-spacing: -0.012em;
 }
 
 .solution-hero__lead,
-.solution-hero__note {
-  max-width: 70ch;
-  color: rgba(255, 255, 255, 0.82);
-  line-height: 1.9;
+.solution-hero__note,
+.proof-stage__copy p,
+.operating-panel__heading p,
+.solution-final__copy p {
+  max-width: 72ch;
+  line-height: 1.85;
   text-wrap: pretty;
 }
 
 .solution-hero__lead {
+  color: rgba(255, 255, 255, 0.86);
   font-size: clamp(1.08rem, 1.7vw, 1.32rem);
 }
 
 .solution-hero__note {
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: var(--radius-2xl);
   padding: var(--spacing-5);
-  color: rgba(255, 255, 255, 0.76);
+  color: rgba(255, 255, 255, 0.82);
   background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-}
-
-.solution-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-3);
 }
 
 .solution-button {
@@ -351,140 +268,105 @@ html[lang='ar'] .solution-hero h1 {
   justify-content: center;
   border: 1px solid transparent;
   border-radius: var(--radius-full);
-  padding: 0.85rem 1.3rem;
+  padding: 0.85rem 1.45rem;
+  color: var(--solution-accent-contrast);
+  background: var(--solution-accent);
+  box-shadow: 0 18px 38px rgba(232, 168, 56, 0.28);
   font-weight: 900;
   line-height: 1.35;
   text-align: center;
-  transition: transform 220ms var(--reveal-easing), box-shadow 220ms var(--reveal-easing), background-color 220ms var(--reveal-easing), border-color 220ms var(--reveal-easing);
-}
-
-.solution-button--primary {
-  color: var(--color-accent-contrast);
-  background: var(--color-accent);
-  box-shadow: 0 18px 38px rgba(232, 168, 56, 0.28);
-}
-
-.solution-button--ghost {
-  color: var(--color-text-light);
-  border-color: rgba(255, 255, 255, 0.24);
-  background: rgba(255, 255, 255, 0.08);
+  transition: transform 220ms var(--reveal-easing), box-shadow 220ms var(--reveal-easing), background-color 220ms var(--reveal-easing);
 }
 
 .solution-button:focus-visible,
-.related-feature:focus-visible,
-.related-solutions a:focus-visible,
 .faq-item summary:focus-visible {
-  outline: 3px solid var(--color-accent);
+  outline: 3px solid var(--solution-accent);
   outline-offset: 3px;
 }
 
-.solution-section {
-  padding-block: clamp(4.5rem, 9vw, 8rem);
+.solution-skim {
+  position: relative;
+  z-index: 2;
+  margin-block-start: calc(var(--spacing-12) * -1);
 }
 
-.solution-section--fit,
-.solution-section--workflow,
-.solution-section--faq {
-  background: var(--color-bg-alt);
-}
-
-.solution-split,
-.workflow-layout,
-.faq-layout {
+.solution-skim__inner {
   display: grid;
-  grid-template-columns: minmax(16rem, 0.45fr) minmax(0, 1fr);
-  gap: clamp(var(--spacing-8), 6vw, var(--spacing-16));
-  align-items: start;
+  grid-template-columns: minmax(12rem, 0.32fr) 1fr;
+  gap: clamp(var(--spacing-5), 4vw, var(--spacing-8));
+  align-items: stretch;
+  border: 1px solid rgba(27, 77, 92, 0.1);
+  border-radius: var(--radius-4xl);
+  padding: clamp(var(--spacing-5), 4vw, var(--spacing-8));
+  background: var(--color-surface);
+  box-shadow: var(--shadow-lg);
 }
 
-.solution-section__intro {
-  position: sticky;
-  top: 6rem;
-  display: grid;
-  gap: var(--spacing-4);
-}
-
-.solution-section__intro--wide {
-  position: static;
-  max-width: 62rem;
-  margin-block-end: clamp(var(--spacing-8), 5vw, var(--spacing-12));
-}
-
-.solution-section__intro h2,
-.solution-fit h2,
-.artifact-stage__heading h2,
-.benefits-panel h2,
-.related-solutions h2,
+.solution-skim h2,
+.proof-stage h2,
+.operating-panel h2,
 .solution-final h2 {
-  color: var(--color-primary-dark);
-  font-size: clamp(2.1rem, 5vw, 4.2rem);
+  color: var(--trackora-primary-strong);
+  font-size: clamp(2rem, 4.5vw, 3.7rem);
   line-height: 1.12;
-  letter-spacing: -0.035em;
 }
 
-html[lang='ar'] .solution-section__intro h2,
-html[lang='ar'] .solution-fit h2,
-html[lang='ar'] .artifact-stage__heading h2,
-html[lang='ar'] .benefits-panel h2,
-html[lang='ar'] .related-solutions h2,
-html[lang='ar'] .solution-final h2 {
-  letter-spacing: -0.012em;
-}
-
-.solution-section__intro p,
-.solution-fit p,
-.artifact-stage__heading p,
-.benefits-panel__copy p,
-.solution-final p {
-  max-width: 72ch;
-  color: var(--color-text-secondary);
-  font-size: var(--text-lg);
-  line-height: 1.85;
-  text-wrap: pretty;
-}
-
-.pain-stack,
+.skim-list,
+.proof-list,
 .workflow-steps,
-.faq-list {
+.benefits-strip,
+.adoption-list {
   display: grid;
-  gap: var(--spacing-4);
+  gap: var(--spacing-3);
 }
 
-.pain-stack__item,
-.workflow-step {
+.skim-list {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.skim-list li,
+.benefits-strip__item {
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: var(--spacing-5);
+  gap: var(--spacing-3);
   align-items: start;
-  border: 1px solid rgba(27, 77, 92, 0.1);
-  border-radius: var(--radius-3xl);
-  padding: clamp(var(--spacing-5), 3vw, var(--spacing-7, 1.75rem));
-  background: var(--color-surface);
-  box-shadow: var(--shadow-card);
 }
 
-.pain-stack__item > span,
-.benefits-list__item > span {
-  width: 0.85rem;
-  height: 0.85rem;
+.skim-list li {
+  border-radius: var(--radius-2xl);
+  padding: var(--spacing-4);
+  background: var(--trackora-primary-soft);
+}
+
+.skim-list span,
+.benefits-strip__item span {
+  width: 0.75rem;
+  height: 0.75rem;
   margin-block-start: 0.55rem;
   border-radius: var(--radius-full);
   background: var(--solution-accent);
-  box-shadow: 0 0 0 0.35rem var(--solution-accent-soft);
+  box-shadow: 0 0 0 0.28rem var(--solution-accent-soft);
 }
 
-.pain-stack__item p,
+.skim-list p,
+.benefits-strip__item p,
 .workflow-step p,
-.benefits-list__item p {
+.proof-stage__copy p,
+.operating-panel__heading p {
   color: var(--color-text-secondary);
-  font-size: var(--text-lg);
   line-height: 1.75;
 }
 
-.solution-fit,
-.artifact-stage,
-.benefits-panel,
-.related-solutions {
+.solution-section {
+  padding-block: clamp(4rem, 8vw, 7rem);
+}
+
+.solution-section--operating {
+  background: var(--color-bg-alt);
+}
+
+.proof-stage,
+.operating-panel {
   border: 1px solid rgba(27, 77, 92, 0.1);
   border-radius: var(--radius-4xl);
   padding: clamp(var(--spacing-6), 5vw, var(--spacing-12));
@@ -492,238 +374,147 @@ html[lang='ar'] .solution-final h2 {
   box-shadow: var(--shadow-card);
 }
 
-.solution-fit {
-  display: grid;
-  grid-template-columns: minmax(0, 0.95fr) minmax(18rem, 0.75fr);
-  gap: clamp(var(--spacing-8), 5vw, var(--spacing-12));
+.proof-stage {
+  grid-template-columns: minmax(0, 0.46fr) minmax(0, 1fr);
   align-items: start;
+  background:
+    radial-gradient(circle at 0% 8%, rgba(232, 168, 56, 0.12), transparent 22rem),
+    var(--color-surface);
 }
 
-.solution-fit div,
-.artifact-stage__heading,
-.benefits-panel__copy,
-.related-solutions > div:first-child {
-  display: grid;
-  gap: var(--spacing-4);
+.proof-list {
+  margin-block-start: var(--spacing-2);
 }
 
-.solution-fit ul {
-  display: grid;
-  gap: var(--spacing-3);
-}
-
-.solution-fit li {
-  border-radius: var(--radius-2xl);
-  padding: var(--spacing-4) var(--spacing-5);
-  color: var(--color-primary-dark);
-  background: rgba(45, 110, 125, 0.07);
+.proof-list li {
+  border-block-start: 1px solid rgba(27, 77, 92, 0.12);
+  padding-block: var(--spacing-4);
+  color: var(--trackora-primary-strong);
   font-weight: 800;
   line-height: 1.65;
 }
 
-.artifact-stage {
+.operating-panel {
+  grid-template-columns: minmax(0, 0.36fr) minmax(0, 0.64fr);
+}
+
+.workflow-step {
   display: grid;
-  gap: clamp(var(--spacing-8), 5vw, var(--spacing-12));
-  background:
-    radial-gradient(circle at 0% 8%, rgba(232, 168, 56, 0.1), transparent 22rem),
-    var(--color-surface);
+  grid-template-columns: auto 1fr;
+  gap: var(--spacing-4);
+  align-items: start;
+  border: 1px solid rgba(27, 77, 92, 0.1);
+  border-radius: var(--radius-2xl);
+  padding: var(--spacing-5);
+  background: var(--color-surface);
 }
 
 .workflow-step__number {
   display: grid;
-  width: 3rem;
-  height: 3rem;
+  width: 2.8rem;
+  height: 2.8rem;
   place-items: center;
   border-radius: var(--radius-full);
   color: var(--color-text-on-primary);
-  background: var(--color-primary);
+  background: var(--trackora-primary);
   font-weight: 900;
   font-variant-numeric: tabular-nums;
 }
 
 .workflow-step h3 {
   margin-block-end: var(--spacing-2);
-  color: var(--color-primary-dark);
+  color: var(--trackora-primary-strong);
   font-size: var(--text-xl);
 }
 
-.benefits-panel {
-  display: grid;
-  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1fr);
-  gap: clamp(var(--spacing-8), 5vw, var(--spacing-12));
+.benefits-strip {
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-block-start: 1px solid rgba(27, 77, 92, 0.1);
+  padding-block-start: var(--spacing-6);
+}
+
+.benefits-strip__item {
+  min-height: 100%;
+}
+
+.solution-final {
+  padding-block: clamp(4.5rem, 9vw, 7.5rem);
+}
+
+.solution-final__inner {
+  grid-template-columns: minmax(0, 0.43fr) minmax(0, 0.57fr);
   align-items: start;
 }
 
-.benefits-list {
-  display: grid;
-  gap: 1px;
-  border: 1px solid rgba(27, 77, 92, 0.1);
-  border-radius: var(--radius-3xl);
-  background: rgba(27, 77, 92, 0.1);
-  overflow: hidden;
+.solution-final h2 {
+  color: var(--color-text-light);
 }
 
-.benefits-list__item {
+.solution-final__copy p {
+  color: rgba(255, 255, 255, 0.84);
+}
+
+.solution-final__adoption {
   display: grid;
-  grid-template-columns: auto 1fr;
   gap: var(--spacing-4);
-  padding: var(--spacing-5);
-  background: var(--color-surface);
 }
 
-.related-feature-list {
-  display: grid;
-  gap: var(--spacing-3);
+.solution-final__adoption h3 {
+  color: var(--solution-accent-soft);
+  font-size: var(--text-2xl);
+  line-height: 1.25;
 }
 
-.related-feature {
-  display: grid;
-  grid-template-columns: minmax(12rem, 0.3fr) minmax(0, 1fr) auto;
-  gap: var(--spacing-5);
-  align-items: center;
-  border: 1px solid rgba(27, 77, 92, 0.1);
-  border-radius: var(--radius-2xl);
-  padding: var(--spacing-5);
-  color: inherit;
-  background: var(--color-surface);
-  box-shadow: var(--shadow-sm);
-  transition: transform 220ms var(--reveal-easing), border-color 220ms var(--reveal-easing), box-shadow 220ms var(--reveal-easing);
-}
-
-.related-feature span,
-.related-feature strong {
-  color: var(--color-primary);
-  font-weight: 900;
-}
-
-.related-feature p {
-  color: var(--color-text-secondary);
-  line-height: 1.7;
+.adoption-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .faq-item {
-  border: 1px solid rgba(27, 77, 92, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: var(--radius-2xl);
-  background: var(--color-surface);
-  box-shadow: var(--shadow-sm);
+  background: rgba(255, 255, 255, 0.08);
   overflow: hidden;
 }
 
 .faq-item summary {
   min-height: 3.25rem;
   cursor: pointer;
-  padding: var(--spacing-5);
-  color: var(--color-primary-dark);
+  padding: var(--spacing-4) var(--spacing-5);
+  color: var(--color-text-light);
   font-weight: 900;
 }
 
 .faq-item p {
   padding: 0 var(--spacing-5) var(--spacing-5);
-  color: var(--color-text-secondary);
-  line-height: 1.8;
-}
-
-.related-solutions {
-  display: grid;
-  grid-template-columns: minmax(0, 0.62fr) minmax(0, 1fr);
-  gap: clamp(var(--spacing-8), 5vw, var(--spacing-12));
-}
-
-.related-solutions__links {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--spacing-4);
-}
-
-.related-solutions a {
-  display: grid;
-  gap: var(--spacing-3);
-  min-height: 12rem;
-  align-content: space-between;
-  border: 1px solid rgba(27, 77, 92, 0.1);
-  border-radius: var(--radius-3xl);
-  padding: var(--spacing-5);
-  color: inherit;
-  background: rgba(45, 110, 125, 0.05);
-  transition: transform 220ms var(--reveal-easing), background-color 220ms var(--reveal-easing);
-}
-
-.related-solutions a span {
-  color: var(--color-text-secondary);
-  font-size: var(--text-sm);
-  font-weight: 800;
-}
-
-.related-solutions a strong {
-  color: var(--color-primary-dark);
-  font-size: var(--text-xl);
-  line-height: 1.35;
-}
-
-.solution-final {
-  padding-block: clamp(4.5rem, 9vw, 8rem);
-}
-
-.solution-final__inner {
-  display: grid;
-  justify-items: center;
-  gap: var(--spacing-5);
-  text-align: center;
-}
-
-.solution-final .solution-label {
-  color: var(--color-accent-light);
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.solution-final h2 {
-  max-width: 13ch;
-  color: var(--color-text-light);
-}
-
-.solution-final p {
   color: rgba(255, 255, 255, 0.82);
+  line-height: 1.75;
 }
 
 @media (hover: hover) {
-  .solution-button:hover,
-  .related-feature:hover,
-  .related-solutions a:hover {
+  .solution-button:hover {
     transform: translateY(-3px);
-  }
-
-  .related-feature:hover {
-    border-color: rgba(27, 77, 92, 0.22);
-    box-shadow: var(--shadow-md);
-  }
-
-  .related-solutions a:hover {
-    background: rgba(45, 110, 125, 0.09);
+    box-shadow: 0 22px 44px rgba(232, 168, 56, 0.34);
   }
 }
 
 @media (max-width: 72rem) {
   .solution-hero__layout,
-  .solution-split,
-  .solution-fit,
-  .workflow-layout,
-  .benefits-panel,
-  .faq-layout,
-  .related-solutions {
+  .solution-skim__inner,
+  .proof-stage,
+  .operating-panel,
+  .solution-final__inner,
+  .skim-list,
+  .benefits-strip,
+  .adoption-list {
     grid-template-columns: 1fr;
-  }
-
-  .solution-section__intro {
-    position: static;
   }
 }
 
 @media (max-width: 52rem) {
   .solution-hero h1,
-  .solution-section__intro h2,
-  .solution-fit h2,
-  .artifact-stage__heading h2,
-  .benefits-panel h2,
+  .solution-skim h2,
+  .solution-section h2,
   .solution-final h2 {
     max-width: 100%;
   }
@@ -734,19 +525,28 @@ html[lang='ar'] .solution-final h2 {
     width: 100%;
   }
 
-  .related-feature,
-  .pain-stack__item,
+  .solution-hero {
+    padding-block-start: var(--spacing-20);
+  }
+
+  .solution-skim {
+    margin-block-start: calc(var(--spacing-8) * -1);
+  }
+
   .workflow-step,
-  .benefits-list__item,
-  .related-solutions__links {
+  .skim-list li,
+  .benefits-strip__item {
     grid-template-columns: 1fr;
+  }
+
+  .skim-list span,
+  .benefits-strip__item span {
+    margin-block-start: 0;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .solution-button,
-  .related-feature,
-  .related-solutions a {
+  .solution-button {
     transition-duration: 0.01ms;
   }
 }

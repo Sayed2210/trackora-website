@@ -46,6 +46,7 @@ export interface SolutionDetail {
   summary: LocalizedText
   heroNote: LocalizedText
   cta: LocalizedText
+  skimPoints: LocalizedText[]
   painTitle: LocalizedText
   painLead: LocalizedText
   painPoints: LocalizedText[]
@@ -62,6 +63,7 @@ export interface SolutionDetail {
   relatedFeatureKeys: string[]
   relatedSolutionKeys: SolutionKey[]
   faq: SolutionFaqItem[]
+  adoptionFaq: SolutionFaqItem[]
   finalTitle: LocalizedText
   finalText: LocalizedText
   seoTitle: LocalizedText
@@ -86,6 +88,11 @@ export const solutions: SolutionDetail[] = [
       en: 'Designed for operations leaders reviewing load, courier-held cash, delayed shipments, and daily risk before gaps widen.',
     },
     cta: { ar: 'اطلب عرض لشركة الشحن', en: 'Request a shipping company demo' },
+    skimPoints: [
+      { ar: 'اعرف حمولة كل تاجر والمناديب المتاحة قبل توزيع الطريق.', en: 'See each merchant load and available couriers before dispatch.' },
+      { ar: 'راقب COD المحصل والمعلق مع كل مندوب أثناء اليوم.', en: 'Track collected and pending COD by courier during the day.' },
+      { ar: 'اجمع التأخير والمخاطر والتسوية في سجل واحد قابل للمراجعة.', en: 'Keep delays, risk, and settlement in one reviewable record.' },
+    ],
     painTitle: { ar: 'الخطأ اليدوي لا يبقى صغيرا في شركة شحن', en: 'Manual errors do not stay small in a shipping company' },
     painLead: {
       ar: 'عندما تتحرك شحنات التجار والمناديب والتحصيل في ملفات ومكالمات منفصلة، يصبح قرار واحد غير واضح كافيا لتعطيل الطريق أو تأخير التسوية.',
@@ -156,6 +163,14 @@ export const solutions: SolutionDetail[] = [
       { question: { ar: 'كيف يساعد في تسوية COD؟', en: 'How does it help COD settlement?' }, answer: { ar: 'كل مبلغ يرتبط بالشحنة والمندوب والتاجر، فتظهر التحصيلات والمبالغ المعلقة قبل اعتماد التسوية.', en: 'Each amount is tied to shipment, courier, and merchant, so collected and pending amounts are visible before settlement approval.' } },
       { question: { ar: 'هل يمكن تعديل الإسناد يدويا؟', en: 'Can assignment be adjusted manually?' }, answer: { ar: 'نعم. يستطيع المشرف تعديل القرار عندما يحتاج معرفة محلية، مع بقاء الشحنة داخل نفس السجل.', en: 'Yes. Supervisors can adjust decisions when local context matters while keeping the shipment in the same record.' } },
     ],
+    adoptionFaq: [
+      { question: { ar: 'كيف ننتقل من الشيتات؟', en: 'How do we migrate from sheets?' }, answer: { ar: 'نبدأ بملف التجار والشحنات الحالي، نطابق الأعمدة الأساسية، ثم نختبر يوم تشغيل واحد قبل تعميم المسار على الفريق.', en: 'Start with the current merchant and shipment file, map the core columns, then test one operating day before rolling it out.' } },
+      { question: { ar: 'هل يدعم الفروع والمناطق؟', en: 'Does it support branches and zones?' }, answer: { ar: 'نعم. يمكن فصل الفروع والمناطق والمناديب مع رؤية إجمالية للمدير ورؤية محددة لكل فريق.', en: 'Yes. Branches, zones, and couriers can be separated while managers keep an overall operating view.' } },
+      { question: { ar: 'ماذا عن صلاحيات التشغيل والمحاسبة؟', en: 'What about operations and finance permissions?' }, answer: { ar: 'تحدد الصلاحيات من يرى التوزيع، التحصيل، التسوية، والتقارير حتى لا يفتح النقد لكل مستخدم.', en: 'Permissions control who sees dispatch, collection, settlement, and reports so cash data is not open to every user.' } },
+      { question: { ar: 'هل توجد تكاملات؟', en: 'Are integrations supported?' }, answer: { ar: 'نعرض في الديمو مصادر الطلبات الحالية، ثم نحدد هل يكفي الرفع المجمع أم تحتاجون ربطا مباشرا.', en: 'In the demo we review current order sources, then decide whether bulk upload is enough or a direct connection is needed.' } },
+      { question: { ar: 'كيف يدخل المناديب على النظام؟', en: 'How do couriers onboard?' }, answer: { ar: 'نبدأ بمجموعة من المناديب، نراجع الحالات المطلوبة منهم، ثم نوسع الاستخدام بعد أول دورة تحصيل وتسوية.', en: 'Start with a courier group, confirm the required statuses, then expand after the first collection and settlement cycle.' } },
+      { question: { ar: 'كيف تتم مطابقة COD؟', en: 'How is COD reconciled?' }, answer: { ar: 'كل تحصيل يبقى مرتبطا بالشحنة والمندوب والتاجر، فتظهر المبالغ المحصلة والمعلقة قبل اعتماد التسوية.', en: 'Each collection stays tied to shipment, courier, and merchant, so collected and pending amounts are visible before approval.' } },
+    ],
     finalTitle: { ar: 'شاهد Trackora على يوم تشغيل حقيقي لشركتك', en: 'See Trackora on a real operating day for your company' },
     finalText: { ar: 'شاركنا عدد التجار، الشحنات، المناديب، وطريقة تسوية COD. سنعرض المسار كما سيظهر لفريقك.', en: 'Share merchant count, shipment volume, couriers, and COD settlement flow. We will show the path as your team would use it.' },
     seoTitle: { ar: 'حل Trackora لشركات الشحن وإدارة COD والديسباتش', en: 'Trackora for Shipping Companies, COD, and Dispatch' },
@@ -169,6 +184,11 @@ export const solutions: SolutionDetail[] = [
     summary: { ar: 'Trackora يعطي المتجر بوابة لإنشاء الشحنات، رفع دفعات كثيرة، متابعة الحالات، معرفة تحصيل COD، وتقليل المرتجعات والطلبات الوهمية.', en: 'Trackora gives stores a portal to create shipments, upload batches, follow status, see COD collection, and reduce returns and fake orders.' },
     heroNote: { ar: 'مناسب لفريق متجر يريد معرفة ما حدث لكل طلب، وما تم تحصيله، وما يجب إرساله للعميل كرابط تتبع.', en: 'Built for store teams that need to know what happened to each order, what was collected, and what tracking link to send customers.' },
     cta: { ar: 'اطلب عرض لمتجرك', en: 'Request a demo for your store' },
+    skimPoints: [
+      { ar: 'ارفع الطلبات وتحقق من الأخطاء قبل إرسالها للتوصيل.', en: 'Upload orders and catch errors before they move to delivery.' },
+      { ar: 'اعرف حالة الشحنة ورقم التتبع بدون سؤال شركة الشحن.', en: 'See shipment status and tracking number without chasing the carrier.' },
+      { ar: 'راجع COD والرصيد والمرتجعات من نفس بوابة المتجر.', en: 'Review COD, balance, and returns from the same merchant portal.' },
+    ],
     painTitle: { ar: 'غياب الرؤية يحول التوصيل إلى خدمة دعم مستمرة', en: 'Lack of visibility turns delivery into constant support work' },
     painLead: { ar: 'عندما لا يرى المتجر حالة الطلب أو رصيد COD بنفسه، يعود كل سؤال إلى محادثة مع شركة الشحن أو العميل.', en: 'When a store cannot see order status or COD balance directly, every question becomes a conversation with the carrier or customer.' },
     painPoints: [
@@ -223,6 +243,14 @@ export const solutions: SolutionDetail[] = [
       { question: { ar: 'هل تدعم الصفحة رفع شحنات كثيرة؟', en: 'Does this support bulk shipment upload?' }, answer: { ar: 'نعم. الرفع المجمع يراجع الصفوف والأخطاء قبل انتقال الطلبات إلى التشغيل.', en: 'Yes. Bulk upload reviews rows and errors before orders move to operations.' } },
       { question: { ar: 'كيف أعرف رصيد COD؟', en: 'How do I know COD balance?' }, answer: { ar: 'تظهر المحفظة المبالغ المعلقة، الجاهزة للتسوية، وما تم تسويته حسب الشحنات.', en: 'The wallet shows pending, ready-to-settle, and settled amounts by shipment.' } },
     ],
+    adoptionFaq: [
+      { question: { ar: 'كيف ننقل الطلبات الحالية؟', en: 'How do we migrate current orders?' }, answer: { ar: 'نبدأ بملف الطلبات أو نموذج الرفع الحالي، نطابق الاسم والهاتف والعنوان وقيمة COD، ثم نختبر دفعة صغيرة.', en: 'Start with the current order file or upload format, map name, phone, address, and COD, then test a small batch.' } },
+      { question: { ar: 'هل يناسب أكثر من فرع أو مخزن؟', en: 'Does it fit multiple branches or stores?' }, answer: { ar: 'نعم. يمكن فصل الطلبات حسب الفرع أو المخزن أو قناة البيع مع بقاء الرصيد والتتبع واضحين.', en: 'Yes. Orders can be separated by branch, warehouse, or sales channel while balance and tracking stay clear.' } },
+      { question: { ar: 'من يرى المحفظة والتسوية؟', en: 'Who sees wallet and settlement data?' }, answer: { ar: 'تحدد الصلاحيات من ينشئ الشحنات، من يرى COD، ومن يراجع الرصيد حتى لا تظهر الأرقام لكل الفريق.', en: 'Permissions define who creates shipments, who sees COD, and who reviews balance so numbers are not exposed to everyone.' } },
+      { question: { ar: 'هل يتكامل مع المتجر؟', en: 'Can it integrate with the store?' }, answer: { ar: 'نراجع منصة البيع الحالية في الديمو، ثم نبدأ بالرفع المجمع أو نحدد الربط المناسب حسب حجم الطلبات.', en: 'We review the current commerce platform in the demo, then start with bulk upload or define the right integration by order volume.' } },
+      { question: { ar: 'هل يحتاج المندوبون تدريبا؟', en: 'Do couriers need training?' }, answer: { ar: 'لا يحتاج فريق المتجر لإدارة تدريب المناديب. تظهر لك تحديثات الطريق والتحصيل القادمة من فريق التوصيل.', en: 'The store team does not need to manage courier training. You receive route and collection updates from the delivery team.' } },
+      { question: { ar: 'كيف نراجع COD؟', en: 'How do we reconcile COD?' }, answer: { ar: 'تراجع المحفظة المبالغ المعلقة والجاهزة للتسوية حسب الشحنات، مع رقم تتبع لكل مبلغ عند الحاجة.', en: 'The wallet shows pending and ready-to-settle amounts by shipment, with a tracking number behind each amount when needed.' } },
+    ],
     finalTitle: { ar: 'اعرض Trackora على طلبات متجرك الفعلية', en: 'See Trackora using your actual store orders' },
     finalText: { ar: 'أخبرنا بعدد الطلبات اليومي، طريقة الرفع، وشركة الشحن الحالية. سنعرض لك مسارا واضحا من الإنشاء حتى التتبع وCOD.', en: 'Tell us daily order volume, upload method, and current carrier. We will show a clear path from creation to tracking and COD.' },
     seoTitle: { ar: 'حل Trackora للمتاجر الإلكترونية وتتبع COD والشحنات', en: 'Trackora for E-commerce Stores, COD, and Shipment Tracking' },
@@ -236,6 +264,11 @@ export const solutions: SolutionDetail[] = [
     summary: { ar: 'Trackora يعطي البائع الصغير مسارا خفيفا لإدخال الطلبات، متابعة التحصيل والمرتجعات، مشاركة التتبع، وتقليل اللخبطة مع المناديب.', en: 'Trackora gives small sellers a lightweight path to enter orders, follow COD and returns, share tracking, and reduce confusion with couriers.' },
     heroNote: { ar: 'مصمم لمن يبيع من الرسائل ويحتاج بداية بسيطة بدل الشيتات وسكرينشوتات الطلبات.', en: 'Designed for sellers taking orders from messages who need a simple start instead of sheets and order screenshots.' },
     cta: { ar: 'ابدأ تنظيم طلباتك', en: 'Start organizing your orders' },
+    skimPoints: [
+      { ar: 'حوّل بيانات العميل من الرسالة إلى شحنة لها رقم واضح.', en: 'Turn customer message details into a shipment with a clear number.' },
+      { ar: 'تابع التحصيل والمرتجعات بدون البحث في المحادثات.', en: 'Follow COD and returns without searching through chats.' },
+      { ar: 'شارك التتبع مع العميل من نفس مسار الطلب.', en: 'Share tracking with the customer from the same order flow.' },
+    ],
     painTitle: { ar: 'الشيتات والرسائل تعمل حتى يزداد عدد الطلبات', en: 'Sheets and messages work until order volume rises' },
     painLead: { ar: 'مع كل حملة أو بث مباشر، تتداخل بيانات العملاء والتحصيل والمرتجعات مع محادثات كثيرة ومندوبين ينتظرون عناوين واضحة.', en: 'With every campaign or live sale, customer data, collections, and returns mix with many chats and couriers waiting for clear addresses.' },
     painPoints: [
@@ -288,6 +321,14 @@ export const solutions: SolutionDetail[] = [
       { question: { ar: 'هل أحتاج فريق تشغيل كامل لاستخدام Trackora؟', en: 'Do I need a full operations team to use Trackora?' }, answer: { ar: 'لا. هذه الصفحة مصممة كبداية خفيفة للبائع أو الفريق الصغير الذي يريد تنظيم الطلبات والشحنات.', en: 'No. This path is designed as a lightweight start for a seller or small team organizing orders and shipments.' } },
       { question: { ar: 'هل يمكن مشاركة رقم تتبع مع العميل؟', en: 'Can I share a tracking number with the customer?' }, answer: { ar: 'نعم. كل شحنة يمكن أن تحمل رقما يستخدمه العميل لمتابعة الحالة الأساسية.', en: 'Yes. Each shipment can carry a number customers use to follow the basic state.' } },
       { question: { ar: 'هل يساعد في المرتجعات؟', en: 'Does it help with returns?' }, answer: { ar: 'نعم. تظهر الشحنات المرتجعة بجانب التحصيل والمحفظة حتى تعرف ما تم تسليمه وما عاد.', en: 'Yes. Returned shipments appear alongside COD and wallet data so you know what was delivered and what came back.' } },
+    ],
+    adoptionFaq: [
+      { question: { ar: 'كيف أبدأ من الشيت أو الرسائل؟', en: 'How do I start from sheets or messages?' }, answer: { ar: 'نبدأ بأبسط بيانات تستخدمها الآن: الاسم، الهاتف، العنوان، المنتج، وقيمة COD، ثم نحولها إلى مسار شحن واضح.', en: 'Start with the basics you already use: name, phone, address, item, and COD, then turn them into a clear shipment flow.' } },
+      { question: { ar: 'هل يناسب أكثر من قناة بيع؟', en: 'Does it fit multiple selling channels?' }, answer: { ar: 'نعم. يمكن فصل الطلبات القادمة من إنستغرام أو فيسبوك أو تيك توك بدون نظام ثقيل.', en: 'Yes. Orders from Instagram, Facebook, or TikTok can be separated without adding a heavy system.' } },
+      { question: { ar: 'هل أحتاج صلاحيات لفريق صغير؟', en: 'Do small teams need permissions?' }, answer: { ar: 'إذا كان معك مساعد أو شريك، يمكن فصل من يدخل الطلبات عمن يراجع التحصيل والمرتجعات.', en: 'If you work with an assistant or partner, order entry can be separated from COD and return review.' } },
+      { question: { ar: 'هل أحتاج تكاملات من أول يوم؟', en: 'Do I need integrations on day one?' }, answer: { ar: 'لا. البداية تكون بإدخال سريع أو رفع بسيط، ثم نحدد أي ربط لاحق عندما يكبر حجم الطلبات.', en: 'No. Start with quick entry or simple upload, then decide on integrations later when order volume grows.' } },
+      { question: { ar: 'كيف يتعامل المندوب مع الطلب؟', en: 'How does the courier handle the order?' }, answer: { ar: 'تصل الشحنة برقم وحالة وقيمة COD واضحة، فيقل الاعتماد على صور المحادثات والرسائل المتفرقة.', en: 'The shipment has a clear number, status, and COD amount, reducing reliance on chat screenshots and scattered messages.' } },
+      { question: { ar: 'كيف أعرف التحصيل؟', en: 'How do I know what was collected?' }, answer: { ar: 'تظهر مبالغ COD والمرتجعات بجانب الطلبات، حتى تعرف ما تم تحصيله وما عاد بدون تجميع يدوي.', en: 'COD and returns appear beside orders, so you know what was collected and what came back without manual tallying.' } },
     ],
     finalTitle: { ar: 'ابدأ من طلباتك الحالية، لا من نظام معقد', en: 'Start from your current orders, not a complex system' },
     finalText: { ar: 'أخبرنا كيف تستقبل الطلبات اليوم وعدد الشحنات الأسبوعي. سنعرض طريقة بسيطة لتحويل الرسائل إلى شحنات منظمة.', en: 'Tell us how you receive orders today and weekly shipment volume. We will show a simple way to turn messages into organized shipments.' },
