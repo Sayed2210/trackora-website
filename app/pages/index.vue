@@ -1,6 +1,7 @@
 <template>
   <div class="home-redesign" dir="rtl">
     <section class="hero" aria-labelledby="hero-title">
+      
       <div class="hero__grid">
         <div class="hero__content">
           <p class="hero__label">نظام تشغيل الشحنات والتحصيل</p>
@@ -391,7 +392,7 @@ const faqs = [
 .section,
 .stats-strip,
 .final-cta {
-  width: min(100%, 1180px);
+  width: min(100%, var(--container-wide));
   margin-inline: auto;
 }
 

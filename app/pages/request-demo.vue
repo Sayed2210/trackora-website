@@ -1,7 +1,7 @@
 <template>
   <div class="demo-page" :dir="isArabic ? 'rtl' : 'ltr'">
     <section class="demo-hero" aria-labelledby="demo-heading">
-      <AppContainer>
+      <AppContainer wide>
         <div class="demo-hero__grid">
           <div class="demo-hero__copy">
             <div class="plan-context plan-context--inline" aria-live="polite">
@@ -71,7 +71,7 @@
       class="demo-section demo-section--form"
       aria-labelledby="form-heading"
     >
-      <AppContainer>
+      <AppContainer wide>
         <div class="form-layout">
           <form
             ref="formEl"
@@ -431,7 +431,7 @@
     </section>
 
     <section class="demo-section trust-section" aria-labelledby="trust-heading">
-      <AppContainer>
+      <AppContainer wide>
         <div class="trust-layout">
           <div>
             <h2 id="trust-heading">{{ copy.trust.title }}</h2>
@@ -451,7 +451,7 @@
       class="demo-section faq-section"
       aria-labelledby="demo-faq-heading"
     >
-      <AppContainer narrow>
+      <AppContainer wide>
         <div class="faq-heading">
           <h2 id="demo-faq-heading">{{ copy.faq.title }}</h2>
           <p>{{ copy.faq.lead }}</p>
@@ -466,7 +466,7 @@
     </section>
 
     <section class="final-demo-cta" aria-labelledby="final-demo-heading">
-      <AppContainer>
+      <AppContainer wide>
         <div class="final-demo-cta__inner">
           <div>
             <h2 id="final-demo-heading">{{ copy.finalCta.title }}</h2>
