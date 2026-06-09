@@ -270,9 +270,16 @@ useHead(() => ({
 
 <style scoped>
 .features-page {
+  --features-primary: #1a3b66;
+  --features-primary-light: #3b5998;
+  --features-primary-dark: #0a1d34;
+  --features-accent: #ff6b6b;
+  --features-accent-soft: #ffd8d8;
+  --features-accent-ink: #210f16;
+  --features-shadow: 0 24px 80px rgba(26, 59, 102, 0.16);
   color: var(--color-text);
   background:
-    radial-gradient(circle at 8% 12%, rgba(232, 168, 56, 0.12), transparent 24rem),
+    radial-gradient(circle at 8% 12%, rgba(255, 107, 107, 0.12), transparent 24rem),
     linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-alt) 42%, var(--color-bg) 100%);
   overflow: hidden;
 }
@@ -281,7 +288,9 @@ useHead(() => ({
   position: relative;
   padding-block: clamp(5rem, 10vw, 8.5rem);
   color: var(--color-text-light);
-  background: var(--gradient-hero);
+  background:
+    radial-gradient(circle at 18% 18%, rgba(255, 107, 107, 0.18), transparent 19rem),
+    linear-gradient(145deg, var(--features-primary-dark) 0%, var(--features-primary) 48%, #254c80 100%);
   isolation: isolate;
 }
 
@@ -292,8 +301,18 @@ useHead(() => ({
   width: 18rem;
   height: 18rem;
   border-radius: var(--radius-full);
-  background: rgba(232, 168, 56, 0.14);
+  background: rgba(255, 107, 107, 0.14);
   filter: blur(12px);
+  z-index: -1;
+}
+
+.features-hero::after {
+  content: '';
+  position: absolute;
+  inset: auto -8rem -12rem -8rem;
+  height: 18rem;
+  border-radius: 50% 50% 0 0;
+  background: var(--color-bg);
   z-index: -1;
 }
 
@@ -374,21 +393,20 @@ html[lang='ar'] .features-hero h1 {
 .feature-button:focus-visible,
 .feature-tile:focus-visible,
 .audience-row:focus-visible {
-  outline: 3px solid var(--color-accent);
+  outline: 3px solid var(--features-accent);
   outline-offset: 3px;
 }
 
-.feature-button--primary,
-.feature-button--accent {
-  color: var(--color-text-on-primary);
-  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
-  box-shadow: 0 16px 36px rgba(15, 51, 64, 0.24);
+.feature-button--primary {
+  color: var(--features-accent-ink);
+  background: var(--features-accent);
+  box-shadow: 0 16px 36px rgba(255, 107, 107, 0.3);
 }
 
 .feature-button--accent {
-  color: var(--color-text-on-accent);
-  background: var(--color-accent);
-  box-shadow: 0 16px 36px rgba(232, 168, 56, 0.28);
+  color: var(--features-accent-ink);
+  background: var(--features-accent);
+  box-shadow: 0 16px 36px rgba(255, 107, 107, 0.3);
 }
 
 .feature-button--ghost {
@@ -400,8 +418,8 @@ html[lang='ar'] .features-hero h1 {
 .operations-ledger {
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: var(--radius-4xl);
-  background: rgba(5, 24, 31, 0.74);
-  box-shadow: var(--shadow-glow);
+  background: rgba(7, 20, 36, 0.72);
+  box-shadow: 0 32px 100px rgba(0, 0, 0, 0.28);
   overflow: hidden;
   animation: ledger-enter 720ms var(--reveal-easing) both;
 }
@@ -419,8 +437,8 @@ html[lang='ar'] .features-hero h1 {
 .operations-ledger__bar strong {
   border-radius: var(--radius-full);
   padding: 0.25rem 0.7rem;
-  color: #15323d;
-  background: var(--color-accent);
+  color: var(--features-accent-soft);
+  background: rgba(255, 107, 107, 0.18);
 }
 
 .operations-ledger__body {
@@ -439,7 +457,7 @@ html[lang='ar'] .features-hero h1 {
 
 .dispatch-ticket--active {
   background:
-    radial-gradient(circle at 8% 10%, rgba(232, 168, 56, 0.22), transparent 12rem),
+    radial-gradient(circle at 8% 10%, rgba(255, 107, 107, 0.18), transparent 12rem),
     rgba(255, 255, 255, 0.1);
 }
 
@@ -865,13 +883,13 @@ html[lang='ar'] .comparison-shell__heading h2 {
   padding: clamp(var(--spacing-8), 5vw, var(--spacing-16));
   color: var(--color-text-light);
   background:
-    radial-gradient(circle at 18% 18%, rgba(232, 168, 56, 0.22), transparent 20rem),
-    linear-gradient(145deg, var(--color-primary-dark), var(--color-primary));
-  box-shadow: var(--shadow-lg);
+    radial-gradient(circle at 18% 18%, rgba(255, 107, 107, 0.18), transparent 19rem),
+    linear-gradient(145deg, var(--features-primary-dark) 0%, var(--features-primary) 58%, #254c80 100%);
+  box-shadow: var(--features-shadow);
 }
 
 .features-cta__inner span {
-  color: var(--color-accent-light);
+  color: var(--features-accent-soft);
   background: rgba(255, 255, 255, 0.1);
   margin-block-end: var(--spacing-4);
 }
