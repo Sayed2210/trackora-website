@@ -2,15 +2,17 @@
   <div :class="['solution-artifact', `solution-artifact--${solution.artifact.kind}`, { 'solution-artifact--expanded': expanded }]">
     <div class="solution-artifact__top">
       <span>{{ l(solution.artifact.title) }}</span>
-      <strong>{{ locale === 'ar' ? 'Trackora Live' : 'Trackora Live' }}</strong>
+      <strong>{{ locale === 'ar' ? 'معاينة Trackora' : 'Trackora preview' }}</strong>
     </div>
+
+    <p class="solution-artifact__summary">{{ l(solution.artifact.text) }}</p>
 
     <div v-if="solution.artifact.kind === 'command-board' && solution.artifact.table" class="command-board" role="table" :aria-label="l(solution.artifact.title)">
       <div class="command-board__row command-board__row--head" role="row">
         <span v-for="column in solution.artifact.table.columns" :key="column.en" role="columnheader">{{ l(column) }}</span>
       </div>
       <div v-for="(row, rowIndex) in solution.artifact.table.rows" :key="rowIndex" class="command-board__row" role="row">
-        <span v-for="(cell, cellIndex) in row" :key="`${rowIndex}-${cellIndex}`" role="cell">
+        <span v-for="(cell, cellIndex) in row" :key="`${rowIndex}-${cellIndex}`" role="cell" :data-label="l(solution.artifact.table.columns[cellIndex])">
           {{ l(cell) }}
         </span>
       </div>
@@ -88,23 +90,35 @@ function formatArabic(value: number) {
   align-items: center;
   justify-content: space-between;
   gap: var(--spacing-4);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-  padding: var(--spacing-5) var(--spacing-6);
+  padding: var(--spacing-5) var(--spacing-6) var(--spacing-3);
   color: rgba(255, 255, 255, 0.78);
   font-weight: 900;
 }
 
 .solution-artifact--expanded .solution-artifact__top {
-  border-color: rgba(27, 77, 92, 0.1);
-  color: var(--color-primary-dark);
+  color: var(--trackora-primary-strong, var(--color-primary-dark));
 }
 
 .solution-artifact__top strong {
   border-radius: var(--radius-full);
   padding: 0.3rem 0.7rem;
-  color: var(--color-accent-contrast);
-  background: var(--color-accent-light);
+  color: var(--solution-accent-contrast, var(--color-accent-contrast));
+  background: var(--solution-accent-soft, var(--color-accent-light));
   font-size: var(--text-sm);
+}
+
+.solution-artifact__summary {
+  max-width: 74ch;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0 var(--spacing-6) var(--spacing-5);
+  color: rgba(255, 255, 255, 0.74);
+  line-height: 1.75;
+  text-wrap: pretty;
+}
+
+.solution-artifact--expanded .solution-artifact__summary {
+  border-color: rgba(27, 77, 92, 0.1);
+  color: var(--color-text-secondary);
 }
 
 .command-board {
@@ -155,7 +169,7 @@ function formatArabic(value: number) {
 
 .solution-artifact--expanded .command-board__row--head span,
 .solution-artifact--expanded .command-board__row span:first-child {
-  color: var(--color-primary-dark);
+  color: var(--trackora-primary-strong, var(--color-primary-dark));
 }
 
 .merchant-dashboard {
@@ -211,13 +225,13 @@ function formatArabic(value: number) {
 }
 
 .solution-artifact--expanded .merchant-metric strong {
-  color: var(--color-primary-dark);
+  color: var(--trackora-primary-strong, var(--color-primary-dark));
 }
 
 .merchant-metric--gold strong { color: var(--color-accent-light); }
 .merchant-metric--success strong { color: #C8F7D8; }
 .merchant-metric--danger strong { color: #FFD0D0; }
-.solution-artifact--expanded .merchant-metric--gold strong { color: var(--color-accent-contrast); }
+.solution-artifact--expanded .merchant-metric--gold strong { color: var(--solution-accent-contrast, var(--color-accent-contrast)); }
 .solution-artifact--expanded .merchant-metric--success strong { color: #166534; }
 .solution-artifact--expanded .merchant-metric--danger strong { color: #991B1B; }
 
@@ -236,8 +250,8 @@ function formatArabic(value: number) {
 .tracking-strip b {
   border-radius: var(--radius-full);
   padding: 0.45rem 0.75rem;
-  color: var(--color-accent-contrast);
-  background: var(--color-accent-light);
+  color: var(--solution-accent-contrast, var(--color-accent-contrast));
+  background: var(--solution-accent-soft, var(--color-accent-light));
   font-size: var(--text-sm);
 }
 
@@ -270,8 +284,8 @@ function formatArabic(value: number) {
   height: 2.6rem;
   place-items: center;
   border-radius: var(--radius-full);
-  color: var(--color-accent-contrast);
-  background: var(--color-accent);
+  color: var(--solution-accent-contrast, var(--color-accent-contrast));
+  background: var(--solution-accent, var(--color-accent));
   font-weight: 900;
 }
 
@@ -288,7 +302,7 @@ function formatArabic(value: number) {
 }
 
 .solution-artifact--expanded .seller-flow h3 {
-  color: var(--color-primary-dark);
+  color: var(--trackora-primary-strong, var(--color-primary-dark));
 }
 
 .solution-artifact--expanded .seller-flow p {
@@ -298,15 +312,15 @@ function formatArabic(value: number) {
 .seller-flow strong {
   border-radius: var(--radius-full);
   padding: 0.35rem 0.7rem;
-  color: var(--color-accent-light);
+  color: var(--solution-accent-soft, var(--color-accent-light));
   background: rgba(232, 168, 56, 0.16);
   font-size: var(--text-sm);
   white-space: nowrap;
 }
 
 .solution-artifact--expanded .seller-flow strong {
-  color: var(--color-accent-contrast);
-  background: var(--color-accent-light);
+  color: var(--solution-accent-contrast, var(--color-accent-contrast));
+  background: var(--solution-accent-soft, var(--color-accent-light));
 }
 
 @media (max-width: 52rem) {
@@ -318,10 +332,80 @@ function formatArabic(value: number) {
 
   .solution-artifact__top {
     display: grid;
+    padding-inline: var(--spacing-4);
+  }
+
+  .solution-artifact__summary {
+    padding-inline: var(--spacing-4);
   }
 
   .merchant-dashboard__metrics {
     grid-template-columns: 1fr;
+  }
+
+  .command-board {
+    overflow: visible;
+  }
+
+  .command-board__row--head {
+    display: none;
+  }
+
+  .command-board__row {
+    display: grid;
+    min-width: 0;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-2);
+    border-bottom: 0;
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-4);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .solution-artifact--expanded .command-board__row {
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .command-board__row + .command-board__row {
+    margin-block-start: var(--spacing-3);
+  }
+
+  .command-board__row span,
+  .command-board__row span:first-child {
+    display: grid;
+    grid-template-columns: minmax(7rem, 0.42fr) 1fr;
+    gap: var(--spacing-3);
+    padding: 0;
+    color: rgba(255, 255, 255, 0.82);
+  }
+
+  .solution-artifact--expanded .command-board__row span,
+  .solution-artifact--expanded .command-board__row span:first-child {
+    color: var(--color-text-secondary);
+  }
+
+  .command-board__row span::before {
+    content: attr(data-label);
+    color: rgba(255, 255, 255, 0.58);
+    font-size: var(--text-sm);
+    font-weight: 900;
+  }
+
+  .solution-artifact--expanded .command-board__row span::before {
+    color: var(--trackora-primary-strong, var(--color-primary-dark));
+  }
+
+  .command-board__row span + span {
+    border-inline-start: 0;
+  }
+}
+
+@media (max-width: 36rem) {
+  .command-board__row span,
+  .command-board__row span:first-child {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-1);
   }
 }
 </style>
