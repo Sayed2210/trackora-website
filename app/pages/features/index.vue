@@ -170,6 +170,7 @@ import {
 
 const { locale } = useI18n()
 const localePath = useLocalePath()
+const { setSeo } = useLocaleSeo()
 
 const overviewItems = featureOverviewItems
 const workflowPreview = featureWorkflowPreview
@@ -254,18 +255,13 @@ function arabicStep(value: number) {
 
 useScrollReveal()
 
-useHead(() => ({
-  title: locale.value === 'ar' ? 'مزايا Trackora | أدوات الشحن والتحصيل' : 'Trackora Features | Shipment and COD Tools',
-  htmlAttrs: { lang: locale.value, dir: locale.value === 'ar' ? 'rtl' : 'ltr' },
-  meta: [
-    {
-      name: 'description',
-      content: locale.value === 'ar'
-        ? 'كل مزايا Trackora لإدارة الشحنات، الديسباتش، تطبيق المناديب، بوابة التاجر، COD، الرفع المجمع، كشف المخاطر، والتتبع.'
-        : 'All Trackora features for shipments, dispatch, courier app, merchant portal, COD, bulk upload, risk detection, and tracking.',
-    },
-  ],
-}))
+setSeo(
+  locale.value === 'ar' ? 'مزايا Trackora | أدوات الشحن والتحصيل' : 'Trackora Features | Shipment and COD Tools',
+  locale.value === 'ar'
+    ? 'كل مزايا Trackora لإدارة الشحنات، الديسباتش، تطبيق المناديب، بوابة التاجر، COD، الرفع المجمع، كشف المخاطر، والتتبع.'
+    : 'All Trackora features for shipments, dispatch, courier app, merchant portal, COD, bulk upload, risk detection, and tracking.',
+  '/features',
+)
 </script>
 
 <style scoped>

@@ -1,21 +1,23 @@
 <template>
-  <button :class="['lang-switch', `lang-switch--${tone}`]" type="button" :aria-label="locale === 'ar' ? 'Switch to English' : 'التبديل إلى العربية'" @click="switchLocale">
+  <button :class="['lang-switch', `lang-switch--${tone}`]" type="button" :aria-label="locale === 'ar' ? t('a11y.switchToEnglish') : t('a11y.switchToArabic')" @click="switchLocale">
     <span aria-hidden="true">{{ locale === 'ar' ? 'EN' : 'عربي' }}</span>
   </button>
 </template>
 
 <script setup lang="ts">
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 const switchLocalePath = useSwitchLocalePath()
 const router = useRouter()
+const route = useRoute()
 
 withDefaults(defineProps<{ tone?: 'dark' | 'light' }>(), {
   tone: 'dark',
 })
 
 async function switchLocale() {
-  const path = switchLocalePath(locale.value === 'ar' ? 'en' : 'ar')
-  await router.push(path)
+  const targetLocale = locale.value === 'ar' ? 'en' : 'ar'
+  const path = switchLocalePath(targetLocale)
+  await router.push({ path, query: route.query })
 }
 </script>
 

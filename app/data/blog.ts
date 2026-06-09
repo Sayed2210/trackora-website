@@ -17,6 +17,7 @@ export interface BlogArticle {
   slug: string
   title: string
   category: BlogCategory
+  categoryEn: string
   readTime: string
   publishedAt: string
   author: string
@@ -25,6 +26,8 @@ export interface BlogArticle {
   featured?: boolean
   seoTitle: string
   seoDescription: string
+  seoTitleEn?: string
+  seoDescriptionEn?: string
   keyTakeaways: string[]
   body: BlogSection[]
 }
@@ -44,6 +47,7 @@ export const blogArticles: BlogArticle[] = [
     slug: 'reduce-delivery-delays',
     title: 'كيف تقلل تأخير الشحنات بدون زيادة عدد المناديب؟',
     category: 'الشحن والتوزيع',
+    categoryEn: 'Shipping and Dispatch',
     readTime: '6 دقائق قراءة',
     publishedAt: '2026-02-18',
     author: 'فريق Trackora',
@@ -52,8 +56,9 @@ export const blogArticles: BlogArticle[] = [
     excerpt: 'خطوات عملية لقراءة السعة، تنظيف الشحنات المعلقة، وتقسيم المناطق قبل التفكير في تعيين مندوب جديد.',
     seoTitle: 'تقليل تأخير الشحنات بدون زيادة المناديب',
     seoDescription: 'دليل عربي عملي لشركات الشحن حول تقليل تأخير الشحنات عبر إدارة الديسباتش، سعة المناديب، المناطق، والشحنات المعلقة.',
+    seoTitleEn: 'How to Reduce Delivery Delays Without Adding Couriers',
+    seoDescriptionEn: 'A practical Arabic guide for shipping companies on reducing delays through dispatch management, courier capacity, zone planning, and clearing pending shipments.',
     keyTakeaways: [
-      'ابدأ بقياس السعة الفعلية لكل مندوب حسب المنطقة ونوع الشحنة.',
       'افصل الشحنات المعلقة عن الشحنات الجاهزة حتى لا تعطل مسار التوزيع.',
       'راجع المناطق يوميا بدل الاعتماد على تقسيم ثابت لا يعكس ضغط الطلبات.',
     ],
@@ -105,6 +110,7 @@ export const blogArticles: BlogArticle[] = [
     slug: 'cod-reconciliation-mistakes',
     title: 'لماذا تضيع أرباحك في تحصيل COD غير المنظم؟',
     category: 'تحصيل COD',
+    categoryEn: 'COD Collection',
     readTime: '7 دقائق قراءة',
     publishedAt: '2026-02-12',
     author: 'فريق Trackora',
@@ -112,8 +118,9 @@ export const blogArticles: BlogArticle[] = [
     excerpt: 'كيف تضبط المحفظة، النقد مع المندوب، التسويات، والمراجعة اليومية قبل أن تتحول الأخطاء إلى خسائر.',
     seoTitle: 'أخطاء تسوية COD التي تضيع أرباح شركات الشحن',
     seoDescription: 'شرح عملي لتنظيم تحصيل COD، محفظة المندوب، النقد المعلق، التسوية، والمطابقة المالية داخل شركات الشحن.',
+    seoTitleEn: 'COD Reconciliation Mistakes That Cost Shipping Companies',
+    seoDescriptionEn: 'A practical guide to organizing COD collection, courier wallets, pending cash, settlement, and daily financial reconciliation inside shipping companies.',
     keyTakeaways: [
-      'افصل المحصل، المعلق، والمرتجع في محفظة COD من أول يوم.',
       'طابق النقد مع المندوب على مستوى الشحنة، لا على مستوى إجمالي اليوم فقط.',
       'اجعل التسوية قابلة للمراجعة من التاجر وفريق المالية.',
     ],
@@ -159,6 +166,7 @@ export const blogArticles: BlogArticle[] = [
     slug: 'social-sellers-shipment-organization',
     title: 'طريقة بسيطة لتنظيم طلبات السوشيال سيلرز بدل الشيتات',
     category: 'التجارة الإلكترونية',
+    categoryEn: 'E-commerce',
     readTime: '5 دقائق قراءة',
     publishedAt: '2026-02-05',
     author: 'فريق Trackora',
@@ -166,8 +174,9 @@ export const blogArticles: BlogArticle[] = [
     excerpt: 'نموذج تشغيلي بسيط يحول الطلب من رسالة إلى شحنة برقم تتبع واضح، بدون الاعتماد الكامل على الشيتات.',
     seoTitle: 'تنظيم طلبات السوشيال سيلرز بدل الشيتات',
     seoDescription: 'طريقة عملية لتنظيم طلبات السوشيال سيلرز، أرقام التتبع، تحويل الطلب إلى شحنة، وتقليل أخطاء الشيتات.',
+    seoTitleEn: 'Organizing Social Seller Orders Without Spreadsheets',
+    seoDescriptionEn: 'A practical approach to organizing social seller orders, tracking numbers, COD, and reducing spreadsheet errors.',
     keyTakeaways: [
-      'حوّل كل طلب إلى شحنة برقم تتبع قبل دخوله التوزيع.',
       'اجعل حقول الهاتف والعنوان وقيمة COD إلزامية وقابلة للمراجعة.',
       'وفر حالة واضحة للسيلر حتى لا يتابع كل طلب برسالة منفصلة.',
     ],
@@ -213,6 +222,7 @@ export const blogArticles: BlogArticle[] = [
     slug: 'detect-fake-orders-before-dispatch',
     title: 'مؤشرات خطر تكشف الطلبات الوهمية قبل خروج المندوب',
     category: 'تقليل المرتجعات',
+    categoryEn: 'Return Reduction',
     readTime: '6 دقائق قراءة',
     publishedAt: '2026-01-29',
     author: 'فريق Trackora',
@@ -220,8 +230,9 @@ export const blogArticles: BlogArticle[] = [
     excerpt: 'إشارات عملية قبل الإرسال: أرقام مكررة، عناوين ضعيفة، قيمة COD عالية، وأنماط طلبات تحتاج مراجعة.',
     seoTitle: 'كشف الطلبات الوهمية قبل خروج المندوب',
     seoDescription: 'مؤشرات عملية لتقليل المرتجعات عبر كشف الطلبات الوهمية، الأرقام المكررة، جودة العنوان، وقيمة COD العالية قبل التوزيع.',
+    seoTitleEn: 'Detecting Fake Orders Before Dispatch',
+    seoDescriptionEn: 'Practical signals to reduce returns by catching fake orders, repeated phone numbers, poor address quality, and high COD risk before dispatch.',
     keyTakeaways: [
-      'الأرقام المكررة ليست دائما احتيالا، لكنها تحتاج مراجعة قبل الإرسال.',
       'العنوان الضعيف يرفع تكلفة التوصيل حتى لو كان العميل حقيقيا.',
       'قيمة COD العالية تحتاج تأكيد أقوى قبل حجز سعة المندوب.',
     ],
@@ -267,6 +278,7 @@ export const blogArticles: BlogArticle[] = [
     slug: 'shipping-company-operations-dashboard',
     title: 'ما الذي يجب أن تراه شركة الشحن في لوحة التشغيل اليومية؟',
     category: 'التتبع والتقارير',
+    categoryEn: 'Tracking and Reports',
     readTime: '8 دقائق قراءة',
     publishedAt: '2026-01-21',
     author: 'فريق Trackora',
@@ -274,8 +286,9 @@ export const blogArticles: BlogArticle[] = [
     excerpt: 'العناصر التي يجب أن تظهر صباحا وخلال اليوم: الشحنات المتأخرة، COD المعلق، ضغط المناديب، والمناطق التي تحتاج تدخل.',
     seoTitle: 'لوحة التشغيل اليومية لشركات الشحن',
     seoDescription: 'ما يجب أن تعرضه لوحة تشغيل شركة الشحن يوميا: الشحنات المتأخرة، COD المعلق، عبء المناديب، المناطق، والتقارير.',
+    seoTitleEn: 'What a Shipping Company Operations Dashboard Should Show',
+    seoDescriptionEn: 'What a daily shipping operations dashboard should display: delayed shipments, pending COD, courier workload, zone pressure, and actionable reports.',
     keyTakeaways: [
-      'ابدأ بلوحة قرارات يومية، لا تقرير مؤشرات عام.',
       'اعرض المتأخرات وCOD المعلق وعبء المناديب في نفس السياق.',
       'اجعل كل مؤشر قابلا لإجراء واضح من فريق التشغيل.',
     ],

@@ -24,7 +24,7 @@
         </section>
       </nav>
 
-      <section class="footer__demo" aria-label="دعوة للتواصل">
+      <section class="footer__demo" :aria-label="locale === 'ar' ? 'دعوة للتواصل' : 'Contact invitation'">
         <h2>{{ t('footer.ctaTitle') }}</h2>
         <p>{{ t('footer.ctaText') }}</p>
         <NuxtLink :to="localePath('/contact')" class="footer__contact-link">

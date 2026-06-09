@@ -198,6 +198,7 @@ const props = defineProps<{
 
 const { locale } = useI18n()
 const localePath = useLocalePath()
+const { setSeo } = useLocaleSeo()
 const foundFeature = getFeatureDetail(props.featureKey)
 
 if (!foundFeature) {
@@ -219,15 +220,9 @@ function arabicStep(value: number) {
 
 useScrollReveal()
 
-useHead(() => ({
-  title: l(feature.seoTitle),
-  htmlAttrs: { lang: locale.value, dir: locale.value === 'ar' ? 'rtl' : 'ltr' },
-  meta: [
-    { name: 'description', content: l(feature.seoDescription) },
-    { property: 'og:title', content: l(feature.seoTitle) },
-    { property: 'og:description', content: l(feature.seoDescription) },
-  ],
-}))
+watchEffect(() => {
+  setSeo(l(feature.seoTitle), l(feature.seoDescription), feature.path)
+})
 </script>
 
 <style scoped>

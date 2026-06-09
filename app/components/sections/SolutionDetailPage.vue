@@ -110,6 +110,7 @@ const props = defineProps<{
 
 const { locale } = useI18n()
 const localePath = useLocalePath()
+const { setSeo } = useLocaleSeo()
 
 const solution = computed(() => {
   const found = getSolutionDetail(props.solutionKey)
@@ -131,15 +132,9 @@ function formatArabic(value: number) {
 
 useScrollReveal()
 
-useHead(() => ({
-  title: l(solution.value.seoTitle),
-  htmlAttrs: { lang: locale.value, dir: locale.value === 'ar' ? 'rtl' : 'ltr' },
-  meta: [
-    { name: 'description', content: l(solution.value.seoDescription) },
-    { property: 'og:title', content: l(solution.value.seoTitle) },
-    { property: 'og:description', content: l(solution.value.seoDescription) },
-  ],
-}))
+watchEffect(() => {
+  setSeo(l(solution.value.seoTitle), l(solution.value.seoDescription), solution.value.path)
+})
 </script>
 
 <style scoped>

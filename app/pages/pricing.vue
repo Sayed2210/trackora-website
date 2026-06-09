@@ -424,7 +424,7 @@ const pageCopy = {
 const copy = computed(() => (isArabic.value ? pageCopy.ar : pageCopy.en))
 
 watchEffect(() => {
-  setSeo(copy.value.seoTitle, copy.value.seoDescription)
+  setSeo(copy.value.seoTitle, copy.value.seoDescription, '/pricing')
 })
 
 onMounted(() => {

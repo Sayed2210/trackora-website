@@ -206,5 +206,29 @@
       "heading": "Solutions for Social Sellers",
       "subtitle": "Upload orders easily and track delivery and COD collection without complexity."
     }
+  },
+  "seo": {
+    "trackPrivacyNote": "The tracking page shows shipment status and only the details needed to identify it."
+  },
+  "a11y": {
+    "switchToEnglish": "Switch to English",
+    "switchToArabic": "Switch to Arabic",
+    "mainNav": "Main navigation",
+    "footerNav": "Footer links",
+    "homeLink": "Trackora home",
+    "contactCta": "Contact invitation",
+    "keyActions": "Key actions",
+    "operationsSummary": "Operations summary",
+    "operationsConsole": "Trackora operating console",
+    "operationsMetrics": "Operations metrics",
+    "connectionMap": "Trackora operations connection map",
+    "articleContent": "Article content",
+    "articleToc": "Article table of contents",
+    "articleCategories": "Article categories",
+    "keyTakeaways": "Key takeaways",
+    "solutionActions": "Solution actions",
+    "adoptionQuestions": "Adoption questions",
+    "featurePreview": "Operational feature preview",
+    "featurePageActions": "Feature page actions"
   }
 }
