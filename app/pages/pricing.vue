@@ -3,17 +3,17 @@
     <section class="pricing-hero" aria-labelledby="pricing-heading">
       <AppContainer wide>
         <div class="pricing-hero__grid">
-          <div class="pricing-hero__content">
-            <p class="pricing-kicker">{{ copy.hero.kicker }}</p>
-            <h1 id="pricing-heading">{{ copy.hero.title }}</h1>
-            <p class="pricing-hero__lead">{{ copy.hero.lead }}</p>
-            <div class="pricing-hero__actions" :aria-label="copy.hero.actionsLabel">
-              <NuxtLink class="pricing-btn pricing-btn--primary" :to="localePath('/request-demo')">
-                {{ copy.hero.primaryCta }}
-              </NuxtLink>
-              <NuxtLink class="pricing-btn pricing-btn--secondary" :to="localePath('/contact')">
-                {{ copy.hero.secondaryCta }}
-              </NuxtLink>
+          <div class="pricing-hero__content reveal-up">
+            <p class="pricing-hero__eyebrow">{{ locale === 'ar' ? 'تسعير حسب التشغيل' : 'Pricing by operation size' }}</p>
+            <h1 id="pricing-heading" class="pricing-hero__title">{{ t('pricing.heading') }}</h1>
+            <p class="pricing-hero__text">{{ t('pricing.subtitle') }}</p>
+            <div class="pricing-hero__actions">
+              <AppButton :to="localePath('/request-demo?plan=growth')" variant="primary">
+                {{ locale === 'ar' ? 'اطلب عرض لخطة النمو' : 'Request a Growth demo' }}
+              </AppButton>
+              <AppButton :to="localePath('/contact?topic=pricing')" variant="outline">
+                {{ locale === 'ar' ? 'تحدث مع فريق Trackora' : 'Talk to Trackora' }}
+              </AppButton>
             </div>
           </div>
 
@@ -96,22 +96,71 @@
       </AppContainer>
     </section>
 
-    <section class="pricing-section reassurance-section" aria-labelledby="reassurance-heading">
-      <AppContainer wide>
-        <div class="reassurance-grid">
-          <div class="reassurance-copy">
-            <h2 id="reassurance-heading">{{ copy.reassurance.title }}</h2>
-            <p>{{ copy.reassurance.lead }}</p>
-          </div>
-          <div class="reassurance-list">
-            <article v-for="item in copy.reassurance.items" :key="item.title">
-              <span>{{ item.marker }}</span>
-              <div>
-                <h3>{{ item.title }}</h3>
-                <p>{{ item.text }}</p>
-              </div>
-            </article>
-          </div>
+    <section class="pricing-objections section" aria-labelledby="pricing-objections-heading">
+      <AppContainer>
+        <div class="pricing-section-head reveal-up">
+          <h2 id="pricing-objections-heading" class="pricing-section-head__title">
+            {{ locale === 'ar' ? 'قبل اختيار الخطة، راجع حدود التشغيل' : 'Before choosing, check operation limits' }}
+          </h2>
+          <p class="pricing-section-head__text">
+            {{ locale === 'ar' ? 'التسعير في Trackora يرتبط بالشحنات، المستخدمين، المناديب، تحصيل COD، والتسوية. هذه هي التفاصيل التي تمنع المفاجآت أثناء النمو.' : 'Trackora pricing follows shipments, users, couriers, COD collection, and settlement. These details prevent surprises as volume grows.' }}
+          </p>
+        </div>
+
+        <div class="pricing-objections__grid">
+          <article v-for="(item, i) in pricingObjections" :key="i" class="pricing-objections__item reveal-stagger">
+            <h3 class="pricing-objections__title">{{ locale === 'ar' ? item.titleAr : item.titleEn }}</h3>
+            <p class="pricing-objections__text">{{ locale === 'ar' ? item.textAr : item.textEn }}</p>
+          </article>
+        </div>
+      </AppContainer>
+    </section>
+
+    <section class="pricing-plans section" :aria-label="plansLabel">
+      <AppContainer>
+        <div v-if="plansService.loading.value" class="pricing__notice" aria-live="polite">
+          {{ locale === 'ar' ? 'نراجع أي تحديثات متاحة للأسعار، والخطط المحلية ظاهرة الآن.' : 'Checking for pricing updates. Local plans are visible now.' }}
+        </div>
+        <div v-else-if="plansService.error.value || plansService.usedFallback.value" class="pricing__notice pricing__notice--soft" aria-live="polite">
+          {{ locale === 'ar' ? 'نعرض خطط Trackora المحلية الآمنة حالياً. يمكنك طلب عرض لتأكيد السعر حسب حجم التشغيل.' : 'Showing safe Trackora local plans. Request a quote to confirm pricing for your operation size.' }}
+        </div>
+
+        <div class="pricing__grid">
+          <PricingCard v-for="plan in displayedPlans" :key="plan.id" :plan="plan" />
+        </div>
+      </AppContainer>
+    </section>
+
+    <section class="pricing-comparison section section--alt" aria-labelledby="pricing-comparison-heading">
+      <AppContainer>
+        <div class="pricing-section-head pricing-section-head--compact reveal-up">
+          <h2 id="pricing-comparison-heading" class="pricing-section-head__title">
+            {{ locale === 'ar' ? 'قارن تفاصيل التشغيل' : 'Compare operation details' }}
+          </h2>
+          <p class="pricing-section-head__text">
+            {{ locale === 'ar' ? 'الجدول يوضح ما يحصل عليه فريقك في الشحن، المناديب، COD، التقارير، والدعم الفني.' : 'This table shows what your team gets across shipments, couriers, COD, reports, and support.' }}
+          </p>
+        </div>
+
+        <div class="pricing-comparison__scroll" tabindex="0" :aria-label="comparisonLabel">
+          <table class="pricing-comparison__table">
+            <thead>
+              <tr>
+                <th scope="col">{{ locale === 'ar' ? 'البند' : 'Item' }}</th>
+                <th scope="col">{{ locale === 'ar' ? 'البداية' : 'Starter' }}</th>
+                <th scope="col" class="pricing-comparison__recommended">{{ locale === 'ar' ? 'النمو' : 'Growth' }}</th>
+                <th scope="col">{{ locale === 'ar' ? 'التوسع' : 'Scale' }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="row in pricingComparisonRows" :key="row.featureEn">
+                <th scope="row">{{ locale === 'ar' ? row.featureAr : row.featureEn }}</th>
+                <td>{{ locale === 'ar' ? row.starterAr : row.starterEn }}</td>
+                <td class="pricing-comparison__recommended">{{ locale === 'ar' ? row.growthAr : row.growthEn }}</td>
+                <td>{{ locale === 'ar' ? row.scaleAr : row.scaleEn }}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </AppContainer>
     </section>
@@ -133,36 +182,23 @@
       </AppContainer>
     </section>
 
-    <section class="pricing-section faq-section" aria-labelledby="faq-heading">
-      <AppContainer wide>
-        <div class="pricing-section__header pricing-section__header--center">
-          <h2 id="faq-heading">{{ copy.faq.title }}</h2>
-        </div>
-        <div class="faq-list">
-          <details v-for="item in copy.faq.items" :key="item.question">
-            <summary>{{ item.question }}</summary>
-            <p>{{ item.answer }}</p>
-          </details>
-        </div>
-      </AppContainer>
-    </section>
-
-    <section class="final-pricing-cta" aria-labelledby="final-pricing-heading">
-      <AppContainer wide>                          
-        <div class="final-pricing-cta__inner">
-          <div>
-            <h2 id="final-pricing-heading">{{ copy.finalCta.title }}</h2>
-            <p>{{ copy.finalCta.lead }}</p>
-          </div>
-          <NuxtLink class="pricing-btn pricing-btn--accent" :to="localePath('/request-demo')">
-            {{ copy.finalCta.cta }}
-          </NuxtLink>
+    <section class="pricing-cta section section--dark" aria-labelledby="pricing-cta-heading">
+      <AppContainer narrow>
+        <div class="pricing-cta__inner reveal-scale">
+          <h2 id="pricing-cta-heading" class="pricing-cta__title">{{ locale === 'ar' ? 'اختر الخطة حسب حجم التشغيل' : 'Choose by operation size' }}</h2>
+          <p class="pricing-cta__text">{{ locale === 'ar' ? 'شاركنا عدد الشحنات، المناديب، وحجم تحصيل COD. فريق Trackora يوضح الخطة المناسبة والتكلفة المتوقعة.' : 'Share shipment volume, couriers, and COD collection size. The Trackora team will explain the right plan and expected cost.' }}</p>
+          <AppButton :to="localePath('/contact?topic=pricing')" variant="primary">{{ locale === 'ar' ? 'تحدث مع فريق Trackora' : 'Talk to Trackora' }}</AppButton>
         </div>
       </AppContainer>
     </section>
   </div>
 </template>
 
+<script setup lang="ts">
+import { pricingFaqItems } from '~/data/forms'
+import { pricingComparisonRows, pricingObjections, pricingPlans } from '~/data/pricing'
+import PricingCard from '~/components/pricing/PricingCard.vue'
+import type { PublicPlan } from '~/types/pricing'
 
 
 <script setup lang="ts">
@@ -421,26 +457,52 @@ const pageCopy = {
   },
 } as const
 
-const copy = computed(() => (isArabic.value ? pageCopy.ar : pageCopy.en))
+const plansLabel = computed(() => locale.value === 'ar' ? 'خطط أسعار Trackora' : 'Trackora pricing plans')
+const comparisonLabel = computed(() => locale.value === 'ar' ? 'جدول مقارنة خطط Trackora' : 'Trackora plan comparison table')
 
-watchEffect(() => {
-  setSeo(copy.value.seoTitle, copy.value.seoDescription, '/pricing')
+const displayedPlans = computed<PublicPlan[]>(() => {
+  const apiPlans = new Map<string, PublicPlan>()
+
+  if (plansService.data.value && !plansService.usedFallback.value) {
+    for (const plan of plansService.data.value) {
+      const normalizedSlug = plan.slug === 'professional' ? 'growth' : plan.slug === 'enterprise' ? 'scale' : plan.slug
+      apiPlans.set(normalizedSlug, plan)
+    }
+  }
+
+  return pricingPlans.map((plan) => {
+    const apiPlan = apiPlans.get(plan.slug)
+
+    return {
+      id: `local-${plan.slug}`,
+      slug: plan.slug,
+      name: locale.value === 'ar' ? plan.nameAr : plan.nameEn,
+      audience: locale.value === 'ar' ? plan.audienceAr : plan.audienceEn,
+      description: locale.value === 'ar' ? plan.descriptionAr : plan.descriptionEn,
+      priceMonthly: apiPlan?.priceMonthly ?? plan.priceMonthly,
+      priceYearly: apiPlan?.priceYearly ?? plan.priceYearly,
+      currency: apiPlan?.currency ?? plan.currency,
+      shipmentLimit: apiPlan?.shipmentLimit ?? plan.shipmentLimit,
+      features: locale.value === 'ar' ? plan.featuresAr : plan.featuresEn,
+      isPopular: plan.highlighted,
+      ctaLabel: locale.value === 'ar' ? plan.ctaAr : plan.ctaEn,
+      ctaHref: plan.ctaHref,
+      overageNote: locale.value === 'ar' ? plan.overageAr : plan.overageEn,
+      displayPrice: apiPlan?.priceMonthly != null || apiPlan?.priceYearly != null ? undefined : locale.value === 'ar' ? plan.priceAr : plan.priceEn,
+    }
+  })
 })
 
 onMounted(() => {
-  const media = window.matchMedia('(min-width: 46.001rem)')
-  const updateComparisonFocus = () => {
-    comparisonTabIndex.value = media.matches ? 0 : null
-  }
-
-  updateComparisonFocus()
-  media.addEventListener('change', updateComparisonFocus)
-  removeComparisonFocusListener = () => media.removeEventListener('change', updateComparisonFocus)
+  plansService.fetchPlans()
 })
 
-onBeforeUnmount(() => {
-  removeComparisonFocusListener?.()
-})
+setSeo(
+  locale.value === 'ar' ? 'خطط وأسعار Trackora' : 'Trackora Plans and Pricing',
+  locale.value === 'ar'
+    ? 'قارن خطط Trackora حسب الشحنات شهرياً، المناديب، بوابة التاجر، محفظة COD، التسوية، والدعم.'
+    : 'Compare Trackora plans by monthly shipments, couriers, merchant portal, COD wallet, settlement, and support.'
+)
 </script>
 
 <style scoped>
@@ -478,43 +540,36 @@ onBeforeUnmount(() => {
 }
 
 .pricing-hero__content {
-  display: grid;
-  gap: 1.35rem;
+  max-width: 45rem;
 }
 
 .pricing-kicker {
   width: fit-content;
   display: inline-flex;
-  align-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  border-radius: 999px;
-  padding: 0.42rem 0.88rem;
-  color: rgba(255, 255, 255, 0.86);
-  background: rgba(255, 255, 255, 0.08);
-  font-size: 0.88rem;
-  font-weight: 900;
+  margin-block-end: var(--spacing-4);
+  border: 1px solid rgba(26, 59, 102, 0.1);
+  border-radius: var(--radius-full);
+  padding: var(--spacing-2) var(--spacing-4);
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--color-primary);
+  font-size: var(--text-sm);
+  font-weight: 800;
+  box-shadow: var(--shadow-sm);
 }
 
-.pricing-kicker--light {
-  border-color: rgba(26, 59, 102, 0.14);
-  color: var(--pricing-primary);
-  background: rgba(26, 59, 102, 0.05);
-}
-
-.pricing-hero h1 {
-  max-width: 12ch;
-  color: #FFFFFF;
-  font-size: clamp(3rem, 7vw, 5.7rem);
-  line-height: 1.05;
-  letter-spacing: -0.035em;
+.pricing-hero__title {
+  max-width: 13ch;
+  margin-block-end: var(--spacing-6);
+  font-size: var(--text-6xl);
+  letter-spacing: -0.04em;
   text-wrap: balance;
 }
 
-.pricing-hero__lead {
-  max-width: 62ch;
-  color: rgba(255, 255, 255, 0.82);
-  font-size: clamp(1.05rem, 1.5vw, 1.24rem);
-  line-height: 1.9;
+.pricing-hero__text {
+  max-width: 43rem;
+  color: var(--color-text-secondary);
+  font-size: var(--text-xl);
+  line-height: 1.8;
   text-wrap: pretty;
 }
 
@@ -526,57 +581,14 @@ onBeforeUnmount(() => {
   align-items: center;
 }
 
-.pricing-btn {
-  min-height: 3rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid transparent;
-  border-radius: 999px;
-  padding: 0.88rem 1.35rem;
-  font-weight: 900;
-  line-height: 1.3;
-  text-align: center;
-  transition: transform 220ms var(--pricing-ease), box-shadow 220ms var(--pricing-ease), background 220ms var(--pricing-ease), border-color 220ms var(--pricing-ease), color 220ms var(--pricing-ease);
-}
-
-.pricing-btn:focus-visible,
-.comparison-table:focus-visible,
-details:focus-within {
-  outline: 3px solid var(--pricing-accent);
-  outline-offset: 3px;
-}
-
-.pricing-btn--primary,
-.pricing-btn--accent {
-  color: #210F16;
-  background: var(--pricing-accent);
-  box-shadow: 0 16px 36px rgba(255, 107, 107, 0.3);
-}
-
-.pricing-btn--secondary {
-  color: #FFFFFF;
-  border-color: rgba(255, 255, 255, 0.28);
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.pricing-btn--outline {
-  color: var(--pricing-primary);
-  border-color: rgba(26, 59, 102, 0.2);
-  background: #FFFFFF;
-  box-shadow: 0 12px 32px rgba(26, 59, 102, 0.08);
-}
-
-.pricing-btn:hover {
-  transform: translateY(-2px);
-}
-
-.pricing-hero__panel {
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 2rem;
+.pricing-hero__visual {
+  position: relative;
+  min-height: 27rem;
   overflow: hidden;
-  background: rgba(7, 20, 36, 0.72);
-  box-shadow: 0 32px 100px rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--radius-4xl);
+  background: var(--gradient-hero);
+  box-shadow: var(--shadow-glow);
 }
 
 .pricing-ledger__top {
@@ -609,32 +621,77 @@ details:focus-within {
   background: rgba(255, 255, 255, 0.07);
 }
 
-.pricing-ledger__row span,
-.pricing-ledger__row small {
-  color: rgba(255, 255, 255, 0.68);
+.pricing-objections {
+  padding-block-end: var(--spacing-12);
 }
 
-.pricing-ledger__row strong {
-  color: #FFFFFF;
-  font-size: clamp(1.45rem, 3vw, 2.35rem);
-  line-height: 1;
+.pricing-section-head {
+  max-width: 48rem;
+  margin-block-end: var(--spacing-12);
 }
 
-.pricing-section {
-  padding-block: clamp(4.5rem, 8vw, 8rem);
+.pricing-section-head--compact {
+  margin-block-end: var(--spacing-8);
 }
 
-.pricing-section__header {
+.pricing-section-head__title {
+  margin-block-end: var(--spacing-4);
+  color: var(--color-text);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: 1.16;
+  text-wrap: balance;
+}
+
+.pricing-section-head__text {
+  color: var(--color-text-secondary);
+  font-size: var(--text-lg);
+  line-height: 1.8;
+  text-wrap: pretty;
+}
+
+.pricing-objections__grid {
   display: grid;
-  gap: 1rem;
-  max-width: 62rem;
-  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--spacing-6);
 }
 
-.pricing-section__header--center {
-  margin-inline: auto;
-  text-align: center;
-  justify-items: center;
+.pricing-objections__item {
+  border: 1px solid rgba(26, 59, 102, 0.1);
+  border-radius: var(--radius-3xl);
+  padding: var(--spacing-8);
+  background: var(--color-surface);
+  box-shadow: 0 10px 28px rgba(26, 59, 102, 0.05);
+}
+
+.pricing-objections__title {
+  margin-block-end: var(--spacing-3);
+  color: var(--color-primary);
+  font-size: var(--text-xl);
+}
+
+.pricing-objections__text {
+  color: var(--color-text-secondary);
+  line-height: 1.75;
+}
+
+.pricing-plans {
+  padding-block-start: var(--spacing-8);
+}
+
+.pricing__notice {
+  margin-block-end: var(--spacing-6);
+  border: 1px solid rgba(59, 89, 152, 0.18);
+  border-radius: var(--radius-2xl);
+  padding: var(--spacing-4) var(--spacing-6);
+  background: rgba(59, 89, 152, 0.06);
+  color: var(--color-primary-dark);
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+
+.pricing__notice--soft {
+  border-color: rgba(245, 158, 11, 0.24);
+  background: rgba(245, 158, 11, 0.08);
 }
 
 .pricing-section h2,
@@ -660,29 +717,56 @@ details:focus-within {
   align-items: stretch;
 }
 
-.plan-card {
-  position: relative;
-  display: grid;
-  gap: 1.1rem;
-  align-content: start;
-  padding: clamp(1.25rem, 2.3vw, 1.8rem);
-  border: 1px solid rgba(26, 59, 102, 0.12);
-  border-radius: 1.7rem;
-  background: #FFFFFF;
-  box-shadow: 0 14px 42px rgba(26, 59, 102, 0.07);
-  transition: transform 220ms var(--pricing-ease), box-shadow 220ms var(--pricing-ease), border-color 220ms var(--pricing-ease);
+.pricing-comparison__scroll {
+  overflow-x: auto;
+  border: 1px solid rgba(26, 59, 102, 0.1);
+  border-radius: var(--radius-3xl);
+  background: var(--color-surface);
+  box-shadow: 0 12px 34px rgba(26, 59, 102, 0.06);
 }
 
-.plan-card--recommended {
-  border-color: rgba(255, 107, 107, 0.42);
-  background:
-    radial-gradient(circle at 12% 8%, rgba(255, 107, 107, 0.13), transparent 14rem),
-    #FFFFFF;
-  box-shadow: 0 24px 70px rgba(255, 107, 107, 0.17), 0 18px 50px rgba(26, 59, 102, 0.1);
-  transform: translateY(-0.65rem);
+.pricing-comparison__scroll:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 3px;
 }
 
-.plan-card__top {
+.pricing-comparison__table {
+  width: 100%;
+  min-width: 58rem;
+  border-collapse: collapse;
+  text-align: start;
+}
+
+.pricing-comparison__table th,
+.pricing-comparison__table td {
+  border-block-end: 1px solid rgba(26, 59, 102, 0.08);
+  padding: var(--spacing-4) var(--spacing-5);
+  vertical-align: top;
+}
+
+.pricing-comparison__table thead th {
+  position: sticky;
+  inset-block-start: 0;
+  background: var(--color-bg-alt);
+  color: var(--color-primary-dark);
+  font-weight: 900;
+}
+
+.pricing-comparison__table tbody th {
+  color: var(--color-text);
+  font-weight: 800;
+}
+
+.pricing-comparison__table td {
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.pricing-comparison__recommended {
+  background: rgba(26, 59, 102, 0.045);
+}
+
+.pricing-faq__list {
   display: flex;
   gap: 1rem;
   align-items: flex-start;
@@ -694,9 +778,10 @@ details:focus-within {
   font-weight: 900;
 }
 
-.plan-card h3 {
-  color: var(--pricing-ink);
-  font-size: clamp(1.45rem, 2.4vw, 2.25rem);
+.pricing-faq__question {
+  margin-block-end: var(--spacing-3);
+  font-size: var(--text-lg);
+  font-weight: 700;
 }
 
 .plan-card__badge {
@@ -709,250 +794,32 @@ details:focus-within {
   font-weight: 900;
 }
 
-.plan-card__description,
-.plan-card__best {
-  color: var(--pricing-muted);
+.pricing-cta__inner {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--radius-4xl);
+  padding: var(--spacing-12);
+  background: rgba(255, 255, 255, 0.08);
+  text-align: center;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
-.plan-card__price {
-  display: grid;
-  gap: 0.25rem;
-  padding-block: 0.6rem;
-  border-block: 1px solid rgba(26, 59, 102, 0.1);
-}
-
-.plan-card__price strong {
-  color: var(--pricing-primary);
-  font-size: clamp(1.25rem, 2vw, 1.75rem);
-  line-height: 1.2;
-}
-
-.plan-card__price span {
-  color: var(--pricing-muted);
+.pricing-cta__title {
+  margin-block-end: var(--spacing-4);
+  color: var(--color-text-light);
+  font-size: var(--text-4xl);
   font-weight: 800;
 }
 
-.plan-card__best {
-  border-radius: 1rem;
-  padding: 0.85rem;
-  background: rgba(26, 59, 102, 0.05);
-  font-weight: 800;
+.pricing-cta__text {
+  margin-block-end: var(--spacing-8);
+  color: rgba(255, 255, 255, 0.86);
+  font-size: var(--text-lg);
+  line-height: 1.7;
 }
 
-.plan-card__features {
-  display: grid;
-  gap: 0.62rem;
-}
-
-.plan-card__features li,
-.enterprise-card li {
-  position: relative;
-  padding-inline-start: 1.15rem;
-  color: var(--pricing-muted);
-  line-height: 1.65;
-}
-
-.plan-card__features li::before,
-.enterprise-card li::before {
-  content: '';
-  position: absolute;
-  inset-inline-start: 0;
-  top: 0.72rem;
-  width: 0.42rem;
-  height: 0.42rem;
-  border-radius: 50%;
-  background: var(--pricing-accent);
-}
-
-.comparison-section {
-  background: var(--pricing-surface);
-}
-
-.comparison-table {
-  overflow-x: auto;
-  border: 1px solid var(--pricing-line);
-  border-radius: 1.7rem;
-  background: #FFFFFF;
-  box-shadow: var(--pricing-shadow);
-}
-
-.comparison-table table {
-  width: 100%;
-  min-width: 48rem;
-  border-collapse: collapse;
-}
-
-.comparison-table th,
-.comparison-table td {
-  padding: 1rem;
-  border-bottom: 1px solid rgba(26, 59, 102, 0.1);
-  text-align: start;
-  vertical-align: top;
-}
-
-.comparison-table thead th {
-  color: #FFFFFF;
-  background: var(--pricing-primary);
-  font-size: 0.95rem;
-}
-
-.comparison-table tbody th {
-  color: var(--pricing-ink);
-  font-weight: 900;
-}
-
-.comparison-table td {
-  color: var(--pricing-muted);
-  font-weight: 700;
-}
-
-.comparison-table tr:last-child th,
-.comparison-table tr:last-child td {
-  border-bottom: 0;
-}
-
-.reassurance-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
-  gap: clamp(2rem, 5vw, 5rem);
-  align-items: start;
-}
-
-.reassurance-copy {
-  display: grid;
-  gap: 1rem;
-}
-
-.reassurance-list {
-  display: grid;
-  gap: 0.85rem;
-}
-
-.reassurance-list article {
-  display: grid;
-  grid-template-columns: 3rem 1fr;
-  gap: 1rem;
-  align-items: start;
-  padding: 1.1rem;
-  border: 1px solid rgba(26, 59, 102, 0.12);
-  border-radius: 1.3rem;
-  background: #FFFFFF;
-  box-shadow: 0 10px 32px rgba(26, 59, 102, 0.06);
-}
-
-.reassurance-list article > span {
-  display: grid;
-  place-items: center;
-  width: 2.4rem;
-  height: 2.4rem;
-  border-radius: 50%;
-  color: #210F16;
-  background: var(--pricing-accent);
-  font-weight: 900;
-  font-variant-numeric: tabular-nums;
-}
-
-.reassurance-list h3 {
-  color: var(--pricing-ink);
-  font-size: 1.15rem;
-}
-
-.enterprise-section {
-  padding-block-start: 0;
-}
-
-.enterprise-card,
-.final-pricing-cta__inner {
-  display: grid;
-  gap: clamp(1.5rem, 4vw, 3rem);
-  border-radius: 2rem;
-  color: #FFFFFF;
-  background:
-    radial-gradient(circle at 18% 18%, rgba(255, 107, 107, 0.22), transparent 18rem),
-    linear-gradient(145deg, #0B1D33, var(--pricing-primary));
-  box-shadow: var(--pricing-shadow);
-}
-
-.enterprise-card {
-  grid-template-columns: 1.05fr 0.95fr auto;
-  align-items: center;
-  padding: clamp(1.5rem, 4vw, 3rem);
-}
-
-.enterprise-card h2,
-.enterprise-card p,
-.enterprise-card li,
-.final-pricing-cta h2,
-.final-pricing-cta p {
-  color: #FFFFFF;
-}
-
-.enterprise-card p,
-.enterprise-card li,
-.final-pricing-cta p {
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.enterprise-card ul {
-  display: grid;
-  gap: 0.55rem;
-}
-
-.faq-section {
-  background: linear-gradient(180deg, #FFFFFF, var(--pricing-surface));
-}
-
-.faq-list {
-  display: grid;
-  gap: 0.75rem;
-}
-
-details {
-  border: 1px solid rgba(26, 59, 102, 0.12);
-  border-radius: 1.25rem;
-  background: #FFFFFF;
-  box-shadow: 0 10px 30px rgba(26, 59, 102, 0.06);
-}
-
-summary {
-  min-height: 3.2rem;
-  cursor: pointer;
-  padding: 1rem 1.2rem;
-  color: var(--pricing-ink);
-  font-weight: 900;
-}
-
-details p {
-  padding: 0 1.2rem 1.2rem;
-  max-width: 74ch;
-}
-
-.final-pricing-cta {
-  padding-block: clamp(3rem, 6vw, 5.5rem);
-}
-
-.final-pricing-cta__inner {
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  padding: clamp(1.5rem, 4vw, 3.25rem);
-}
-
-@media (hover: hover) {
-  .plan-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 22px 58px rgba(26, 59, 102, 0.13);
-  }
-
-  .plan-card--recommended:hover {
-    transform: translateY(-0.85rem);
-  }
-}
-
-@media (max-width: 68rem) {
+@media (max-width: 64rem) {
   .pricing-hero__grid,
-  .reassurance-grid,
-  .enterprise-card,
-  .final-pricing-cta__inner {
+  .pricing-objections__grid {
     grid-template-columns: 1fr;
   }
 
@@ -962,7 +829,7 @@ details p {
 
   .plan-grid {
     grid-template-columns: 1fr;
-    max-width: 34rem;
+    max-width: 30rem;
     margin-inline: auto;
   }
 
@@ -976,22 +843,8 @@ details p {
     padding-block-start: 4rem;
   }
 
-  .pricing-hero h1 {
-    max-width: 100%;
-    font-size: clamp(2.45rem, 13vw, 3.8rem);
-  }
-
-  .pricing-hero__panel,
-  .enterprise-card,
-  .final-pricing-cta__inner,
-  .comparison-table {
-    border-radius: 1.45rem;
-  }
-
-  .pricing-hero__actions .pricing-btn,
-  .final-pricing-cta .pricing-btn,
-  .enterprise-card .pricing-btn,
-  .plan-card .pricing-btn {
+  .pricing-hero__actions,
+  .pricing-hero__actions :deep(.app-button) {
     width: 100%;
   }
 
@@ -1025,41 +878,15 @@ details p {
     clip: rect(0 0 0 0);
   }
 
-  .comparison-table tr {
-    margin-bottom: 0.9rem;
-    border: 1px solid rgba(26, 59, 102, 0.12);
-    border-radius: 1.2rem;
-    background: #FFFFFF;
-    box-shadow: 0 10px 30px rgba(26, 59, 102, 0.06);
-    overflow: hidden;
+  .pricing-objections__item,
+  .pricing-faq__item,
+  .pricing-cta__inner {
+    padding: var(--spacing-6);
   }
 
-  .comparison-table tbody th {
-    background: rgba(26, 59, 102, 0.06);
-  }
-
-  .comparison-table td {
-    display: grid;
-    grid-template-columns: minmax(7rem, 0.45fr) 1fr;
-    gap: 1rem;
-    align-items: start;
-  }
-
-  .comparison-table td::before {
-    content: attr(data-label);
-    color: var(--pricing-primary);
-    font-weight: 900;
-  }
-
-  .reassurance-list article {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .pricing-btn,
-  .plan-card {
-    transition-duration: 0.01ms;
+  .pricing-comparison__scroll {
+    margin-inline: calc(-1 * var(--spacing-4));
+    border-radius: var(--radius-2xl);
   }
 }
 </style>

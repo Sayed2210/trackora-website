@@ -167,10 +167,10 @@
     "error": "Review the highlighted fields before sending the message."
   },
   "pricing": {
-    "heading": "Trackora Plans & Pricing",
-    "subtitle": "Choose the plan that fits your business. Upgrade or downgrade at any time.",
-    "cta": "Request a demo",
-    "faqHeading": "Pricing FAQ",
+    "heading": "Trackora pricing by shipment and COD volume",
+    "subtitle": "Compare plans by monthly shipments, users, couriers, merchant portal, COD wallet, settlement, and support.",
+    "cta": "Talk to Trackora",
+    "faqHeading": "Pricing and operations FAQ",
     "loading": "Loading plans...",
     "emptyTitle": "No plans available",
     "emptyText": "We could not load pricing plans right now. Please try again later.",
