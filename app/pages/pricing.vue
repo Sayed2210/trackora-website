@@ -1458,5 +1458,10 @@ details p {
   .plan-card {
     transition-duration: 0.01ms;
   }
+
+  .pricing-comparison__scroll {
+    margin-inline: calc(-1 * var(--spacing-4));
+    border-radius: var(--radius-2xl);
+  }
 }
 </style>
