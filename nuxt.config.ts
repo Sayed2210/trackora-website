@@ -2,13 +2,13 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
 
-  modules: ['@nuxtjs/i18n', '@nuxt/content'],
+  modules: ['@nuxtjs/i18n', '@nuxt/content', '@nuxtjs/sitemap'],
 
   app: {
     head: {
       meta: [
         { charset: 'utf-8' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1, viewport-fit=cover' },
       ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
@@ -21,9 +21,11 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
 
   runtimeConfig: {
+    contactWebhookUrl: process.env.NUXT_CONTACT_WEBHOOK_URL || '',
     public: {
       apiBaseUrl: process.env.NUXT_PUBLIC_API_BASE_URL || '',
       enableMockTracking: process.env.NUXT_PUBLIC_ENABLE_MOCK_TRACKING === 'true',
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://trackora.com',
     },
   },
 
@@ -35,6 +37,10 @@ export default defineNuxtConfig({
     defaultLocale: 'ar',
     langDir: 'locales',
     strategy: 'prefix_except_default',
+  },
+
+  sitemap: {
+    autoI18n: true,
   },
 
   components: [

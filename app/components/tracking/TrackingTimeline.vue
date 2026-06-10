@@ -3,8 +3,9 @@
     <div class="tracking-timeline__header">
       <AppIcon3D name="courier-app" alt="" size="md" />
       <div>
-        <p class="tracking-timeline__kicker">{{ locale === 'ar' ? 'خطوات التوصيل' : 'Delivery steps' }}</p>
+        <p class="tracking-timeline__kicker">{{ t('track.deliverySteps') }}</p>
         <h3 class="tracking-timeline__title">{{ t('track.timeline') }}</h3>
+        <p class="tracking-timeline__intro">{{ t('track.timelineDescription') }}</p>
       </div>
     </div>
     <ol class="tracking-timeline__list">
@@ -28,8 +29,11 @@
         <div v-if="i < shipment.timeline.length - 1" class="tracking-timeline__line" :class="{ 'tracking-timeline__line--completed': entry.completed }" />
         <div class="tracking-timeline__content">
           <p class="tracking-timeline__status">{{ localizeStatus(entry.status) }}</p>
-          <p class="tracking-timeline__description">{{ entry.description }}</p>
-          <p v-if="entry.timestamp" class="tracking-timeline__time" dir="ltr">{{ formatDate(entry.timestamp) }}</p>
+          <p class="tracking-timeline__description">{{ localizeDescription(entry.status, entry.description) }}</p>
+          <p class="tracking-timeline__meta">
+            <span>{{ entry.completed ? t('track.completedStep') : t('track.pendingStep') }}</span>
+            <time v-if="entry.timestamp" :datetime="entry.timestamp" dir="ltr">{{ formatDate(entry.timestamp) }}</time>
+          </p>
         </div>
       </li>
     </ol>
@@ -63,10 +67,21 @@ function localizeStatus(status: string) {
 function formatDate(iso: string) {
   try {
     const d = new Date(iso)
-    return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
+    return new Intl.DateTimeFormat(locale.value, { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }).format(d)
   } catch {
     return iso
   }
+}
+
+function localizeDescription(status: string, fallback: string) {
+  const mockDescriptions: Record<string, { ar: string; en: string }> = {
+    'Order received': { ar: 'استلمت شركة الشحن بيانات الطلب من التاجر.', en: 'The shipping company received the order details from the merchant.' },
+    'Picked up by courier': { ar: 'استلم المندوب الشحنة وبدأت تدخل مسار التشغيل.', en: 'The courier picked up the shipment and it entered the delivery workflow.' },
+    'Arrived at distribution center': { ar: 'وصلت الشحنة إلى مركز التوزيع للمراجعة والإسناد.', en: 'The shipment reached the distribution center for review and assignment.' },
+    'Out for delivery today': { ar: 'الشحنة مع المندوب ومتجهة للعميل اليوم.', en: 'The shipment is with the courier and heading to the customer today.' },
+    'Delivered to customer': { ar: 'تم تسليم الشحنة للعميل.', en: 'The shipment was delivered to the customer.' },
+  }
+  return mockDescriptions[fallback]?.[locale.value as 'ar' | 'en'] || fallback || localizeStatus(status)
 }
 </script>
 
@@ -74,23 +89,11 @@ function formatDate(iso: string) {
 .tracking-timeline {
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(26, 59, 102, 0.08);
-  border-radius: var(--radius-4xl);
+  border: 1px solid rgba(27, 77, 92, 0.08);
+  border-radius: var(--radius-3xl);
   padding: var(--spacing-8);
   background: var(--color-surface);
   box-shadow: var(--shadow-card);
-}
-
-.tracking-timeline::before {
-  content: '';
-  position: absolute;
-  width: 14rem;
-  height: 14rem;
-  inset-block-start: -8rem;
-  inset-inline-start: -6rem;
-  border-radius: 50%;
-  background: rgba(59, 89, 152, 0.07);
-  pointer-events: none;
 }
 
 .tracking-timeline__header,
@@ -115,6 +118,14 @@ function formatDate(iso: string) {
 .tracking-timeline__title {
   margin-block-start: var(--spacing-1);
   font-size: var(--text-xl);
+}
+
+.tracking-timeline__intro {
+  max-width: 52ch;
+  margin-block-start: var(--spacing-2);
+  color: var(--color-text-secondary);
+  font-size: var(--text-sm);
+  line-height: 1.7;
 }
 
 .tracking-timeline__list {
@@ -168,7 +179,7 @@ function formatDate(iso: string) {
 
 .tracking-timeline__dot--pending {
   background: var(--color-bg-alt);
-  border: 2px solid rgba(26, 59, 102, 0.12);
+  border: 2px solid rgba(27, 77, 92, 0.12);
 }
 
 .tracking-timeline__line {
@@ -177,17 +188,17 @@ function formatDate(iso: string) {
   bottom: 0;
   inset-inline-start: calc(1.375rem - 1px);
   width: 2px;
-  background-color: rgba(26, 59, 102, 0.1);
+  background-color: rgba(27, 77, 92, 0.1);
 }
 
 .tracking-timeline__line--completed {
-  background: linear-gradient(180deg, var(--color-primary), rgba(59, 89, 152, 0.16));
+  background: linear-gradient(180deg, var(--color-primary), rgba(45, 110, 125, 0.16));
 }
 
 .tracking-timeline__content {
   min-width: 0;
   width: 100%;
-  border: 1px solid rgba(26, 59, 102, 0.08);
+  border: 1px solid rgba(27, 77, 92, 0.08);
   border-radius: var(--radius-2xl);
   padding: var(--spacing-5);
   background: rgba(255, 255, 255, 0.74);
@@ -196,17 +207,13 @@ function formatDate(iso: string) {
 }
 
 .tracking-timeline__step--active .tracking-timeline__content {
-  border-color: rgba(26, 59, 102, 0.16);
+  border-color: rgba(27, 77, 92, 0.16);
   box-shadow: var(--shadow-md);
-  background: linear-gradient(145deg, rgba(59, 89, 152, 0.07), rgba(255, 255, 255, 0.86));
+  background: linear-gradient(145deg, rgba(45, 110, 125, 0.07), rgba(255, 255, 255, 0.86));
 }
 
 .tracking-timeline__step--pending .tracking-timeline__content {
   background: rgba(245, 245, 245, 0.68);
-}
-
-.tracking-timeline__content {
-  min-width: 0;
 }
 
 .tracking-timeline__status {
@@ -226,8 +233,25 @@ function formatDate(iso: string) {
   line-height: 1.75;
 }
 
-.tracking-timeline__time {
+.tracking-timeline__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2) var(--spacing-4);
+  align-items: center;
   font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+}
+
+.tracking-timeline__meta span {
+  border-radius: var(--radius-full);
+  padding: 0.2rem 0.55rem;
+  background: rgba(27, 77, 92, 0.07);
+  color: var(--color-primary);
+  font-weight: 800;
+}
+
+.tracking-timeline__step--pending .tracking-timeline__meta span {
+  background: rgba(102, 102, 102, 0.08);
   color: var(--color-text-secondary);
 }
 
@@ -242,6 +266,7 @@ function formatDate(iso: string) {
 
   .tracking-timeline__step {
     gap: var(--spacing-3);
+    padding-block-end: var(--spacing-4);
   }
 
   .tracking-timeline__marker {
@@ -260,6 +285,7 @@ function formatDate(iso: string) {
 
   .tracking-timeline__content {
     padding: var(--spacing-4);
+    border-radius: var(--radius-xl);
   }
 }
 

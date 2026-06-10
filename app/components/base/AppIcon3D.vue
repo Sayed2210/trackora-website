@@ -48,7 +48,7 @@ const iconSrc = computed(() => `/icons/trackora-3d/${resolvedName.value}.svg`)
   width: var(--icon-box-size);
   height: var(--icon-box-size);
   flex-shrink: 0;
-  border: 1px solid rgba(26, 59, 102, 0.08);
+  border: 1px solid rgba(27, 77, 92, 0.08);
   border-radius: 30%;
   background:
     radial-gradient(circle at 26% 18%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 36%),
@@ -62,7 +62,7 @@ const iconSrc = computed(() => `/icons/trackora-3d/${resolvedName.value}.svg`)
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(59, 89, 152, 0.08), rgba(255, 107, 107, 0.08));
+  background: linear-gradient(135deg, rgba(45, 110, 125, 0.08), rgba(232, 168, 56, 0.08));
   pointer-events: none;
 }
 
@@ -77,7 +77,7 @@ const iconSrc = computed(() => `/icons/trackora-3d/${resolvedName.value}.svg`)
 
 .app-icon-3d:hover {
   transform: translateY(-4px);
-  border-color: rgba(59, 89, 152, 0.18);
+  border-color: rgba(45, 110, 125, 0.18);
   box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
@@ -88,7 +88,7 @@ const iconSrc = computed(() => `/icons/trackora-3d/${resolvedName.value}.svg`)
   height: 112%;
   object-fit: contain;
   pointer-events: none;
-  filter: drop-shadow(0 0.45rem 0.8rem rgba(26, 59, 102, 0.12));
+  filter: drop-shadow(0 0.45rem 0.8rem rgba(27, 77, 92, 0.12));
 }
 
 .app-icon-3d--sm {

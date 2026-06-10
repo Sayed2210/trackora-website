@@ -28,13 +28,17 @@ The redesign MUST preserve all existing public functionality, routes, API behavi
 
 The redesign MUST use these Trackora tokens as the source of truth:
 
-- **Primary**: `#1A3B66`
-- **Primary Light**: `#3B5998`
-- **Accent**: `#FF6B6B`
+- **Primary**: `#1B4D5C`
+- **Primary Light**: `#2D6E7D`
+- **Primary Dark**: `#0F3340`
+- **Accent**: `#E8A838`
+- **Accent Hover**: `#D99A24`
+- **Accent Light**: `#FFF7E3`
+- **Accent Contrast**: `#4C3508`
 - **Text**: `#333333`
 - **Text Secondary**: `#666666`
 - **Background**: `#FFFFFF`
-- **Surface**: `#F5F5F5`
+- **Surface**: `#F7F9FA`
 - **Border**: `#E0E0E0`
 - **Success**: `#22C55E`
 - **Warning**: `#F59E0B`
