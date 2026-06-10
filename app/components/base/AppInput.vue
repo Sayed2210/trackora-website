@@ -7,6 +7,8 @@
       :value="modelValue"
       :placeholder="placeholder"
       :disabled="disabled"
+      :inputmode="inputmode"
+      :autocomplete="autocomplete"
       :aria-invalid="!!error"
       :aria-describedby="describedBy"
       class="app-input__field"
@@ -30,6 +32,8 @@ const props = withDefaults(defineProps<{
   hint?: string
   error?: string
   disabled?: boolean
+  inputmode?: 'none' | 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url'
+  autocomplete?: string
 }>(), {
   type: 'text',
   modelValue: '',
@@ -37,6 +41,8 @@ const props = withDefaults(defineProps<{
   hint: '',
   error: '',
   disabled: false,
+  inputmode: 'text',
+  autocomplete: undefined,
 })
 
 defineEmits<{ 'update:modelValue': [value: string] }>()
@@ -73,14 +79,14 @@ const describedBy = computed(() => {
 }
 
 .app-input__field::placeholder {
-  color: var(--color-text-secondary);
-  opacity: 0.6;
+  color: #555555;
+  opacity: 1;
 }
 
 .app-input__field:focus-visible {
   outline: none;
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 4px rgba(26, 59, 102, 0.12);
+  box-shadow: 0 0 0 4px rgba(27, 77, 92, 0.12);
 }
 
 .app-input__field:disabled {

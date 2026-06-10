@@ -10,8 +10,9 @@
     "requestDemo": "Request Demo",
     "login": "Log In",
     "loginMerchant": "Merchant Login",
+    "loginShippingCompany": "Shipping Company Login",
     "loginCourier": "Courier Login",
-    "loginAdmin": "Admin Login"
+    "loginAdmin": "System Admin Login"
   },
   "hero": {
     "eyebrow": "Shipping Operating System",
@@ -58,23 +59,33 @@
   "footer": {
     "brand": "Trackora",
     "copyright": "All rights reserved",
+    "description": "Trackora is an Arabic-first platform for shipments, dispatch, customer tracking, and COD wallets for logistics operators and merchants.",
+    "product": "Product",
+    "company": "Company",
+    "ctaTitle": "Run shipments and COD from one operating record",
+    "ctaText": "Book a demo shaped around your shipment volume and delivery zones.",
     "features": "Features",
     "solutions": "Solutions",
     "pricing": "Pricing",
     "blog": "Blog",
     "contact": "Contact",
-    "trackShipment": "Track Shipment"
+    "trackShipment": "Track Shipment",
+    "requestDemo": "Request Demo",
+    "shippingCompanies": "Shipping Companies",
+    "ecommerceStores": "E-commerce Stores",
+    "socialSellers": "Social Sellers"
   },
   "track": {
-    "heading": "Track Your Shipment",
-    "subtitle": "Enter your tracking number to check delivery status.",
-    "inputPlaceholder": "Tracking number",
-    "submitButton": "Track",
+    "heading": "See where your shipment is without a status call",
+    "subtitle": "Enter the tracking number to see the current status, latest update, and next step recorded by the shipping company.",
+    "inputPlaceholder": "TRK-240502-A1B2",
+    "submitButton": "Show shipment status",
     "mockNotice": "This is sample data for demonstration purposes only.",
     "exampleFormat": "Example: TRK-240502-A1B2",
-    "privacyNote": "Your data is protected — we never share your tracking number with third parties.",
-    "emptyInputError": "Please enter a tracking number",
-    "resultTitle": "Tracking Result",
+    "privacyNote": "The tracking page shows shipment status and only the details needed to identify it. We do not show a full address or unmasked phone number.",
+    "emptyInputError": "Enter the tracking number you received from the merchant or shipping company.",
+    "formatError": "Tracking numbers need at least 5 letters or digits. Example: TRK-240502-A1B2",
+    "resultTitle": "Shipment status record",
     "trackingNumber": "Tracking number",
     "status": "Status",
     "merchant": "Merchant",
@@ -83,12 +94,33 @@
     "phone": "Phone",
     "timeline": "Shipment timeline",
     "notFound": "Shipment not found",
-    "notFoundDescription": "Please double-check the tracking number and try again. If the problem persists, contact the merchant.",
-    "errorTitle": "Something went wrong",
-    "errorDescription": "We could not fetch tracking data right now. Please try again later.",
+    "notFoundDescription": "Check the number exactly as it appears in the merchant message. If it is correct, the shipping company may not have registered the shipment yet.",
+    "errorTitle": "Could not fetch shipment status",
+    "errorDescription": "We could not reach the tracking service right now. Try again, or return to the link the merchant sent later.",
     "retry": "Retry",
     "backToTrack": "Track another shipment",
-    "loading": "Searching for shipment..."
+    "editTrackingNumber": "Correct tracking number",
+    "updateTracking": "Update tracking",
+    "retryHint": "Edit the number or search for the same shipment again.",
+    "recoveryTitle": "Quick checks before the next attempt",
+    "recoveryCheckNumber": "Confirm the tracking number exactly as the merchant or shipping company sent it.",
+    "recoveryCheckFormat": "Check the number format, for example: TRK-240502-A1B2.",
+    "recoveryNewShipment": "If the shipment is new, wait a little and try again.",
+    "recoveryContact": "Contact the merchant or support if the problem continues.",
+    "loading": "Checking the shipment record...",
+    "lookupKicker": "Public customer tracking",
+    "lookupCardTitle": "Enter the number exactly as it appears in the shipping message",
+    "lookupProofStatus": "Latest recorded status",
+    "lookupProofPrivacy": "Masked phone",
+    "lookupProofSupport": "Enough detail for support",
+    "resultKicker": "Secure shipment update",
+    "deliverySteps": "Delivery steps",
+    "lastKnownStep": "Last recorded step",
+    "nextStep": "Next step",
+    "completedStep": "Step recorded",
+    "pendingStep": "Waiting for update",
+    "timelineDescription": "Each update appears as the shipping company records it from the warehouse or courier.",
+    "customerPrivacy": "We protect customer data by masking the phone number and showing only the details needed for tracking."
   },
   "trackingStatus": {
     "PENDING": "Pending",
@@ -102,32 +134,37 @@
     "CANCELLED": "Cancelled"
   },
   "requestDemo": {
-    "heading": "Request a Demo",
-    "subtitle": "Tell us about your business and we will contact you within 24 hours.",
+    "heading": "Book a demo shaped around your operation",
+    "subtitle": "Trackora helps organize shipments, couriers, COD, tracking, dispatch, and reports from one operating record.",
     "fields": {
       "name": "Name",
-      "company": "Company name",
+      "company": "Company / store name",
       "email": "Email",
       "phone": "Phone number",
       "businessType": "Business type",
+      "monthlyVolume": "Monthly shipment volume",
+      "plan": "Interested plan",
+      "problem": "Main problem to solve",
       "message": "Additional message"
     },
-    "submit": "Submit Request",
-    "success": "Your request has been submitted successfully! We will contact you soon.",
-    "error": "An error occurred during submission. Please try again later."
+    "submit": "Send demo request",
+    "success": "Demo request recorded. We will review your operation size and follow up with clear next steps.",
+    "error": "Review the highlighted fields before sending the request."
   },
   "contact": {
-    "heading": "Contact Us",
-    "subtitle": "We are not far away. Send us a message and we will reply as soon as possible.",
+    "heading": "Contact the Trackora team",
+    "subtitle": "If you run a shipping company, online store, or courier team and need better shipment and COD control, send us a message and we will help you choose the right path.",
     "fields": {
       "name": "Name",
-      "email": "Email",
-      "subject": "Subject",
+      "company": "Company / store name",
+      "phone": "Phone number",
+      "email": "Email address",
+      "inquiryType": "Inquiry type",
       "message": "Message"
     },
-    "submit": "Send",
-    "success": "Your message has been sent successfully!",
-    "error": "An error occurred during submission. Please try again later."
+    "submit": "Send contact message",
+    "success": "We received your message. We will review the inquiry type and operating context, then route it to the right team.",
+    "error": "Review the highlighted fields before sending the message."
   },
   "pricing": {
     "heading": "Trackora pricing by shipment and COD volume",
@@ -169,5 +206,29 @@
       "heading": "Solutions for Social Sellers",
       "subtitle": "Upload orders easily and track delivery and COD collection without complexity."
     }
+  },
+  "seo": {
+    "trackPrivacyNote": "The tracking page shows shipment status and only the details needed to identify it."
+  },
+  "a11y": {
+    "switchToEnglish": "Switch to English",
+    "switchToArabic": "Switch to Arabic",
+    "mainNav": "Main navigation",
+    "footerNav": "Footer links",
+    "homeLink": "Trackora home",
+    "contactCta": "Contact invitation",
+    "keyActions": "Key actions",
+    "operationsSummary": "Operations summary",
+    "operationsConsole": "Trackora operating console",
+    "operationsMetrics": "Operations metrics",
+    "connectionMap": "Trackora operations connection map",
+    "articleContent": "Article content",
+    "articleToc": "Article table of contents",
+    "articleCategories": "Article categories",
+    "keyTakeaways": "Key takeaways",
+    "solutionActions": "Solution actions",
+    "adoptionQuestions": "Adoption questions",
+    "featurePreview": "Operational feature preview",
+    "featurePageActions": "Feature page actions"
   }
 }

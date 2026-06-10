@@ -32,7 +32,7 @@ useScrollReveal()
   width: 50rem;
   height: 50rem;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 107, 107, 0.06), transparent 70%);
+  background: radial-gradient(circle, rgba(232, 168, 56, 0.06), transparent 70%);
   top: -25rem;
   inset-inline-end: -12rem;
   pointer-events: none;
@@ -44,7 +44,7 @@ useScrollReveal()
   width: 40rem;
   height: 40rem;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(59, 89, 152, 0.08), transparent 65%);
+  background: radial-gradient(circle, rgba(45, 110, 125, 0.08), transparent 65%);
   bottom: -20rem;
   inset-inline-start: -8rem;
   pointer-events: none;

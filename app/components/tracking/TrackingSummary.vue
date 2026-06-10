@@ -24,7 +24,11 @@
       </div>
       <div v-if="shipment.estimatedDelivery" class="tracking-summary__row">
         <dt class="tracking-summary__label">{{ t('track.estimatedDelivery') }}</dt>
-        <dd class="tracking-summary__value">{{ shipment.estimatedDelivery }}</dd>
+        <dd class="tracking-summary__value">{{ formatDelivery(shipment.estimatedDelivery) }}</dd>
+      </div>
+      <div v-if="shipment.customerName" class="tracking-summary__row">
+        <dt class="tracking-summary__label">{{ t('track.customer') }}</dt>
+        <dd class="tracking-summary__value">{{ shipment.customerName }}</dd>
       </div>
       <div v-if="shipment.customerPhoneMasked" class="tracking-summary__row">
         <dt class="tracking-summary__label">{{ t('track.phone') }}</dt>
@@ -34,7 +38,7 @@
 
     <div class="tracking-summary__privacy">
       <AppIcon3D name="fraud-detection" alt="" size="sm" />
-      <p>{{ locale === 'ar' ? 'نعرض فقط البيانات اللازمة للتتبّع. أي رقم هاتف يظهر هنا يكون مخفياً لحماية الخصوصية.' : 'We only show the details needed for tracking. Any phone number shown here is masked for privacy.' }}</p>
+      <p>{{ t('track.customerPrivacy') }}</p>
     </div>
   </div>
 </template>
@@ -67,20 +71,24 @@ const localizedStatus = computed(() => {
 })
 
 const statusVariant = computed(() => STATUS_VARIANTS[props.shipment.status] ?? 'default')
+
+function formatDelivery(value: string) {
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return value
+  return new Intl.DateTimeFormat(locale.value, { year: 'numeric', month: 'short', day: 'numeric' }).format(date)
+}
 </script>
 
 <style scoped>
 .tracking-summary {
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(26, 59, 102, 0.08);
-  border-radius: var(--radius-4xl);
+  border: 1px solid rgba(27, 77, 92, 0.08);
+  border-radius: var(--radius-3xl);
   padding: var(--spacing-8);
-  background:
-    radial-gradient(circle at 16% 0%, rgba(59, 89, 152, 0.1), transparent 34%),
-    var(--glass-bg);
-  box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(18px);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  height: 100%;
 }
 
 .tracking-summary::before {
@@ -91,7 +99,7 @@ const statusVariant = computed(() => STATUS_VARIANTS[props.shipment.status] ?? '
   inset-block-start: -8rem;
   inset-inline-end: -7rem;
   border-radius: 50%;
-  background: rgba(59, 89, 152, 0.08);
+  background: rgba(45, 110, 125, 0.08);
   pointer-events: none;
 }
 
@@ -134,7 +142,7 @@ const statusVariant = computed(() => STATUS_VARIANTS[props.shipment.status] ?? '
 
 .tracking-summary__details {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
   gap: var(--spacing-4);
 }
 
@@ -142,15 +150,14 @@ const statusVariant = computed(() => STATUS_VARIANTS[props.shipment.status] ?? '
   display: flex;
   flex-direction: column;
   gap: var(--spacing-2);
-  border: 1px solid rgba(26, 59, 102, 0.08);
-  border-radius: var(--radius-2xl);
-  padding: var(--spacing-5);
-  background: rgba(255, 255, 255, 0.76);
-  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(27, 77, 92, 0.08);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-4);
+  background: var(--color-bg-alt);
 }
 
 .tracking-summary__row--status {
-  background: linear-gradient(145deg, rgba(59, 89, 152, 0.08), rgba(255, 255, 255, 0.82));
+  background: linear-gradient(145deg, rgba(45, 110, 125, 0.08), rgba(255, 255, 255, 0.82));
 }
 
 .tracking-summary__label {
@@ -170,10 +177,8 @@ const statusVariant = computed(() => STATUS_VARIANTS[props.shipment.status] ?? '
   align-items: center;
   gap: var(--spacing-4);
   margin-block-start: var(--spacing-6);
-  border: 1px solid rgba(26, 59, 102, 0.08);
-  border-radius: var(--radius-2xl);
-  padding: var(--spacing-4);
-  background: rgba(255, 255, 255, 0.66);
+  border-top: 1px solid rgba(27, 77, 92, 0.08);
+  padding-block-start: var(--spacing-4);
 }
 
 .tracking-summary__privacy p {

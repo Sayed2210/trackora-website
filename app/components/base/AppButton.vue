@@ -74,11 +74,11 @@ withDefaults(defineProps<{
 .app-button--primary {
   background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
   color: var(--color-text-on-primary);
-  box-shadow: 0 12px 32px rgba(26, 59, 102, 0.3);
+  box-shadow: 0 12px 32px rgba(27, 77, 92, 0.3);
 }
 
 .app-button--primary:hover:not(:disabled) {
-  box-shadow: 0 16px 40px rgba(26, 59, 102, 0.4);
+  box-shadow: 0 16px 40px rgba(27, 77, 92, 0.4);
 }
 
 .app-button--secondary {
@@ -96,13 +96,13 @@ withDefaults(defineProps<{
 .app-button--outline {
   background-color: transparent;
   color: var(--color-primary);
-  border-color: rgba(26, 59, 102, 0.28);
+  border-color: rgba(27, 77, 92, 0.28);
 }
 
 .app-button--outline:hover:not(:disabled) {
   background-color: var(--color-primary);
   color: var(--color-text-light);
-  box-shadow: 0 8px 24px rgba(26, 59, 102, 0.2);
+  box-shadow: 0 8px 24px rgba(27, 77, 92, 0.2);
 }
 
 .app-button--ghost {
@@ -117,13 +117,13 @@ withDefaults(defineProps<{
 .app-button--glass {
   background: var(--glass-bg);
   color: var(--color-primary);
-  border-color: rgba(26, 59, 102, 0.1);
+  border-color: rgba(27, 77, 92, 0.1);
   box-shadow: var(--shadow-card);
   backdrop-filter: blur(18px);
 }
 
 .app-button--glass:hover:not(:disabled) {
-  border-color: rgba(26, 59, 102, 0.2);
+  border-color: rgba(27, 77, 92, 0.2);
   box-shadow: var(--shadow-md);
 }
 

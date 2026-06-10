@@ -16,8 +16,8 @@ const props = withDefaults(defineProps<{
 })
 
 const gradients: Record<string, string> = {
-  primary: 'linear-gradient(145deg, #3B5998 0%, #1A3B66 100%)',
-  accent: 'linear-gradient(145deg, #FF8E53 0%, #FF6B6B 100%)',
+  primary: 'linear-gradient(145deg, #2D6E7D 0%, #1B4D5C 100%)',
+  accent: 'linear-gradient(145deg, #F0B84F 0%, #E8A838 100%)',
   success: 'linear-gradient(145deg, #34D399 0%, #16A34A 100%)',
   info: 'linear-gradient(145deg, #60A5FA 0%, #3B82F6 100%)',
   warning: 'linear-gradient(145deg, #FBBF24 0%, #F59E0B 100%)',
@@ -25,8 +25,8 @@ const gradients: Record<string, string> = {
 }
 
 const shadows: Record<string, string> = {
-  primary: '0 6px 20px rgba(26, 59, 102, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25)',
-  accent: '0 6px 20px rgba(255, 107, 107, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.25)',
+  primary: '0 6px 20px rgba(27, 77, 92, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25)',
+  accent: '0 6px 20px rgba(232, 168, 56, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.25)',
   success: '0 6px 20px rgba(22, 163, 74, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.25)',
   info: '0 6px 20px rgba(59, 130, 246, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.25)',
   warning: '0 6px 20px rgba(245, 158, 11, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.25)',
