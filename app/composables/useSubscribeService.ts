@@ -1,34 +1,44 @@
-export interface RequestDemoPayload {
-  name: string
-  companyName: string
-  phone: string
-  email?: string
-  businessType: string
-  monthlyShipments?: string
-  message?: string
-  interestedPlanSlug?: string
+export interface SubscribePayload {
+  company: {
+    name: string
+    slug: string
+    businessType: string
+  }
+  owner: {
+    name: string
+    phone: string
+    password: string
+    email?: string
+  }
+  planSlug: string
 }
 
-export interface RequestDemoResponse {
-  [key: string]: unknown
+export interface SubscribeResponse {
+  tenant?: unknown
+  subscription?: unknown
+  plan?: unknown
+  user?: unknown
+  accessToken: string
+  refreshToken: string
+  expiresIn?: number
 }
 
-export type RequestDemoErrorCode = 'validation' | 'network' | 'generic'
+export type SubscribeErrorCode = 'conflict' | 'validation' | 'network' | 'generic'
 
-export interface RequestDemoFieldErrors {
-  name?: string
+export interface SubscribeFieldErrors {
   companyName?: string
-  phone?: string
-  email?: string
+  companySlug?: string
   businessType?: string
-  monthlyShipments?: string
-  message?: string
-  interestedPlanSlug?: string
+  ownerName?: string
+  ownerPhone?: string
+  ownerPassword?: string
+  ownerEmail?: string
+  planSlug?: string
   [key: string]: string | undefined
 }
 
 function buildEndpoint(baseUrl: string): string {
-  return `${baseUrl.replace(/\/+$/, '')}/public/request-demo`
+  return `${baseUrl.replace(/\/+$/, '')}/public/subscribe`
 }
 
 function extractStatus(err: unknown): number | undefined {
@@ -53,23 +63,26 @@ function extractData(err: unknown): Record<string, unknown> | undefined {
   return undefined
 }
 
-function normalizeFieldErrors(raw: unknown): RequestDemoFieldErrors {
-  const out: RequestDemoFieldErrors = {}
+function normalizeFieldErrors(raw: unknown): SubscribeFieldErrors {
+  const out: SubscribeFieldErrors = {}
   if (!raw || typeof raw !== 'object') return out
   const src = raw as Record<string, unknown>
-  const map: Record<string, keyof RequestDemoFieldErrors> = {
-    'name': 'name',
-    'companyName': 'companyName',
+  const map: Record<string, keyof SubscribeFieldErrors> = {
     'company.name': 'companyName',
-    'company': 'companyName',
-    'phone': 'phone',
-    'email': 'email',
+    'companyName': 'companyName',
+    'company.slug': 'companySlug',
+    'companySlug': 'companySlug',
+    'company.businessType': 'businessType',
     'businessType': 'businessType',
-    'monthlyShipments': 'monthlyShipments',
-    'message': 'message',
-    'interestedPlanSlug': 'interestedPlanSlug',
-    'planSlug': 'interestedPlanSlug',
-    'plan': 'interestedPlanSlug',
+    'owner.name': 'ownerName',
+    'ownerName': 'ownerName',
+    'owner.phone': 'ownerPhone',
+    'ownerPhone': 'ownerPhone',
+    'owner.password': 'ownerPassword',
+    'ownerPassword': 'ownerPassword',
+    'owner.email': 'ownerEmail',
+    'ownerEmail': 'ownerEmail',
+    'planSlug': 'planSlug',
   }
   for (const key of Object.keys(src)) {
     const target = map[key]
@@ -84,14 +97,14 @@ function normalizeFieldErrors(raw: unknown): RequestDemoFieldErrors {
   return out
 }
 
-export function useRequestDemoService() {
+export function useSubscribeService() {
   const config = useRuntimeConfig()
   const loading = ref(false)
   const success = ref(false)
-  const data = ref<RequestDemoResponse | null>(null)
+  const data = ref<SubscribeResponse | null>(null)
   const error = ref<string | null>(null)
-  const errorCode = ref<RequestDemoErrorCode | null>(null)
-  const fieldErrors = ref<RequestDemoFieldErrors>({})
+  const errorCode = ref<SubscribeErrorCode | null>(null)
+  const fieldErrors = ref<SubscribeFieldErrors>({})
 
   function reset() {
     loading.value = false
@@ -102,7 +115,7 @@ export function useRequestDemoService() {
     fieldErrors.value = {}
   }
 
-  async function submit(payload: RequestDemoPayload): Promise<RequestDemoResponse | null> {
+  async function submit(payload: SubscribePayload): Promise<SubscribeResponse | null> {
     const baseUrl = config.public.apiBaseUrl as string
 
     loading.value = true
@@ -122,7 +135,7 @@ export function useRequestDemoService() {
     const endpoint = buildEndpoint(baseUrl)
 
     try {
-      const response = await $fetch<RequestDemoResponse>(endpoint, {
+      const response = await $fetch<SubscribeResponse>(endpoint, {
         method: 'POST',
         body: payload,
         timeout: 15000,
@@ -135,7 +148,13 @@ export function useRequestDemoService() {
       const status = extractStatus(err)
       const body = extractData(err)
 
-      if (status === 400 || status === 422) {
+      if (status === 409) {
+        errorCode.value = 'conflict'
+        error.value =
+          (body && typeof body.message === 'string' && body.message) ||
+          (body && typeof body.error === 'string' && body.error) ||
+          'conflict'
+      } else if (status === 400 || status === 422) {
         errorCode.value = 'validation'
         fieldErrors.value = normalizeFieldErrors(body?.fieldErrors ?? body?.errors ?? body)
         error.value =

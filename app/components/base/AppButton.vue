@@ -1,6 +1,6 @@
 <template>
   <component
-    :is="to ? 'NuxtLink' : 'button'"
+    :is="to ? NuxtLinkComponent : 'button'"
     :to="to || undefined"
     :type="to ? undefined : type"
     :class="['app-button', `app-button--${variant}`, { 'app-button--loading': loading, 'app-button--block': block, 'app-button--lg': size === 'lg' }]"
@@ -11,6 +11,8 @@
 </template>
 
 <script setup lang="ts">
+const NuxtLinkComponent = resolveComponent('NuxtLink')
+
 withDefaults(defineProps<{
   to?: string
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'glass'
