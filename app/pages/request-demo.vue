@@ -279,7 +279,7 @@
                   <div class="field">
                     <label for="demo-volume"
                       >{{ copy.fields.monthlyVolume.label }}
-                      <span>{{ copy.form.required }}</span></label
+                      <small>{{ copy.form.optional }}</small></label
                     >
                     <select
                       id="demo-volume"
@@ -486,6 +486,8 @@
 </template>
 
 <script setup lang="ts">
+import type { RequestDemoFieldErrors, RequestDemoPayload } from '~/composables/useRequestDemoService'
+
 type PlanValue = "starter" | "growth" | "scale";
 type FormKey =
   | "name"
@@ -500,11 +502,19 @@ const route = useRoute();
 const localePath = useLocalePath();
 const { setSeo } = useLocaleSeo();
 
+const {
+  loading,
+  success,
+  error: demoError,
+  errorCode,
+  fieldErrors: serverFieldErrors,
+  submit: submitDemoRequest,
+  reset: resetDemoService,
+} = useRequestDemoService();
+
 const isArabic = computed(() => locale.value === "ar");
 const formEl = ref<HTMLFormElement | null>(null);
 const successEl = ref<HTMLElement | null>(null);
-const loading = ref(false);
-const success = ref(false);
 const submitError = ref("");
 const errors = reactive<Record<FormKey, string>>({
   name: "",
@@ -572,13 +582,13 @@ const pageCopy = {
       kicker: "بيانات التشغيل",
       title: "املأ البيانات الأساسية، وسنرتب عرضا على سيناريو قريب من يومك",
       requiredNote:
-        "الحقول المطلوبة موضحة بعلامة *، ولا يوجد إرسال فعلي لخادم في هذه المرحلة.",
+        "الحقول المطلوبة موضحة بعلامة *. تُرسل البيانات إلى خادم Trackora الرسمي لترتيب عرض توضيحي.",
       required: "*",
       optional: "اختياري",
       submit: "إرسال طلب العرض",
       backToPricing: "العودة للأسعار",
       privacy:
-        "سنستخدم البيانات لترتيب العرض فقط. لن يتم الاتصال بواجهة خلفية حاليا.",
+        "سنستخدم هذه البيانات لترتيب العرض التوضيحي فقط. لن يتم إنشاء حساب أو جلسة دخول.",
     },
     groups: {
       contact: "بيانات التواصل",
@@ -619,10 +629,10 @@ const pageCopy = {
     },
     options: {
       businessTypes: [
-        { value: "shipping-company", label: "شركة شحن" },
-        { value: "ecommerce-store", label: "متجر إلكتروني" },
-        { value: "social-seller", label: "سوشيال سيلر" },
-        { value: "other", label: "أخرى" },
+        { value: "Shipping Company", label: "شركة شحن" },
+        { value: "E-commerce", label: "متجر إلكتروني" },
+        { value: "Social Seller", label: "سوشيال سيلر" },
+        { value: "Other", label: "أخرى" },
       ],
       monthlyVolumes: [
         { value: "lt-500", label: "أقل من 500" },
@@ -669,8 +679,7 @@ const pageCopy = {
     states: {
       loading: "جار إرسال الطلب...",
       successTitle: "تم تسجيل طلب العرض",
-      successText:
-        "سنراجع حجم التشغيل والخطة المهتم بها، ثم نتواصل معك بخطوات العرض المناسبة.",
+      successText: "تم استلام طلبك، سنتواصل معك قريبًا.",
       successSteps: [
         "استلمنا طلبك",
         "سنراجع حجم التشغيل",
@@ -679,6 +688,10 @@ const pageCopy = {
       ],
       sendAnother: "إرسال طلب آخر",
       errorTitle: "لم يكتمل الإرسال",
+      validationFailed: "راجع الحقول الموضحة قبل إرسال الطلب.",
+      network: "تعذّر الاتصال بالخادم. تأكد من الإنترنت ثم حاول مرة أخرى.",
+      generic: "حدث خطأ غير متوقع أثناء إرسال الطلب. حاول مرة أخرى.",
+      apiMissing: "إعداد الخادم غير متوفر حالياً. حاول لاحقاً.",
     },
     next: {
       title: "ماذا يحدث بعد إرسال الطلب؟",
@@ -802,13 +815,13 @@ const pageCopy = {
       title:
         "Share the basics, and we will shape the demo around a real day in your operation",
       requiredNote:
-        "Required fields are marked with *. This page does not send data to a backend yet.",
+        "Required fields are marked with *. Your details are sent to the official Trackora server to arrange a demo.",
       required: "*",
       optional: "Optional",
       submit: "Send demo request",
       backToPricing: "Return to pricing",
       privacy:
-        "We will use these details only to prepare the demo. No backend endpoint is called right now.",
+        "We use these details only to arrange your demo. No account or session is created.",
     },
     groups: {
       contact: "Contact details",
@@ -852,10 +865,10 @@ const pageCopy = {
     },
     options: {
       businessTypes: [
-        { value: "shipping-company", label: "Shipping company" },
-        { value: "ecommerce-store", label: "E-commerce store" },
-        { value: "social-seller", label: "Social seller" },
-        { value: "other", label: "Other" },
+        { value: "Shipping Company", label: "Shipping company" },
+        { value: "E-commerce", label: "E-commerce store" },
+        { value: "Social Seller", label: "Social seller" },
+        { value: "Other", label: "Other" },
       ],
       monthlyVolumes: [
         { value: "lt-500", label: "Less than 500" },
@@ -903,7 +916,7 @@ const pageCopy = {
       loading: "Sending request...",
       successTitle: "Demo request recorded",
       successText:
-        "We will review your operating volume and selected plan, then follow up with the right demo steps.",
+        "Your demo request has been received. We will contact you soon.",
       successSteps: [
         "We received your request",
         "We will review the operating volume",
@@ -912,6 +925,10 @@ const pageCopy = {
       ],
       sendAnother: "Send another request",
       errorTitle: "Request was not sent",
+      validationFailed: "Review the highlighted fields before sending the request.",
+      network: "Could not reach the server. Check your connection and try again.",
+      generic: "An unexpected error occurred while sending the request. Try again.",
+      apiMissing: "Server configuration is unavailable right now. Try again later.",
     },
     next: {
       title: "What happens after you send the request?",
@@ -989,15 +1006,18 @@ const pageCopy = {
 } as const;
 
 const copy = computed(() => (isArabic.value ? pageCopy.ar : pageCopy.en));
-const selectedPlanFromQuery = computed<PlanValue | null>(() => {
+const selectedPlanFromQuery = computed<string | null>(() => {
   const plan = Array.isArray(route.query.plan)
     ? route.query.plan[0]
     : route.query.plan;
-  return plan === "starter" || plan === "growth" ? plan : null;
+  return typeof plan === "string" && plan.trim() ? plan.trim() : null;
 });
 const planContext = computed(() => {
   const plan = selectedPlanFromQuery.value;
-  return plan ? copy.value.planContext[plan] : copy.value.planContext.generic;
+  if (plan === "starter" || plan === "growth") {
+    return copy.value.planContext[plan];
+  }
+  return copy.value.planContext.generic;
 });
 
 watchEffect(() => {
@@ -1007,16 +1027,22 @@ watchEffect(() => {
 watch(
   selectedPlanFromQuery,
   (plan) => {
-    if (plan) {
+    if (plan === "starter" || plan === "growth" || plan === "scale") {
       form.plan = plan;
     }
   },
   { immediate: true },
 );
 
+function normalizeEgyptianPhone(value: string): string {
+  let normalized = value.replace(/[\s()-]/g, "");
+  normalized = normalized.replace(/^(\+20|20)/, "");
+  return normalized;
+}
+
 function isValidEgyptianPhone(value: string) {
-  const normalized = value.replace(/[\s()-]/g, "");
-  return /^(?:\+?20|0)?1[0125]\d{8}$/.test(normalized);
+  const normalized = normalizeEgyptianPhone(value);
+  return /^01[0125]\d{8}$/.test(normalized);
 }
 
 function isValidEmail(value: string) {
@@ -1035,8 +1061,6 @@ function validateField(key: FormKey) {
     errors.email = copy.value.validation.email;
   if (key === "businessType" && !form.businessType)
     errors.businessType = copy.value.validation.businessType;
-  if (key === "monthlyVolume" && !form.monthlyVolume)
-    errors.monthlyVolume = copy.value.validation.monthlyVolume;
 
   return !errors[key];
 }
@@ -1056,9 +1080,62 @@ function validateForm() {
   );
 }
 
+function buildMessage(): string {
+  const base = form.message.trim();
+  if (!form.problems.length) return base;
+  const labels = form.problems
+    .map(
+      (value) =>
+        copy.value.options.problems.find((p) => p.value === value)?.label ??
+        value,
+    )
+    .join(", ");
+  const prefix = isArabic.value ? "المشاكل المختارة" : "Selected problems";
+  const combined = `${prefix}: ${labels}`;
+  return base ? `${base}\n${combined}` : combined;
+}
+
+function buildPayload(): RequestDemoPayload {
+  const payload: RequestDemoPayload = {
+    name: form.name.trim(),
+    companyName: form.company.trim(),
+    phone: normalizeEgyptianPhone(form.phone),
+    businessType: form.businessType,
+    interestedPlanSlug: form.plan,
+  };
+
+  const email = form.email.trim();
+  if (email) payload.email = email;
+
+  if (form.monthlyVolume) payload.monthlyShipments = form.monthlyVolume;
+
+  const message = buildMessage();
+  if (message) payload.message = message;
+
+  return payload;
+}
+
+function applyServerFieldErrors() {
+  const server = serverFieldErrors.value;
+  if (!server) return;
+  const map: Partial<Record<keyof RequestDemoFieldErrors, FormKey>> = {
+    name: "name",
+    companyName: "company",
+    phone: "phone",
+    email: "email",
+    businessType: "businessType",
+    monthlyShipments: "monthlyVolume",
+  };
+  (Object.keys(server) as (keyof RequestDemoFieldErrors)[]).forEach((key) => {
+    const target = map[key];
+    if (target && server[key]) {
+      errors[target] = server[key] as string;
+    }
+  });
+}
+
 async function handleSubmit() {
   submitError.value = "";
-  success.value = false;
 
   if (!validateForm()) {
     submitError.value = copy.value.validation.general;
@@ -1067,34 +1144,34 @@ async function handleSubmit() {
     return;
   }
 
-  loading.value = true;
+  const result = await submitDemoRequest(buildPayload());
 
-  try {
-    const payload = {
-      ...form,
-      locale: locale.value,
-      queryPlan: selectedPlanFromQuery.value,
-      submittedAt: new Date().toISOString(),
-    };
-
-    if (import.meta.dev) {
-      console.info("Trackora demo request placeholder payload:", payload);
+  if (!result) {
+    const c = copy.value.states;
+    if (errorCode.value === "validation") {
+      applyServerFieldErrors();
+      submitError.value = demoError.value || c.validationFailed;
+    } else if (errorCode.value === "network") {
+      submitError.value = c.network;
+    } else if (
+      errorCode.value === "generic" &&
+      demoError.value === "API configuration is missing."
+    ) {
+      submitError.value = c.apiMissing;
+    } else {
+      submitError.value = demoError.value || c.generic;
     }
-
-    await new Promise((resolve) => window.setTimeout(resolve, 900));
-    success.value = true;
     await nextTick();
-    successEl.value?.focus({ preventScroll: true });
-    successEl.value?.scrollIntoView({
-      behavior: getScrollBehavior(),
-      block: "center",
-    });
-  } catch (error) {
-    submitError.value =
-      error instanceof Error ? error.message : copy.value.validation.general;
-  } finally {
-    loading.value = false;
+    formEl.value?.querySelector<HTMLElement>(".is-invalid")?.focus();
+    return;
   }
+
+  await nextTick();
+  successEl.value?.focus({ preventScroll: true });
+  successEl.value?.scrollIntoView({
+    behavior: getScrollBehavior(),
+    block: "center",
+  });
 }
 
 function resetForm() {
@@ -1104,14 +1181,18 @@ function resetForm() {
   form.email = "";
   form.businessType = "";
   form.monthlyVolume = "";
-  form.plan = selectedPlanFromQuery.value ?? "scale";
+  const queryPlan = selectedPlanFromQuery.value;
+  form.plan =
+    queryPlan === "starter" || queryPlan === "growth" || queryPlan === "scale"
+      ? queryPlan
+      : "scale";
   form.problems = [];
   form.message = "";
-  success.value = false;
   submitError.value = "";
   (Object.keys(errors) as FormKey[]).forEach((key) => {
     errors[key] = "";
   });
+  resetDemoService();
 }
 
 async function focusForm() {

@@ -42,7 +42,7 @@
             </li>
           </ul>
           <div class="pricing-preview__cta">
-            <AppButton :to="plan.highlighted ? '/request-demo' : '/pricing'" :variant="plan.highlighted ? 'primary' : 'outline'" block>
+            <AppButton :to="planLink(plan)" :variant="plan.highlighted ? 'primary' : 'outline'" block>
               {{ locale === 'ar' ? plan.ctaAr : plan.ctaEn }}
             </AppButton>
           </div>
@@ -57,6 +57,14 @@ import { metrics } from '~/data/home'
 import { pricingPlans } from '~/data/pricing'
 
 const { t, locale } = useI18n()
+const localePath = useLocalePath()
+
+function planLink(plan: (typeof pricingPlans)[number]) {
+  if (plan.highlighted) {
+    return localePath(`/request-demo?plan=${encodeURIComponent(plan.slug)}`)
+  }
+  return localePath('/pricing')
+}
 
 const metricIcons = ['bulk-upload', 'smart-dispatch', 'cod-wallet', 'analytics']
 const metricsWithType = metrics.map((m, i) => ({

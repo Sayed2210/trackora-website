@@ -20,10 +20,12 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
+  
   runtimeConfig: {
     contactWebhookUrl: process.env.NUXT_CONTACT_WEBHOOK_URL || '',
     public: {
       apiBaseUrl: process.env.NUXT_PUBLIC_API_BASE_URL || '',
+      dashboardUrl: process.env.NUXT_PUBLIC_DASHBOARD_URL || '',
       enableMockTracking: process.env.NUXT_PUBLIC_ENABLE_MOCK_TRACKING === 'true',
       siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://trackora.com',
     },

@@ -63,11 +63,14 @@ const { locale } = useI18n()
 const localePath = useLocalePath()
 
 const ctaTarget = computed(() => {
-  if (props.plan.ctaHref) {
-    return localePath(props.plan.ctaHref)
+  const href = props.plan.ctaHref || ''
+  if (href.startsWith('/contact')) {
+    return localePath(href)
   }
-
-  return localePath(`/request-demo?plan=${encodeURIComponent(props.plan.slug)}`)
+  if (href.startsWith('/request-demo')) {
+    return localePath(`/request-demo?plan=${encodeURIComponent(props.plan.slug)}`)
+  }
+  return localePath(`/subscribe?plan=${encodeURIComponent(props.plan.slug)}`)
 })
 
 function formatPrice(amount: number, currency: string): string {
